@@ -108,14 +108,17 @@ print(parsed_enhanced_img)
 bw_img = larger_image.convert(mode='L')
 bw_img.show()
 
-# parse black and white image
-# great results ~95% captured
+# Parse image converted to black and white using PIL. 
+# Great results ~99% captured, slightly better than an contrast images being
+# converted to grayscale by cv2
 parsed_bw_img = pytesseract.image_to_string(bw_img,  
                 lang ='eng') 
 print(parsed_bw_img)
 
-bw_enhancer = ImageEnhance.Contrast(blk_white)
+# setup an enhancer for the black and white image
+bw_enhancer = ImageEnhance.Contrast(bw_img)
 
+# adjust contrast on the black and white imaqge
 enhance_blk_1_5 = bw_enhancer.enhance(1.5)
 enhance_blk_2 = bw_enhancer.enhance(2)
 enhance_blk_2_5 = bw_enhancer.enhance(2.5)
@@ -124,6 +127,12 @@ enhance_blk_1_5.show()
 enhance_blk_2.show()
 enhance_blk_2_5.show()
 
+# Parse using black and white image with contrast adjusted.
+# 1.5 performs the best and is very comparable to non-adjusted black and white.
+# This parse picked up the title of the item but droped the letters INT in the
+# item requirement section, where the parsed_bw_img performed opposite.
+# both missed the value preceding the INT requirement due to the text being red
+# in color
 parsed_lrg_img = pytesseract.image_to_string(enhance_blk_1_5,  
                 lang ='eng') 
 print(parsed_lrg_img)
