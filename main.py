@@ -9,19 +9,16 @@ have been achieved
 @author: Eric
 
 Game played on windowed fullscreen at 1920x1080
-Coordinates to look within for text
-
-top left inventory
-(1000, 175, 1600, 640)
-
-bottom right inventory
-(1360, 500, 1920, 830)
-
-bottom middle of stash tab
-(30, 400 , 580, 750)
+Coordinates for an empty stash tab to look within for text
+(15, 170 , 650, 750)
 
 testing at windowed 800x600, game in top left corner produced worse results
-(10, 270, 320, 445)
+
+Scaling image by 3x produces much better results than the native resolution
+
+Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
+worse results
+
 """
 from PIL import Image, ImageGrab, ImageEnhance
 import os
@@ -71,7 +68,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\t
 screen_cap = ImageGrab.grab(bbox = (15, 170 , 650, 750))
 
 # used to open the image that is stored in screen_cap
-#screen_cap.show()
+screen_cap.show()
 
 # resizes image 3x from 635x580 to 1905x1740
 larger_image = screen_cap.resize((1905,1740))
@@ -79,22 +76,59 @@ larger_image = screen_cap.resize((1905,1740))
 larger_image.show()
 
 # output of 3x image works fairly well when converting to black and white
-# correct text capture is ~90-95%
+# correct text capture is ~90%
 parsed_lrg_img = pytesseract.image_to_string(
                 cv2.cvtColor(np.array(larger_image), cv2.COLOR_BGR2GRAY),  
                 lang ='eng') 
-print(tesstr)
+print(parsed_lrg_img)
 
 # creates a contrast enhancer for the larger_image
-enhancer = ImageEnhance.Contrast(larger_image)
+color_enhancer = ImageEnhance.Contrast(larger_image)
 
 # setting factor greater than 1 increases contrast
-factor = 2
+enhance_output_1_5 = color_enhancer.enhance(1.5)
+enhance_output_2 = color_enhancer.enhance(2)
+enhance_output_2_5 = color_enhancer.enhance(2.5)
 
-enhance_output = enhancer.enhance(factor)
+# output contrast adjusted images
+enhance_output_1_5.show()
+enhance_output_2.show()
+enhance_output_2_5.show()
 
-enhance_output.show()
+# Parse text of contrast adjusted large image. Image being converted to 
+# grayscale with cv2 prior to parse. Contrast value of of 2 performs the best 
+# of the three and slighty better than previous test with no constrast 
+# adjustments.
+parsed_enhanced_img = pytesseract.image_to_string(
+                cv2.cvtColor(np.array(enhance_output_2), cv2.COLOR_BGR2GRAY),  
+                lang ='eng') 
+print(parsed_enhanced_img)
 
-# save image to file
-#larger_image.save('test1.png')
+# convert enlarged image to black and white
+bw_img = larger_image.convert(mode='L')
+bw_img.show()
 
+# parse black and white image
+# great results ~95% captured
+parsed_bw_img = pytesseract.image_to_string(bw_img,  
+                lang ='eng') 
+print(parsed_bw_img)
+
+bw_enhancer = ImageEnhance.Contrast(blk_white)
+
+enhance_blk_1_5 = bw_enhancer.enhance(1.5)
+enhance_blk_2 = bw_enhancer.enhance(2)
+enhance_blk_2_5 = bw_enhancer.enhance(2.5)
+
+enhance_blk_1_5.show()
+enhance_blk_2.show()
+enhance_blk_2_5.show()
+
+parsed_lrg_img = pytesseract.image_to_string(enhance_blk_1_5,  
+                lang ='eng') 
+print(parsed_lrg_img)
+
+
+#!!!! TODO
+# Test sampling text colors, blue, grey, yellow, red, white
+# and convert all colors to white
