@@ -69,12 +69,17 @@ r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 screen_cap = ImageGrab.grab(bbox = (15, 170 , 650, 750))
 
 # used to open the image that is stored in screen_cap
-screen_cap.show()
+#screen_cap.show()
+
+# create a pixel map from the image
+screen_cap_pixels = screen_cap.load()
+
+for i in range(bw_img.size[1])
 
 # resizes image 3x from 635x580 to 1905x1740
 larger_image = screen_cap.resize((1905,1740))
 
-larger_image.show()
+#larger_image.show()
 
 ## output of 3x image works fairly well when converting to black and white
 ## correct text capture is ~90%
@@ -107,7 +112,7 @@ larger_image.show()
 
 # convert enlarged image to black and white
 bw_img = larger_image.convert(mode='L')
-bw_img.show()
+#bw_img.show()
 
 # Parse image converted to black and white using PIL. 
 # Great results ~99% captured, slightly better than an contrast images being
@@ -124,9 +129,10 @@ enhance_blk_1_5 = bw_enhancer.enhance(1.5)
 enhance_blk_2 = bw_enhancer.enhance(2)
 enhance_blk_2_5 = bw_enhancer.enhance(2.5)
 
-enhance_blk_1_5.show()
-enhance_blk_2.show()
-enhance_blk_2_5.show()
+#enhance_blk_1_5.show()
+
+#enhance_blk_2.show()
+#enhance_blk_2_5.show()
 
 # Parse using black and white image with contrast adjusted.
 # 1.5 performs the best and is very comparable to non-adjusted black and white.
@@ -134,9 +140,13 @@ enhance_blk_2_5.show()
 # item requirement section, where the parsed_bw_img performed opposite.
 # both missed the value preceding the INT requirement due to the text being red
 # in color
-parsed_lrg_img = pytesseract.image_to_string(enhance_blk_1_5,  
+parsed_lrg_img = pytesseract.image_to_string(enhance_blk_2_5,  
                 lang ='eng') 
 print(parsed_lrg_img)
+
+
+
+
 
 
 #!!!! TODO
