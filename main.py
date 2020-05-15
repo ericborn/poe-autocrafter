@@ -4,7 +4,23 @@ Created on Thu May 14 09:38:23 2020
 
 Program is written to read the screen while playing the game Path of Exile
 Automatically crafts an item looking for specific mods and stops once the mods
-have been achieved
+have been achieved or it runs out of currency
+
+#### Steps to complete
+1. screenshot top of screen
+2. if inventory and stash not open, raise error and quit
+3. screenshot inventory and parse
+5. if no alts present, raise error and quit
+6. screen stash and parse
+7. if item has mod desired, raise error and quit
+8. move mouse to 1st alt location
+9. right click
+10. move mouse to item location
+11. hold shift and left click
+12. screenshot stash and parse
+13. if item has desired mod, return success and quit
+14. if item does not have desired mod, return to step 11, 
+    repeat number of requested times
 
 @author: Eric
 
@@ -18,9 +34,9 @@ Scaling image by 3x produces much better results than the native resolution
 
 Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
 worse results
-
 """
 from PIL import Image, ImageGrab, ImageEnhance
+import re
 import os
 import cv2
 import pytesseract
