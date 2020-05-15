@@ -68,18 +68,32 @@ r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 # 1905x1740 x3 size
 screen_cap = ImageGrab.grab(bbox = (15, 170 , 650, 750))
 
-# used to open the image that is stored in screen_cap
-#screen_cap.show()
-
 # create a pixel map from the image
 screen_cap_pixels = screen_cap.load()
 
-for i in range(bw_img.size[1])
+blue_values = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142), \
+               (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155), \
+               (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
+               (108, 108, 181), (97, 97, 184), (123, 123, 233), (109, 109, 207))
+
+for i in range(screen_cap.size[0]):
+    for j in range(screen_cap.size[1]):
+        for k in range(len(blue_values)):
+            # change blue pixels to white
+            if screen_cap_pixels[i,j] == blue_values[k]:
+                screen_cap_pixels[i,j] = (255, 255, 255)
+        
+        
+        
+
+# used to open the image that is stored in screen_cap
+#screen_cap.show()
+
 
 # resizes image 3x from 635x580 to 1905x1740
 larger_image = screen_cap.resize((1905,1740))
 
-#larger_image.show()
+larger_image.show()
 
 ## output of 3x image works fairly well when converting to black and white
 ## correct text capture is ~90%
@@ -126,11 +140,10 @@ bw_enhancer = ImageEnhance.Contrast(bw_img)
 
 # adjust contrast on the black and white imaqge
 enhance_blk_1_5 = bw_enhancer.enhance(1.5)
-enhance_blk_2 = bw_enhancer.enhance(2)
-enhance_blk_2_5 = bw_enhancer.enhance(2.5)
+#enhance_blk_2 = bw_enhancer.enhance(2)
+#enhance_blk_2_5 = bw_enhancer.enhance(2.5)
 
 #enhance_blk_1_5.show()
-
 #enhance_blk_2.show()
 #enhance_blk_2_5.show()
 
@@ -140,15 +153,6 @@ enhance_blk_2_5 = bw_enhancer.enhance(2.5)
 # item requirement section, where the parsed_bw_img performed opposite.
 # both missed the value preceding the INT requirement due to the text being red
 # in color
-parsed_lrg_img = pytesseract.image_to_string(enhance_blk_2_5,  
+parsed_lrg_img = pytesseract.image_to_string(enhance_blk_1_5,  
                 lang ='eng') 
 print(parsed_lrg_img)
-
-
-
-
-
-
-#!!!! TODO
-# Test sampling text colors, blue, grey, yellow, red, white
-# and convert all colors to white
