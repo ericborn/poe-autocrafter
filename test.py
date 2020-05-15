@@ -21,8 +21,10 @@ worse results
 
 """
 from PIL import Image, ImageGrab, ImageEnhance
-import os
-import cv2
+import re
+#import os
+#import cv2
+import pyautogui as gui
 import pytesseract
 import numpy as np
 
@@ -66,22 +68,22 @@ r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 # width x height of an entire normal stash tab
 # 635x580 original
 # 1905x1740 x3 size
-screen_cap = ImageGrab.grab(bbox = (15, 170 , 650, 750))
+stash_img = ImageGrab.grab(bbox = (15, 170 , 650, 750))
 
 # create a pixel map from the image
-screen_cap_pixels = screen_cap.load()
+stash_img_pixels = stash_img.load()
 
 blue_values = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142), \
                (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155), \
                (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
-               (108, 108, 181), (97, 97, 184), (123, 123, 233), (109, 109, 207))
+               (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
 
-for i in range(screen_cap.size[0]):
-    for j in range(screen_cap.size[1]):
+for i in range(stash_img.size[0]):
+    for j in range(stash_img.size[1]):
         for k in range(len(blue_values)):
             # change blue pixels to white
-            if screen_cap_pixels[i,j] == blue_values[k]:
-                screen_cap_pixels[i,j] = (255, 255, 255)
+            if stash_img_pixels[i,j] == blue_values[k]:
+                stash_img_pixels[i,j] = (255, 255, 255)
         
         
         
@@ -91,7 +93,7 @@ for i in range(screen_cap.size[0]):
 
 
 # resizes image 3x from 635x580 to 1905x1740
-larger_image = screen_cap.resize((1905,1740))
+stash_lrg = screen_cap.resize((1905,1740))
 
 #larger_image.show()
 
@@ -125,23 +127,23 @@ larger_image = screen_cap.resize((1905,1740))
 #print(parsed_enhanced_img)
 
 # convert enlarged image to black and white
-bw_img = larger_image.convert(mode='L')
+stash_bw = stash_lrg.convert(mode='L')
 #bw_img.show()
 
 # Parse image converted to black and white using PIL. 
 # Great results ~99% captured, slightly better than an contrast images being
 # converted to grayscale by cv2
-parsed_bw_img = pytesseract.image_to_string(bw_img,  
-                lang ='eng') 
-print('!!!parsed_bw_img!!!\n' + parsed_bw_img)
+#parsed_bw_img = pytesseract.image_to_string(bw_img,  
+#                lang ='eng') 
+#print('!!!parsed_bw_img!!!\n' + parsed_bw_img)
 
 # setup an enhancer for the black and white image
-bw_enhancer = ImageEnhance.Contrast(bw_img)
+stash_enhancer = ImageEnhance.Contrast(stash_bw)
 
 # adjust contrast on the black and white imaqge
-enhance_blk_1_5 = bw_enhancer.enhance(1.5)
-enhance_blk_2 = bw_enhancer.enhance(2)
-enhance_blk_2_5 = bw_enhancer.enhance(2.5)
+stash_enhance_blk_1_5 = stash_enhancer.enhance(1.5)
+stash_enhance_blk_2 = stash_enhancer.enhance(2)
+stash_enhance_blk_2_5 = stash_enhancer.enhance(2.5)
 
 #enhance_blk_1_5.show()
 #enhance_blk_2.show()
@@ -153,18 +155,82 @@ enhance_blk_2_5 = bw_enhancer.enhance(2.5)
 # item requirement section, where the parsed_bw_img performed opposite.
 # both missed the value preceding the INT requirement due to the text being red
 # in color
-parsed_enhance_blk_1_5 = pytesseract.image_to_string(enhance_blk_1_5,  
-                lang ='eng') 
-print('!!!parsed_enhance_blk_1_5!!!\n' + parsed_enhance_blk_1_5)
+#parsed_enhance_blk_1_5 = pytesseract.image_to_string(enhance_blk_1_5,  
+#                lang ='eng') 
+#print('!!!parsed_enhance_blk_1_5!!!\n' + parsed_enhance_blk_1_5)
+#
+#parsed_enhance_blk_2 = pytesseract.image_to_string(enhance_blk_2,  
+#                lang ='eng') 
+#print('!!!parsed_enhance_blk_2!!!\n' + parsed_enhance_blk_2)
+#
+#parsed_enhance_blk_2_5 = pytesseract.image_to_string(enhance_blk_2_5,  
+#                lang ='eng') 
+#print('!!!parsed_enhance_blk_2_5!!!\n' + parsed_enhance_blk_2_5)
 
-parsed_enhance_blk_2 = pytesseract.image_to_string(enhance_blk_2,  
-                lang ='eng') 
-print('!!!parsed_enhance_blk_2!!!\n' + parsed_enhance_blk_2)
+# creates a list of the four images that were created
+stash_image_list = [stash_bw, stash_enhance_blk_1_5, stash_enhance_blk_2, \
+              stash_enhance_blk_2_5]
 
-parsed_enhance_blk_2_5 = pytesseract.image_to_string(enhance_blk_2_5,  
-                lang ='eng') 
-print('!!!parsed_enhance_blk_2_5!!!\n' + parsed_enhance_blk_2_5)
+# create a list which will contain the text from each parsed image
+parsed_list = []
+
+for i in range(len(stash_image_list)):
+    parsed_list.append(pytesseract.image_to_string(stash_image_list[i]).lower(),
+                       lang='eng')
+
+keyword = 'evasion rating'
 
 
 
+'''
+1. screenshot top of screen
+2. if inventory and stash not open, raise error and quit
+3. screenshot inventory and parse
+5. if no alts present, raise error and quit
+6. screen stash and parse
+7. if item has mod desired, raise error and quit
+8. move mouse to 1st alt location
+9. right click
+10. move mouse to item location
+11. hold shift and left click
+12. screenshot stash and parse
+13. if item has desired mod, return success and quit
+14. if item does not have desired mod, return to step 11, 
+    repeat number of requested times
+    
+inventory slots
+1270x585
+1910x860
+
+top header for stash and inventory text
+0x0
+1920x90
+'''
+
+header_img = ImageGrab.grab(bbox = (0, 0 , 1920, 90))
+header_img.show()
+
+header_text = pytesseract.image_to_string(header_img)
+
+# resizes image 3x from 635x580 to 1905x1740
+stash_lrg = screen_cap.resize((1905,1740))
+
+# item location in stash tab 355, 766
+# first item slot in inventory 1300, 615
+
+gui.moveTo(355, 766)
+
+def useAlteration(self):
+    
+
+for i in range(len(parsed_list)):  
+    found = 0
+    if bool(re.search(keyword, parsed_list[i])):
+        found += 1
+        print('found')
+    else:
+        print('not found')
+    if found == 0:
+        
+        
 
