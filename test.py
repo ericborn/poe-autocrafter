@@ -93,7 +93,7 @@ for i in range(screen_cap.size[0]):
 # resizes image 3x from 635x580 to 1905x1740
 larger_image = screen_cap.resize((1905,1740))
 
-larger_image.show()
+#larger_image.show()
 
 ## output of 3x image works fairly well when converting to black and white
 ## correct text capture is ~90%
@@ -133,15 +133,15 @@ bw_img = larger_image.convert(mode='L')
 # converted to grayscale by cv2
 parsed_bw_img = pytesseract.image_to_string(bw_img,  
                 lang ='eng') 
-print(parsed_bw_img)
+print('!!!parsed_bw_img!!!\n' + parsed_bw_img)
 
 # setup an enhancer for the black and white image
 bw_enhancer = ImageEnhance.Contrast(bw_img)
 
 # adjust contrast on the black and white imaqge
 enhance_blk_1_5 = bw_enhancer.enhance(1.5)
-#enhance_blk_2 = bw_enhancer.enhance(2)
-#enhance_blk_2_5 = bw_enhancer.enhance(2.5)
+enhance_blk_2 = bw_enhancer.enhance(2)
+enhance_blk_2_5 = bw_enhancer.enhance(2.5)
 
 #enhance_blk_1_5.show()
 #enhance_blk_2.show()
@@ -153,6 +153,18 @@ enhance_blk_1_5 = bw_enhancer.enhance(1.5)
 # item requirement section, where the parsed_bw_img performed opposite.
 # both missed the value preceding the INT requirement due to the text being red
 # in color
-parsed_lrg_img = pytesseract.image_to_string(enhance_blk_1_5,  
+parsed_enhance_blk_1_5 = pytesseract.image_to_string(enhance_blk_1_5,  
                 lang ='eng') 
-print(parsed_lrg_img)
+print('!!!parsed_enhance_blk_1_5!!!\n' + parsed_enhance_blk_1_5)
+
+parsed_enhance_blk_2 = pytesseract.image_to_string(enhance_blk_2,  
+                lang ='eng') 
+print('!!!parsed_enhance_blk_2!!!\n' + parsed_enhance_blk_2)
+
+parsed_enhance_blk_2_5 = pytesseract.image_to_string(enhance_blk_2_5,  
+                lang ='eng') 
+print('!!!parsed_enhance_blk_2_5!!!\n' + parsed_enhance_blk_2_5)
+
+
+
+
