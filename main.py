@@ -119,8 +119,7 @@ if currency_count < 1:
 
 # move mouse to item location in stash tab 355, 766
 gui.moveTo(355, 766)
-
-t.sleep(1)
+gui.PAUSE = 0.1
 
 # width x height of an entire normal stash tab
 # 635x580 original
@@ -137,8 +136,8 @@ grey_value = (200, 200, 200)
 yellow_value = (254, 254, 118)
 
 # store blue RGB values
-blue_values = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142), \
-               (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155), \
+blue_values = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
+               (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155),\
                (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
                (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
 
@@ -151,10 +150,76 @@ for i in range(stash_img.size[0]):
             raise Exception('This item is normal and cannot be alted. ' \
                     'Place a magic item to be crafted.')
 
-# loops that evaluate the stash image pixels and change any blue to white
-for i in range(stash_img.size[0]):
-    for j in range(stash_img.size[1]):
-        for k in range(len(blue_values)):
-            # change blue pixels to white
-            if stash_img_pixels[i,j] == blue_values[k]:
-                stash_img_pixels[i,j] = (255, 255, 255)
+def color_text(img):
+    # create a pixel map from the image
+    img_pixels = img.load()
+    # loops that evaluate the stash image pixels and change any blue to white
+    for i in range(img.size[0]):
+        for j in range(img.size[1]):
+            for k in range(len(blue_values)):
+                # change blue pixels to white
+                if img_pixels[i,j] == blue_values[k]:
+                    img_pixels[i,j] = (255, 255, 255)
+    return(img)
+
+stash_img = color_text(stash_img)
+
+def image_adjustments(img):
+    # resizes image 3x from 635x580 to 1905x1740
+    img = img.resize((1905,1740))
+    
+    # convert enlarged image to black and white
+    img = img.convert(mode='L')                
+    
+    # setup an enhancer for the black and white image
+    stash_enhancer = ImageEnhance.Contrast(img)
+    
+    # adjust contrast on the black and white imaqge
+    stash_enhance_1_5 = stash_enhancer.enhance(1.5)
+    stash_enhance_2 = stash_enhancer.enhance(2)
+    stash_enhance_2_5 = stash_enhancer.enhance(2.5)
+    
+    # creates a list of the four images that were created
+    stash_image_list = [stash_img, stash_enhance_1_5, stash_enhance_2, \
+                  stash_enhance_2_5]
+    return(stash_image_list, img)
+
+
+
+# create a list which will contain the text from each parsed image
+parsed_list = []
+
+for i in range(len(stash_image_list)):
+    parsed_list.append(pytesseract.image_to_string(stash_image_list[i],
+                       lang='eng').lower())
+
+# move cursor to first item slot in inventory 1300, 615
+gui.moveTo(1300, 615)
+
+# set desired mod and number of rolls to attempt
+desired_mod = 'cold resistance'
+number_of_rolls = 5
+
+mod_found = 0
+for i in range(len(parsed_list)):  
+    if bool(re.search(desired_mod, parsed_list[i])):
+        mod_found += 1
+        print('found')
+    else:
+        print('not found')      
+
+if mod_found > 0:
+    raise Exception('This item has the desired mod.')
+else:
+    # pick up currency for rolling
+    gui.rightClick()
+    
+    # move mouse to item location in stash tab 355, 766
+    gui.moveTo(355, 766)
+    gui.PAUSE = 0.1
+    
+    #shift and left click to roll
+    gui.keyDown('shift')
+    gui.leftClick()
+    
+    gui.keyUp('shift')
