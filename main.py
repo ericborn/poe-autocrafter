@@ -162,8 +162,9 @@ def color_text(img):
                     img_pixels[i,j] = (255, 255, 255)
     return(img)
 
+# !!!TODO!!!
+# TEST THIS
 stash_img = color_text(stash_img)
-
 def image_adjustments(img):
     # resizes image 3x from 635x580 to 1905x1740
     img = img.resize((1905,1740))
