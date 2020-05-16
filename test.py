@@ -53,7 +53,6 @@ top header for stash and inventory text
 0x0
 1920x90
 '''
-
 # 1. screenshot top of screen
 header_img = ImageGrab.grab(bbox = (0, 0, 1920, 90))
 #header_img.show()
@@ -159,15 +158,12 @@ for i in range(stash_img.size[0]):
             if stash_img_pixels[i,j] == blue_values[k]:
                 stash_img_pixels[i,j] = (255, 255, 255)
         
-      
-        
-
 # used to open the image that is stored in screen_cap
 #screen_cap.show()
 
 
 # resizes image 3x from 635x580 to 1905x1740
-stash_lrg = screen_cap.resize((1905,1740))
+stash_img = stash_img.resize((1905,1740))
 
 #larger_image.show()
 
@@ -201,7 +197,7 @@ stash_lrg = screen_cap.resize((1905,1740))
 #print(parsed_enhanced_img)
 
 # convert enlarged image to black and white
-stash_bw = stash_lrg.convert(mode='L')
+stash_img = stash_img.convert(mode='L')
 #bw_img.show()
 
 # Parse image converted to black and white using PIL. 
@@ -212,12 +208,12 @@ stash_bw = stash_lrg.convert(mode='L')
 #print('!!!parsed_bw_img!!!\n' + parsed_bw_img)
 
 # setup an enhancer for the black and white image
-stash_enhancer = ImageEnhance.Contrast(stash_bw)
+stash_enhancer = ImageEnhance.Contrast(stash_img)
 
 # adjust contrast on the black and white imaqge
-stash_enhance_blk_1_5 = stash_enhancer.enhance(1.5)
-stash_enhance_blk_2 = stash_enhancer.enhance(2)
-stash_enhance_blk_2_5 = stash_enhancer.enhance(2.5)
+stash_enhance_1_5 = stash_enhancer.enhance(1.5)
+stash_enhance_2 = stash_enhancer.enhance(2)
+stash_enhance_2_5 = stash_enhancer.enhance(2.5)
 
 #enhance_blk_1_5.show()
 #enhance_blk_2.show()
@@ -242,27 +238,45 @@ stash_enhance_blk_2_5 = stash_enhancer.enhance(2.5)
 #print('!!!parsed_enhance_blk_2_5!!!\n' + parsed_enhance_blk_2_5)
 
 # creates a list of the four images that were created
-stash_image_list = [stash_bw, stash_enhance_blk_1_5, stash_enhance_blk_2, \
-              stash_enhance_blk_2_5]
+stash_image_list = [stash_img, stash_enhance_1_5, stash_enhance_2, \
+              stash_enhance_2_5]
 
 # create a list which will contain the text from each parsed image
 parsed_list = []
 
 for i in range(len(stash_image_list)):
-    parsed_list.append(pytesseract.image_to_string(stash_image_list[i]).lower(),
-                       lang='eng')
+    parsed_list.append(pytesseract.image_to_string(stash_image_list[i],
+                       lang='eng').lower())
 
-# item location in stash tab 355, 766
-# first item slot in inventory 1300, 615
-gui.moveTo(355, 766)
+# move cursor to first item slot in inventory 1300, 615
+gui.moveTo(1300, 615)
 
-desired_mod = 'evasion rating'
+# set desired mod and number of rolls to attempt
+desired_mod = 'cold resistance'
+number_of_rolls = 5
+
 mod_found = 0
 for i in range(len(parsed_list)):  
-    if bool(re.search(keyword, parsed_list[i])):
+    if bool(re.search(desired_mod, parsed_list[i])):
         mod_found += 1
         print('found')
     else:
         print('not found')      
-        
+
+if mod_found > 0:
+    raise Exception('This item has the desired mod.')
+else:
+    # pick up currency for rolling
+    gui.rightClick()
+    
+    # move mouse to item location in stash tab 355, 766
+    gui.moveTo(355, 766)
+    gui.PAUSE = 0.1
+    
+    #shift and left click to roll
+    gui.keyDown('shift')
+    gui.leftClick()
+    
+    gui.keyUp('shift')
+
 #def useAlteration(self):
