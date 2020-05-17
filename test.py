@@ -94,7 +94,7 @@ currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
 #!!!TODO!!!
 #THESE NEED TO COME IN FROM THE UI
 # set desired mod and number of rolls to attempt
-desired_mod = 'cold resistance'
+desired_mod = 'fire resistance'
 number_of_rolls = 5
 
 # function takes an image as an input, creates a pixel map, iterates over the
@@ -270,7 +270,7 @@ for i in range(len(currency_text)):
             currency_to_roll.append(currency_items[j])
     
 # check if the value is higher than 0, indiciating there is a currency to roll
-if currency_to_roll < 1:
+if len(currency_to_roll) < 1:
     raise Exception('You do not have currency in your inventory.' \
                     'Place it in the top left inventory slot dummy.') 
 
