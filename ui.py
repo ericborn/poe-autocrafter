@@ -33,6 +33,15 @@ roll_input = tk.Entry(root)
 # create a Tkinter variable to store the dropdown button
 dropdown_button = tk.StringVar(root)
 
+
+#!!!TODO!!!
+# USE WE SCRAPE TO PULL ITEM MODS FROM
+# https://www.pathofexile.com/trade/search/Delirium
+# class="multiselect filter-select filter-select-mutate multiselect--active"
+# MAY HAVE TO USE WEB SIMULATION PROGRAM TO CLICK THE DROPDOWN TO FIND THIS ACTIVE STATE
+
+# SECONDARY SITE IF FIRST DOESNT WORK https://pathofaffix.com/
+
 mod_list = ['Cold Resistance', 'Lightning Resistance', 'Fire Resistance',
             'Chaos Resistance', 'Movement Speed', 'Elusive', 'Tailwind', 
             'To Intelligence', 'To Strength', 'To Dexterity', 'Vitality Skill']
