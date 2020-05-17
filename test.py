@@ -77,7 +77,7 @@ yellow_value = (254, 254, 118)
 currency_value = ((170,158,129), (140,129,105), (150,139,113), (156,145,117))
 
 # blue RGB values for magic a item
-blue_values = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
+blue_value = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
                (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155),\
                (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
                (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
@@ -87,6 +87,13 @@ header_words = ['stash','inventory']
 
 currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
                   'orb of transmutation', 'regal orb']
+
+#!!!TODO!!!
+#THESE NEED TO COME IN FROM THE UI
+# set desired mod and number of rolls to attempt
+desired_mod = 'strength'
+number_of_rolls = 5
+
 
 # function takes an image as an input, creates a pixel map, iterates over the
 # pixels and changes any blue ones to white. Helps tesseract read the text.
@@ -139,17 +146,20 @@ def screenshot(coords):
 def check_for_mod(mod):
     gui.moveTo(355, 766)
     img = screenshot(stash_coords)
-    img = color_text(img)
+    img = color_text(img, blue_value)
     img = image_adjustments(img)
     
     parsed_text = []
     for i in range(len(img)):
         parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
                                                   config = '--psm 12').lower())
+        
     mod_found = 0
-    for i in range(len(parsed_text)):
-        if bool(re.search(parsed_text[0], mod)):
+    #print(mod)
+    for i in range(len(parsed_text)):      
+        if bool(re.search(mod, parsed_text[i])):
             mod_found += 1
+
     return(mod_found)
 
 # 1. screenshot top of screen
@@ -240,21 +250,18 @@ for i in range(stash_img.size[0]):
             raise Exception('This item is normal and cannot be alted. ' \
                     'Place a magic item to be crafted.')
 
+
+check_for_mod('strength')
+
+
 # create a list which will contain the text from each parsed image
 parsed_list = []
-
 for i in range(len(stash_image_list)):
     parsed_list.append(pytesseract.image_to_string(stash_image_list[i],
                        lang='eng').lower())
 
 # move cursor to first item slot in inventory 1300, 615
 gui.moveTo(1300, 615)
-
-# set desired mod and number of rolls to attempt
-desired_mod = 'cold resistance'
-number_of_rolls = 5
-
-
 
 
 mod_found = 0
@@ -265,9 +272,11 @@ for i in range(len(parsed_list)):
     else:
         print('not found')      
 
-if mod_found > 0:
+if check_for_mod('strength') > 0:
     raise Exception('This item has the desired mod.')
 else:
+    print('roll me!')
+    
     # pick up currency for rolling
     gui.rightClick()
     
