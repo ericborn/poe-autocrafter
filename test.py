@@ -94,7 +94,7 @@ currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
 #!!!TODO!!!
 #THESE NEED TO COME IN FROM THE UI
 # set desired mod and number of rolls to attempt
-desired_mod = 'fire resistance'
+desired_mod = 'dexterity'
 number_of_rolls = 5
 
 # function takes an image as an input, creates a pixel map, iterates over the
@@ -185,26 +185,32 @@ def roll_me(mod, rolls):
                 raise Exception('This item is normal and cannot be alted. ' \
                         'Place a magic item to be crafted.')
     
-    for k in range(rolls):
-        if check_for_mod(mod) > 0:
-            raise Exception('This item has the desired mod.')
-        else:
-            print('roll me!')
-            # move mouse to currency item in inventory
-            gui.moveTo(top_left_inventory_coords)
-                        
-            # pick up currency for rolling
-            gui.rightClick()
-            
-            # move mouse to item location in stash tab 355, 766
-            gui.moveTo(355, 766)
-            gui.PAUSE = 0.1
-            
-            #shift and left click to roll
-            gui.keyDown('shift')
-            gui.leftClick()
-            
-            gui.keyUp('shift')
+    # checks if the item has the desired mod, if not picks up the currency
+    # and starts to roll the item, each time making a check for the desired
+    # mod before rolling again
+    if check_for_mod(mod) > 0:
+        raise Exception('This item has the desired mod.')
+    else:
+        # move mouse to currency item in inventory
+        gui.moveTo(top_left_inventory_coords)
+                    
+        # pick up currency for rolling
+        gui.rightClick()
+        
+        # move mouse to item location in stash tab 355, 766
+        gui.moveTo(item_in_stash_coords)
+        #gui.PAUSE = 0.1
+        for k in range(rolls):
+            if check_for_mod(mod) > 0:
+                raise Exception('This item has the desired mod.')
+            else:
+                print('roll me!')
+
+                #shift and left click to roll
+                gui.keyDown('shift')
+                gui.leftClick()
+        
+        gui.keyUp('shift')
 
 
 # 1. screenshot top of screen
@@ -274,4 +280,6 @@ if len(currency_to_roll) < 1:
     raise Exception('You do not have currency in your inventory.' \
                     'Place it in the top left inventory slot dummy.') 
 
+# executes the mod check and rolls until the desired mod is found or max 
+# attempts are met
 roll_me(desired_mod, number_of_rolls)
