@@ -18,40 +18,21 @@ Scaling image by 3x produces much better results than the native resolution
 
 Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
 worse results
+
+
+details on converting python to standalone exe
+https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
 """
-from PIL import Image, ImageGrab, ImageEnhance
+
+from PIL import ImageGrab, ImageEnhance
 import re
-#import time as t
-#import os
-#import cv2
 import pyautogui as gui
 import pytesseract
-import numpy as np
 
 # set path to tesseract.exe
 pytesseract.pytesseract.tesseract_cmd = \
 r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
-'''
-6. screen stash and parse
-7. if item has mod desired, raise error and quit
-8. move mouse to 1st alt location
-9. right click
-10. move mouse to item location
-11. hold shift and left click
-12. screenshot stash and parse
-13. if item has desired mod, return success and quit
-14. if item does not have desired mod, return to step 11, 
-    repeat number of requested times
-    
-inventory slots
-1270x585
-1910x860
-
-top header for stash and inventory text
-0x0
-1920x90
-'''
 # static values
 
 # various screen coordinate
