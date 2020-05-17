@@ -59,13 +59,16 @@ top header for stash and inventory text
 header_coords = (0, 0, 1920, 90)
 
 # top left inventory slot
-inventory_coords = (1270, 585, 1298, 607)
+top_left_inventory_coords = (1298, 607)
+
+# item to be rolled in bottom middle of stash tab
+item_in_stash_coords = (355, 766)
 
 # entire stash tab
 stash_coords = (15, 170, 650, 750)
 
 # currency description box when currency in top left of inventory
-currency_inventory_coords = (1060,410,1533,588)
+currency_description_coords = (1060,410,1533,588)
 
 # grey RGB value for a normal item
 grey_value = (200, 200, 200)
@@ -143,7 +146,7 @@ def screenshot(coords):
     return(img)
     
 def check_for_mod(mod):
-    gui.moveTo(355, 766)
+    gui.moveTo(item_in_stash_coords)
     img = screenshot(stash_coords)
     img = color_text(img, blue_value)
     img = image_adjustments(img)
@@ -163,7 +166,7 @@ def check_for_mod(mod):
 
 def roll_me(mod, rolls):
     # move mouse to item location in stash tab 355, 766
-    gui.moveTo(355, 766)
+    gui.moveTo(item_in_stash_coords)
     gui.PAUSE = 0.1
     
     # screenshot the stash tab with the item to be crafted
@@ -182,12 +185,14 @@ def roll_me(mod, rolls):
                 raise Exception('This item is normal and cannot be alted. ' \
                         'Place a magic item to be crafted.')
     
-    for k in range(len(rolls)):
+    for k in range(rolls):
         if check_for_mod(mod) > 0:
             raise Exception('This item has the desired mod.')
         else:
             print('roll me!')
-            
+            # move mouse to currency item in inventory
+            gui.moveTo(top_left_inventory_coords)
+                        
             # pick up currency for rolling
             gui.rightClick()
             
@@ -235,7 +240,7 @@ if inv_found < 0 & stash_found < 0:
 gui.moveTo(1300, 615)
 
 # take a screenshot of the currency item description
-currency_img = screenshot(currency_inventory_coords)
+currency_img = screenshot(currency_description_coords)
 
 # colors the currency image item name to white
 color_text(currency_img, currency_value)
@@ -243,7 +248,7 @@ color_text(currency_img, currency_value)
 # perform adjustments
 currency_img = image_adjustments(currency_img)
 
-#inventory_img = screenshot(inventory_coords)
+#inventory_img = screenshot(top_left_inventory_coords)
 #inventory_img = image_adjustments(inventory_img)
 
 # parse the image for text
