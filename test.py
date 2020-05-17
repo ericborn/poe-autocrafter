@@ -52,7 +52,7 @@ top header for stash and inventory text
 0x0
 1920x90
 '''
-
+# static coordinate values
 header_coords = (0, 0, 1920, 90)
 inventory_coords = (1270, 585, 1298, 607)
 stash_coords = (15, 170, 650, 750)
@@ -92,8 +92,7 @@ def color_text(img):
 # Takes an image as input, multiply the dimensions by 3, 
 # converts to b/w, create enhancer, apply contrast 3 times, output list with
 # b/w and 3 contrast adjusted images.
-def image_adjustments(img):
-    
+def image_adjustments(img): 
     # resizes image 3x larger 
     img = img.resize(((img.size[0] * 3),(img.size[1] * 3)))
     
@@ -117,29 +116,21 @@ def image_adjustments(img):
 #stash_img = color_text(stash_img)
 #img_list = image_adjustments(header_img)
 
+# function that takes an input, coords, and makes a screenshot based upon them.
+def screenshot(coords):
+    img = ImageGrab.grab(bbox = (coords))
+    return(img)
+
 # 1. screenshot top of screen
-header_img = ImageGrab.grab(bbox = (0, 0, 1920, 90))
+header_img = screenshot(header_coords)
 #header_img.show()
 
-# resizes image 3x from 635x580 to 5760x270
-header_img = header_img.resize((5760,270))
-#header_lrg.show()
-
-# convert enlarged image to black and white
-header_img = header_img.convert(mode='L')
-#header_bw.show()
-
-# setup an enhancer for the black and white image
-header_enhancer = ImageEnhance.Contrast(header_img)
-
-# adjust contrast on the black and white imaqge
-header_img = header_enhancer.enhance(1.5)
-#header_enhance_blk_1_5.show()
+# perform adjustments
+header_img = image_adjustments(header_img)
 
 # parse the headers text
-header_text = pytesseract.image_to_string(header_img, lang='eng', 
+header_text = pytesseract.image_to_string(header_img[0], lang='eng', 
                                           config = '--psm 12').lower()
-
 
 # 2. if inventory and stash are not open, raise error and quit
 header_found = 0
@@ -152,26 +143,28 @@ if header_found < 2:
                     'Please open both and try again') 
 
 # 3. screenshot top left corner of inventory and parse
-inventory_img = ImageGrab.grab(bbox = (1270, 585, 1298, 607))
+inventory_img = screenshot(inventory_coords)
 
-# convert enlarged image to black and white
-inventory_img = inventory_img.convert(mode='L')
+# perform adjustments
+inventory_img = image_adjustments(inventory_img)
 
-# setup an enhancer for the black and white image
-inventory_enhancer = ImageEnhance.Contrast(inventory_img)
+# parse the image and convert the output to an int
+currency_count = []
 
-# adjust contrast on the black and white imaqge
-inventory_img = inventory_enhancer.enhance(1.5)
+for i in range(len(inventory_img)):
+    currency_count.append(pytesseract.image_to_string(inventory_img[i], \
+                                                          lang='eng', config =\
+                                                          '--psm 12').lower())
+#!!!TODO!!!
+#PUT IN A CHECK FOR THE currency_count LIST CONTAINING A VALUE
 
-#inventory_img.show()
-
-    # parse the image and convert the output to an int
-try:
-    currency_count = int(pytesseract.image_to_string(inventory_img, lang='eng', 
-                                                   config = '--psm 6').lower())
-except Exception as e:
-    print(e)
-    exit('You do not have currency in your inventory.')
+#try:
+#    currency_count = int(pytesseract.image_to_string(inventory_img[1], \
+#                                                     lang='eng', config = \
+#                                                     '--psm 12').lower())
+#except Exception as e:
+#    print(e)
+#    exit('You do not have currency in your inventory.')
     
 # check if the value is higher than 0
 if currency_count < 1:
