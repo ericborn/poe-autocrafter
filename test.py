@@ -91,9 +91,8 @@ currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
 #!!!TODO!!!
 #THESE NEED TO COME IN FROM THE UI
 # set desired mod and number of rolls to attempt
-desired_mod = 'strength'
+desired_mod = 'cold resistance'
 number_of_rolls = 5
-
 
 # function takes an image as an input, creates a pixel map, iterates over the
 # pixels and changes any blue ones to white. Helps tesseract read the text.
@@ -162,6 +161,47 @@ def check_for_mod(mod):
 
     return(mod_found)
 
+def roll_me(mod, rolls):
+    # move mouse to item location in stash tab 355, 766
+    gui.moveTo(355, 766)
+    gui.PAUSE = 0.1
+    
+    # screenshot the stash tab with the item to be crafted
+    stash_img = screenshot(stash_coords)
+    
+    # create a pixel map from the image
+    stash_img_pixels = stash_img.load()
+    
+    # checks the color of the item to ensure its a magic item
+    for i in range(stash_img.size[0]):
+        for j in range(stash_img.size[1]):
+            if stash_img_pixels[i,j] == yellow_value:
+                raise Exception('This item is rare and cannot be alted. ' \
+                        'Place a magic item to be crafted.')
+            if stash_img_pixels[i,j] == grey_value:
+                raise Exception('This item is normal and cannot be alted. ' \
+                        'Place a magic item to be crafted.')
+    
+    for k in range(len(rolls)):
+        if check_for_mod(mod) > 0:
+            raise Exception('This item has the desired mod.')
+        else:
+            print('roll me!')
+            
+            # pick up currency for rolling
+            gui.rightClick()
+            
+            # move mouse to item location in stash tab 355, 766
+            gui.moveTo(355, 766)
+            gui.PAUSE = 0.1
+            
+            #shift and left click to roll
+            gui.keyDown('shift')
+            gui.leftClick()
+            
+            gui.keyUp('shift')
+
+
 # 1. screenshot top of screen
 header_img = screenshot(header_coords)
 #header_img.show()
@@ -229,63 +269,4 @@ if currency_to_roll < 1:
     raise Exception('You do not have currency in your inventory.' \
                     'Place it in the top left inventory slot dummy.') 
 
-
-# move mouse to item location in stash tab 355, 766
-gui.moveTo(355, 766)
-gui.PAUSE = 0.1
-
-# screenshot the stash tab with the item to be crafted
-stash_img = screenshot(stash_coords)
-
-# create a pixel map from the image
-stash_img_pixels = stash_img.load()
-
-# checks the color of the item to ensure its a magic item
-for i in range(stash_img.size[0]):
-    for j in range(stash_img.size[1]):
-        if stash_img_pixels[i,j] == yellow_value:
-            raise Exception('This item is rare and cannot be alted. ' \
-                    'Place a magic item to be crafted.')
-        if stash_img_pixels[i,j] == grey_value:
-            raise Exception('This item is normal and cannot be alted. ' \
-                    'Place a magic item to be crafted.')
-
-
-check_for_mod('strength')
-
-
-# create a list which will contain the text from each parsed image
-parsed_list = []
-for i in range(len(stash_image_list)):
-    parsed_list.append(pytesseract.image_to_string(stash_image_list[i],
-                       lang='eng').lower())
-
-# move cursor to first item slot in inventory 1300, 615
-gui.moveTo(1300, 615)
-
-
-mod_found = 0
-for i in range(len(parsed_list)):  
-    if bool(re.search(desired_mod, parsed_list[i])):
-        mod_found += 1
-        print('found')
-    else:
-        print('not found')      
-
-if check_for_mod('strength') > 0:
-    raise Exception('This item has the desired mod.')
-else:
-    print('roll me!')
-    
-    # pick up currency for rolling
-    gui.rightClick()
-    
-    # move mouse to item location in stash tab 355, 766
-    gui.moveTo(355, 766)
-    gui.PAUSE = 0.1
-    
-    #shift and left click to roll
-    gui.keyDown('shift')
-    gui.leftClick()
-    
-    gui.keyUp('shift')
+roll_me(desired_mod, number_of_rolls)
