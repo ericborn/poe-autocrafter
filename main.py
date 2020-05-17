@@ -18,82 +18,86 @@ Scaling image by 3x produces much better results than the native resolution
 
 Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
 worse results
+
+
+details on converting python to standalone exe
+https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
 """
-from PIL import Image, ImageGrab, ImageEnhance
+
+from PIL import ImageGrab, ImageEnhance
 import re
-#import time as t
-#import os
-#import cv2
 import pyautogui as gui
 import pytesseract
-import numpy as np
 
 # set path to tesseract.exe
 pytesseract.pytesseract.tesseract_cmd = \
 r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
-'''
-6. screen stash and parse
-7. if item has mod desired, raise error and quit
-8. move mouse to 1st alt location
-9. right click
-10. move mouse to item location
-11. hold shift and left click
-12. screenshot stash and parse
-13. if item has desired mod, return success and quit
-14. if item does not have desired mod, return to step 11, 
-    repeat number of requested times
-    
-inventory slots
-1270x585
-1910x860
+# static values
 
-top header for stash and inventory text
-0x0
-1920x90
-'''
-
+# various screen coordinate
+# top of screen, stash/inventory
 header_coords = (0, 0, 1920, 90)
-inventory_coords = (1270, 585, 1298, 607)
+
+# top left inventory slot
+top_left_inventory_coords = (1298, 607)
+
+# item to be rolled in bottom middle of stash tab
+item_in_stash_coords = (355, 766)
+
+# entire stash tab
 stash_coords = (15, 170, 650, 750)
 
-# store the grey RGB value indicating its a rare item
+# currency description box when currency in top left of inventory
+currency_description_coords = (1060,410,1533,588)
+
+# grey RGB value for a normal item
 grey_value = (200, 200, 200)
 
-# store the yellow RGB value indicating its a rare item
+# yellow RGB value for a rare item
 yellow_value = (254, 254, 118)
 
-# store blue RGB values
-blue_values = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
+# greyish yellow RGB values for a currency item
+currency_value = ((170,158,129), (140,129,105), (150,139,113), (156,145,117))
+
+# blue RGB values for magic a item
+blue_value = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
                (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155),\
                (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
                (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
 
-# create list containing the words we're looking for in the image
+# create a list containing the words we're looking for in the image
 header_words = ['stash','inventory']
 
+currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
+                  'orb of transmutation', 'regal orb']
+
+#!!!TODO!!!
+#THESE NEED TO COME IN FROM THE UI
+# set desired mod and number of rolls to attempt
+desired_mod = 'dexterity'
+number_of_rolls = 5
+
 # function takes an image as an input, creates a pixel map, iterates over the
-# pixels and changes any blue ones to white
-# helps tesseract read the text
-def color_text(img):
+# pixels and changes any blue ones to white. Helps tesseract read the text.
+def color_text(img, value):
     # create a pixel map from the image
     img_pixels = img.load()
     # loops that evaluate the stash image pixels and change any blue to white
     for i in range(img.size[0]):
         for j in range(img.size[1]):
-            for k in range(len(blue_values)):
+            for k in range(len(value)):
                 # change blue pixels to white
-                if img_pixels[i,j] == blue_values[k]:
+                if img_pixels[i,j] == value[k]:
                     img_pixels[i,j] = (255, 255, 255)
     return(img)
 
 
 
-# Takes an image as input, multiply the dimensions by 3, 
-# converts to b/w, create enhancer, apply contrast 3 times, output list with
-# b/w and 3 contrast adjusted images.
-def image_adjustments(img):
-    
+# Takes an image as input, resize the image to 3x original size 
+# converts to b/w, create enhancer, apply contrast at 3 different values, 
+# output list with b/w and 3 contrast adjusted images.
+def image_adjustments(img): 
     # resizes image 3x larger 
     img = img.resize(((img.size[0] * 3),(img.size[1] * 3)))
     
@@ -117,129 +121,146 @@ def image_adjustments(img):
 #stash_img = color_text(stash_img)
 #img_list = image_adjustments(header_img)
 
+# function that takes an input, coords, and makes a screenshot based upon them.
+def screenshot(coords):
+    img = ImageGrab.grab(bbox = (coords))
+    return(img)
+    
+def check_for_mod(mod):
+    gui.moveTo(item_in_stash_coords)
+    img = screenshot(stash_coords)
+    img = color_text(img, blue_value)
+    img = image_adjustments(img)
+    
+    parsed_text = []
+    for i in range(len(img)):
+        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
+                                                  config = '--psm 12').lower())
+        
+    mod_found = 0
+    #print(mod)
+    for i in range(len(parsed_text)):      
+        if bool(re.search(mod, parsed_text[i])):
+            mod_found += 1
+
+    return(mod_found)
+
+def roll_me(mod, rolls):
+    # move mouse to item location in stash tab 355, 766
+    gui.moveTo(item_in_stash_coords)
+    gui.PAUSE = 0.1
+    
+    # screenshot the stash tab with the item to be crafted
+    stash_img = screenshot(stash_coords)
+    
+    # create a pixel map from the image
+    stash_img_pixels = stash_img.load()
+    
+    # checks the color of the item to ensure its a magic item
+    for i in range(stash_img.size[0]):
+        for j in range(stash_img.size[1]):
+            if stash_img_pixels[i,j] == yellow_value:
+                raise Exception('This item is rare and cannot be alted. ' \
+                        'Place a magic item to be crafted.')
+            if stash_img_pixels[i,j] == grey_value:
+                raise Exception('This item is normal and cannot be alted. ' \
+                        'Place a magic item to be crafted.')
+    
+    # checks if the item has the desired mod, if not picks up the currency
+    # and starts to roll the item, each time making a check for the desired
+    # mod before rolling again
+    if check_for_mod(mod) > 0:
+        raise Exception('This item has the desired mod.')
+    else:
+        # move mouse to currency item in inventory
+        gui.moveTo(top_left_inventory_coords)
+                    
+        # pick up currency for rolling
+        gui.rightClick()
+        
+        # move mouse to item location in stash tab 355, 766
+        gui.moveTo(item_in_stash_coords)
+        #gui.PAUSE = 0.1
+        for k in range(rolls):
+            if check_for_mod(mod) > 0:
+                raise Exception('This item has the desired mod.')
+            else:
+                print('roll me!')
+
+                #shift and left click to roll
+                gui.keyDown('shift')
+                gui.leftClick()
+        
+        gui.keyUp('shift')
+
+
 # 1. screenshot top of screen
-header_img = ImageGrab.grab(bbox = (0, 0, 1920, 90))
+header_img = screenshot(header_coords)
 #header_img.show()
 
-# resizes image 3x from 635x580 to 5760x270
-header_img = header_img.resize((5760,270))
-#header_lrg.show()
+# perform adjustments
+header_img = image_adjustments(header_img)
 
-# convert enlarged image to black and white
-header_img = header_img.convert(mode='L')
-#header_bw.show()
-
-# setup an enhancer for the black and white image
-header_enhancer = ImageEnhance.Contrast(header_img)
-
-# adjust contrast on the black and white imaqge
-header_img = header_enhancer.enhance(1.5)
-#header_enhance_blk_1_5.show()
+# creates an empty list to store the parsed header text
+header_text = []
 
 # parse the headers text
-header_text = pytesseract.image_to_string(header_img, lang='eng', 
-                                          config = '--psm 12').lower()
-
+for i in range(len(header_img)):
+    header_text.append(pytesseract.image_to_string(header_img[i], lang='eng', 
+                                                  config = '--psm 12').lower())
 
 # 2. if inventory and stash are not open, raise error and quit
-header_found = 0
-for i in range(len(header_words)):
-    if bool(re.search(header_words[i], header_text)):
-        header_found += 1
+inv_found = 0
+stash_found = 0
+for i in range(len(header_text)):
+    if bool(re.search(header_words[0], header_text[i])):
+        stash_found += 1
+    if bool(re.search(header_words[1], header_text[i])):
+        inv_found += 1    
 
-if header_found < 2:
+if inv_found < 0 & stash_found < 0:
     raise Exception('The stash and inventory are not both open. ' \
-                    'Please open both and try again') 
+                    'Please open both and try again')
 
-# 3. screenshot top left corner of inventory and parse
-inventory_img = ImageGrab.grab(bbox = (1270, 585, 1298, 607))
-
-# convert enlarged image to black and white
-inventory_img = inventory_img.convert(mode='L')
-
-# setup an enhancer for the black and white image
-inventory_enhancer = ImageEnhance.Contrast(inventory_img)
-
-# adjust contrast on the black and white imaqge
-inventory_img = inventory_enhancer.enhance(1.5)
-
-#inventory_img.show()
-
-    # parse the image and convert the output to an int
-try:
-    currency_count = int(pytesseract.image_to_string(inventory_img, lang='eng', 
-                                                   config = '--psm 6').lower())
-except Exception as e:
-    print(e)
-    exit('You do not have currency in your inventory.')
-    
-# check if the value is higher than 0
-if currency_count < 1:
-    raise Exception('You do not have currency in your inventory.' \
-                    'Place it in the top left inventory slot dummy.') 
-
-
-# move mouse to item location in stash tab 355, 766
-gui.moveTo(355, 766)
-gui.PAUSE = 0.1
-
-# width x height of an entire normal stash tab
-# 635x580 original
-# 1905x1740 x3 size
-stash_img = ImageGrab.grab(bbox = (15, 170, 650, 750))
-
-# create a pixel map from the image
-stash_img_pixels = stash_img.load()
-
-
-
-for i in range(stash_img.size[0]):
-    for j in range(stash_img.size[1]):
-        if stash_img_pixels[i,j] == yellow_value:
-            raise Exception('This item is rare and cannot be alted. ' \
-                    'Place a magic item to be crafted.')
-        if stash_img_pixels[i,j] == grey_value:
-            raise Exception('This item is normal and cannot be alted. ' \
-                    'Place a magic item to be crafted.')
-
-
-
-img_list[0]
-
-# create a list which will contain the text from each parsed image
-parsed_list = []
-
-for i in range(len(stash_image_list)):
-    parsed_list.append(pytesseract.image_to_string(stash_image_list[i],
-                       lang='eng').lower())
-
+# 3. screenshot currency item description and parse
 # move cursor to first item slot in inventory 1300, 615
 gui.moveTo(1300, 615)
 
-# set desired mod and number of rolls to attempt
-desired_mod = 'cold resistance'
-number_of_rolls = 5
+# take a screenshot of the currency item description
+currency_img = screenshot(currency_description_coords)
 
-mod_found = 0
-for i in range(len(parsed_list)):  
-    if bool(re.search(desired_mod, parsed_list[i])):
-        mod_found += 1
-        print('found')
-    else:
-        print('not found')      
+# colors the currency image item name to white
+color_text(currency_img, currency_value)
 
-if mod_found > 0:
-    raise Exception('This item has the desired mod.')
-else:
-    # pick up currency for rolling
-    gui.rightClick()
+# perform adjustments
+currency_img = image_adjustments(currency_img)
+
+#inventory_img = screenshot(top_left_inventory_coords)
+#inventory_img = image_adjustments(inventory_img)
+
+# parse the image for text
+currency_text = []
+
+for i in range(len(currency_img)):
+    currency_text.append(pytesseract.image_to_string(currency_img[i], \
+                                                          lang='eng', config =\
+                                                          '--psm 12').lower())
+
+# creates an empty list to store the currency type found in the inventory
+currency_to_roll = []
+
+# checks the parsed text against list of item types in inventory, appends to
+# currency_to_roll list 
+for i in range(len(currency_text)):
+    for j in range(len(currency_items)):
+        if bool(re.search(currency_items[j], currency_text[i])):
+            currency_to_roll.append(currency_items[j])
     
-    # move mouse to item location in stash tab 355, 766
-    gui.moveTo(355, 766)
-    gui.PAUSE = 0.1
-    
-    #shift and left click to roll
-    gui.keyDown('shift')
-    gui.leftClick()
-    
-    gui.keyUp('shift')
+# check if the value is higher than 0, indiciating there is a currency to roll
+if len(currency_to_roll) < 1:
+    raise Exception('You do not have currency in your inventory.' \
+                    'Place it in the top left inventory slot dummy.') 
+
+# executes the mod check and rolls until the desired mod is found or max 
+# attempts are met
+roll_me(desired_mod, number_of_rolls)
