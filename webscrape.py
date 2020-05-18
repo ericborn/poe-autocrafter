@@ -40,11 +40,20 @@ for span in soup.select('span'):
     mod_list.append(span.text)
 
 # mods start at 1587 and end at 2587
-#mod_list = mod_list[1587:2587]
+# convert list to dataframe
+mod_df = pd.DataFrame({'mod': mod_list[1587:2587]})
 
-mod_df = pd.DataFrame(data=mod_list[1587:2587])
+# uses an inverse filter with ~ to remove all rows containing 
+# explicit and pseudo in the text as they are duplicates
+mod_df = mod_df[~mod_df['mod'].str.contains('explicit')]
+mod_df = mod_df[~mod_df['mod'].str.contains('pseudo')]
 
-mod_df[]
+# removes rows for empty prefix, suffix and incubator mods
+mod_df = mod_df[~mod_df['mod'].str.contains('Empty')]
+mod_df = mod_df[~mod_df['mod'].str.contains('Incubator')]
+
+# reset indexes
+mod_df.index = pd.RangeIndex(len(mod_df.index))
 
 # Selenium
 #####################################################
