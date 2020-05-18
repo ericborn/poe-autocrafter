@@ -20,13 +20,12 @@ Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
 worse results
 
 !!!TODO!!!
-CREATE WEBSCRAPE FOR MOD LIST
-
 CREATE UI/WEBPAGE
 
 IMPLEMENT FASTER CHECK FOR MOD
 
 OUTPUT CURRENT ROLL/TOTAL ROLLS COUNTER
+??OUTPUT ROLLS PASSED TO LOG FILE??
 
 details on converting python to standalone exe
 https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
