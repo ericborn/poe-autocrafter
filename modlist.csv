@@ -1,0 +1,472 @@
++#% total to Cold Resistance
++#% total to Fire Resistance
++#% total to Lightning Resistance
++#% total Elemental Resistance
++#% total to Chaos Resistance
++#% total Resistance
+# total Resistances
+# total Elemental Resistances
++#% total to all Elemental Resistances
++# total to Strength
++# total to Dexterity
++# total to Intelligence
++# total to all Attributes
++# total maximum Life
++# total maximum Mana
++# total maximum Energy Shield
+#% total increased maximum Energy Shield
++#% total Attack Speed
++#% total Cast Speed
+#% increased Movement Speed
+#% total increased Physical Damage
++#% Global Critical Strike Chance
++#% total Critical Strike Chance for Spells
++#% Global Critical Strike Multiplier
+Adds # to # Physical Damage
+Adds # to # Lightning Damage
+Adds # to # Cold Damage
+Adds # to # Fire Damage
+Adds # to # Elemental Damage
+Adds # to # Chaos Damage
+Adds # to # Damage
+Adds # to # Physical Damage to Attacks
+Adds # to # Lightning Damage to Attacks
+Adds # to # Cold Damage to Attacks
+Adds # to # Fire Damage to Attacks
+Adds # to # Elemental Damage to Attacks
+Adds # to # Chaos Damage to Attacks
+Adds # to # Damage to Attacks
+Adds # to # Physical Damage to Spells
+Adds # to # Lightning Damage to Spells
+Adds # to # Cold Damage to Spells
+Adds # to # Fire Damage to Spells
+Adds # to # Elemental Damage to Spells
+Adds # to # Chaos Damage to Spells
+Adds # to # Damage to Spells
+#% increased Elemental Damage
+#% increased Lightning Damage
+#% increased Cold Damage
+#% increased Fire Damage
+#% increased Spell Damage
+#% increased Lightning Spell Damage
+#% increased Cold Spell Damage
+#% increased Fire Spell Damage
+#% increased Lightning Damage with Attack Skills
+#% increased Cold Damage with Attack Skills
+#% increased Fire Damage with Attack Skills
+#% increased Elemental Damage with Attack Skills
+#% increased Rarity of Items found
+#% increased Burning Damage
+# Life Regenerated per Second
+#% of Life Regenerated per Second
+#% of Physical Attack Damage Leeched as Life
+#% of Physical Attack Damage Leeched as Mana
+#% increased Mana Regeneration Rate
++# total to Level of Socketed Gems
++# total to Level of Socketed Elemental Gems
++# total to Level of Socketed Fire Gems
++# total to Level of Socketed Cold Gems
++# total to Level of Socketed Lightning Gems
++# total to Level of Socketed Chaos Gems
++# total to Level of Socketed Spell Gems
++# total to Level of Socketed Projectile Gems
++# total to Level of Socketed Bow Gems
++# total to Level of Socketed Melee Gems
++# total to Level of Socketed Minion Gems
++# total to Level of Socketed Strength Gems
++# total to Level of Socketed Dexterity Gems
++# total to Level of Socketed Intelligence Gems
++# total to Level of Socketed Aura Gems
++# total to Level of Socketed Movement Gems
++# total to Level of Socketed Curse Gems
++# total to Level of Socketed Vaal Gems
++# total to Level of Socketed Support Gems
++# total to Level of Socketed Skill Gems
++# total to Level of Socketed Warcry Gems
++# total to Level of Socketed Golem Gems
+# Implicit Modifiers
+# Prefix Modifiers
+# Suffix Modifiers
+# Modifiers
+# Crafted Prefix Modifiers
+# Crafted Suffix Modifiers
+# Crafted Modifiers
+# Fractured Modifiers
+# Notable Passive Skills
++#% Quality to Elemental Damage Modifiers
++#% Quality to Caster Modifiers
++#% Quality to Attack Modifiers
++#% Quality to Defence Modifiers
++#% Quality to Life and Mana Modifiers
++#% Quality to Resistance Modifiers
++#% Quality to Attribute Modifiers
+Explicit
+Explicit
+# to maximum Life
+#% to Cold Resistance
+#% to Fire Resistance
+#% to Lightning Resistance
+# to maximum Mana
+# to Strength
+# to maximum Energy Shield
+# to Dexterity
+# to Intelligence
+#% to all Elemental Resistances
+#% increased Rarity of Items found
+Regenerate # Life per second
+Adds # to # Physical Damage to Attacks
+#% increased Stun and Block Recovery
+#% increased Movement Speed
+#% increased Attack Speed (Local)
+#% increased Mana Regeneration Rate
+# to Accuracy Rating
+#% to Global Critical Strike Multiplier
+#% increased Physical Damage
+# to maximum Energy Shield (Local)
+#% increased Attack Speed
+#% increased Spell Damage
+Adds # to # Physical Damage (Local)
+# Added Passive Skills are Jewel Sockets
+#% to Chaos Resistance
+Adds # to # Lightning Damage to Attacks
+#% increased Cast Speed
+#% increased Global Critical Strike Chance
+Adds # to # Cold Damage to Attacks
+#% increased Fire Damage
+#% increased Evasion Rating (Local)
+#% increased Energy Shield (Local)
+#% increased Elemental Damage with Attack Skills
+#% increased maximum Life
+#% increased Cold Damage
+Adds # to # Fire Damage to Attacks
+#% increased maximum Energy Shield
+# to Evasion Rating
+#% increased Global Physical Damage
+#% increased Light Radius
+#% increased Critical Strike Chance
+#% increased Lightning Damage
+#% of Physical Attack Damage Leeched as Life
+# Life gained on Kill
+# to all Attributes
+#% increased Stun Duration on Enemies
+Adds # to # Lightning Damage (Local)
+# Mana gained on Kill
+# to Accuracy Rating (Local)
+# to Armour (Local)
+Adds # to # Cold Damage (Local)
+#% increased Armour and Energy Shield (Local)
+#% increased Armour (Local)
+# to Armour
+#% of Physical Attack Damage Leeched as Mana
+#% increased Armour and Evasion (Local)
+# to Evasion Rating (Local)
+#% increased Global Accuracy Rating
+Adds # to # Fire Damage (Local)
+#% increased maximum Mana
+#% increased Projectile Speed
+# Life gained for each Enemy hit by your Attacks
+#% increased Projectile Damage
+#% increased Armour
+#% increased Evasion and Energy Shield (Local)
+#% reduced Enemy Stun Threshold
+Reflects # Physical Damage to Melee Attackers
+#% more Monster Life
+#% increased Area Damage
+#% increased Critical Strike Chance for Spells
+#% increased Evasion Rating
+#% increased Damage
+#% increased Burning Damage
+#% increased Melee Damage
+#% chance to Ignite
+Adds # to # Lightning Damage to Spells
+#% reduced Mana Cost of Skills
+Minions deal #% increased Damage
+Minions have #% increased maximum Life
+#% increased Monster Damage
+#% increased Attack and Cast Speed
+#% increased Damage with Bleeding
+Adds # to # Fire Damage to Spells
+# Life gained for each Enemy hit by Attacks
+#% increased Quantity of Items found
+#% increased Attribute Requirements
+#% to Fire and Lightning Resistances
+#% increased Damage with Poison
+Adds # to # Cold Damage to Spells
+#% increased Damage over Time
+#% to Fire and Cold Resistances
+#% increased Area of Effect
+# to Level of Socketed Gems
+#% increased Monster Attack Speed
+#% chance to Shock
+# to Level of Socketed Minion Gems
+#% increased Chaos Damage
+Attacks have #% chance to cause Bleeding
+#% increased Attack Speed while Dual Wielding
+#% increased Monster Movement Speed
+# to Strength and Intelligence
+Area contains many Totems
+#% Chance to Block Attack Damage while Dual Wielding
+Rare Monsters each have a Nemesis Mod
+#% increased Duration
+#% increased Poison Duration
+# to Dexterity and Intelligence
+#% chance to Freeze
+Extra gore
+Regenerate # Mana per second
+# to Strength and Dexterity
+Monsters deal #% extra Physical Damage as Lightning
+#% increased Charges used
+Monsters Poison on Hit
+Unique Boss deals #% increased Damage
+Adds # to # Chaos Damage to Attacks
+#% increased Attack Speed while holding a Shield
+#% to Melee Critical Strike Multiplier
+#% increased Trap Damage
+Regenerate #% of Life per second
+#% increased Monster Cast Speed
+#% increased Attack Speed with Swords
+Unique Boss has #% increased Attack and Cast Speed
+#% to Cold and Lightning Resistances
+Players have #% reduced Chance to Block
+#% increased Attack Speed with One Handed Melee Weapons
+Players gain #% reduced Flask Charges
+#% increased Shock Duration on Enemies
+# Physical Damage taken from Attack Hits
+Players have #% less Recovery Rate of Life and Energy Shield
+#% increased Freeze Duration on Enemies
+#% increased Bleeding Duration
+Unique Boss has #% increased Area of Effect
+Players have Elemental Equilibrium
+#% increased Totem Life
+#% increased Amount Recovered
+#% increased Attack Speed with Axes
+Monsters fire # additional Projectiles
+#% Chance to Block (Shields)
+#% increased Flask Life Recovery rate
+#% to Monster Critical Strike Multiplier
+#% increased Totem Damage
+Unique Boss has #% increased Life
+Monsters' skills Chain # additional times
+Added Small Passive Skills grant Nothing
+#% chance to Avoid being Chilled
+#% increased Mana Reserved
+Gain #% of Physical Damage as Extra Cold Damage
+#% increased Energy Shield Recharge Rate
+Monsters deal #% extra Physical Damage as Cold
+#% increased Elemental Damage
+Player chance to Dodge is Lucky
+#% chance to Poison on Hit
+Monsters have #% chance to gain a Power Charge on Hit
+Monsters deal #% extra Physical Damage as Fire
+Added Small Passive Skills have #% increased Effect
+#% increased Mine Damage
+#% increased Ignite Duration on Enemies
+#% increased Flask Effect Duration
+# to Level of Socketed Melee Gems
+#% to Critical Strike Multiplier with Cold Skills
+Adds # to # Fire Damage to Bow Attacks
+# Mana gained for each Enemy hit by your Attacks
+#% to Critical Strike Multiplier with Lightning Skills
+Players are Cursed with Elemental Weakness
+Monsters cannot be Stunned
+Adds # to # Lightning Damage to Bow Attacks
+Monsters reflect #% of Elemental Damage
+#% Chance to Block Spell Damage
++#% Monster Elemental Resistance
+Added Small Passive Skills also grant: # to Strength
+Magic Monster Packs each have a Bloodline Mod
+Historic
+#% increased Damage with Swords
+Players are Cursed with Vulnerability
+Added Small Passive Skills also grant: # to All Attributes
+#% increased Experience gain (Maps)
+Added Small Passive Skills also grant: #% to Cold Resistance
++#% Monster Physical Damage Reduction
+#% increased Strength
+Players are Cursed with Temporal Chains
+Added Small Passive Skills also grant: #% to Lightning Resistance
+#% chance to cause Bleeding on Hit
+"Monsters have a #% chance to avoid Poison, Blind, and Bleeding"
+Added Small Passive Skills also grant: #% to Elemental Resistance
+Added Small Passive Skills also grant: # to Dexterity
+#% to Critical Strike Multiplier with Fire Skills
+Added Small Passive Skills also grant: # to Intelligence
+#% increased Dexterity
+Added Small Passive Skills also grant: #% to Chaos Resistance
+Added Small Passive Skills also grant: #% increased Mana Regeneration Rate
+#% maximum Player Resistances
+#% increased Melee Critical Strike Chance
+Added Small Passive Skills also grant: #% to Fire Resistance
+Minions have #% increased Movement Speed
+Added Small Passive Skills also grant: Regenerate #% of Life per Second
+Adds # to # Cold Damage to Bow Attacks
+#% increased Damage when on Low Life
+Monsters have #% chance to Avoid Elemental Ailments
+Adds # to # Physical Damage to Bow Attacks
+#% to Chaos Damage over Time Multiplier
+#% increased Damage with One Handed Weapons
+Has # Abyssal Sockets
+Players are Cursed with Enfeeble
+#% increased Flask Charges gained
+#% increased Movement Speed when on Low Life
+#% increased Intelligence
+Adds # to # Chaos Damage to Spells
+#% of Physical Damage Converted to Chaos Damage
+Adds # Passive Skills
+#% chance to Knock Enemies Back on hit
+# to Maximum Endurance Charges
+1 Added Passive Skill is Drive the Destruction
+#% Chance to Block Spell Damage while holding a Shield
+Added Small Passive Skills also grant: #% increased Damage
+#% to Cold Damage over Time Multiplier
+#% chance to Avoid being Stunned
+#% Chance to Block Spell Damage while Dual Wielding
+Totems gain #% to all Elemental Resistances
+#% faster start of Energy Shield Recharge
+Added Small Passive Skills also grant: # to Maximum Energy Shield
+#% increased Critical Strike Chance with Fire Skills
+Monsters have #% chance to gain an Endurance Charge on Hit
+1 Added Passive Skill is Prismatic Heart
+#% increased Damage with Axes
+#% increased Attack Speed with Two Handed Melee Weapons
+# to Total Mana Cost of Skills
+#% to Fire Damage over Time Multiplier
+Monsters have #% increased Area of Effect
+#% more Rare Monsters
+#% chance to Dodge Attack Hits
+#% chance to Cause Monsters to Flee
+Adds # to # Cold Damage to Spells and Attacks
+#% Chance to Block Attack Damage while holding a Shield
+#% chance to gain Onslaught for 4 seconds on Kill
+Area contains two Unique Bosses
+#% increased Charge Recovery
+#% increased Critical Strike Chance with Lightning Skills
+Players have Point Blank
+Monsters have #% increased Accuracy Rating
+#% less effect of Curses on Monsters
+Gain #% of Physical Damage as Extra Chaos Damage
+#% increased Attack Damage while Dual Wielding
+#% increased Critical Strike Chance with Cold Skills
+# to Level of Socketed Fire Gems
+#% chance to Poison on Hit (Local)
+#% increased Recovery rate
+#% increased Damage with Two Handed Weapons
+#% Chance to Block Attack Damage
+#% chance to Dodge Spell Hits
+Adds # to # Physical Damage to Spells
+#% chance to gain Phasing for 4 seconds on Kill
+1 Added Passive Skill is Martial Prowess
+Minions deal # to # additional Physical Damage
+#% increased Attack Damage while holding a Shield
+#% increased Effect of Shock
+Area has patches of desecrated ground
+#% increased Trap Throwing Speed
+#% increased Movement Speed during Flask effect
+#% to Critical Strike Multiplier while Dual Wielding
+1 Added Passive Skill is Vengeful Commander
+#% increased Effect of Curses on you
+Monsters' Action Speed cannot be modified to below base value
+Regenerate # Energy Shield per second
+Added Small Passive Skills also grant: # to Evasion
+Minions have #% to all Elemental Resistances
+Immunity to Bleeding during Flask effect
+Removes Bleeding on use
+Players have #% less Area of Effect
+#% more Magic Monsters
+#% to Critical Strike Multiplier with One Handed Melee Weapons
+1 Added Passive Skill is Smite the Weak
+Minions deal # to # additional Cold Damage
+#% to Critical Strike Multiplier with Elemental Skills
+Players have #% less Armour
+Area has increased monster variety
+#% chance to Avoid being Frozen
+#% chance to Blind Enemies on Hit with Attacks
++#% Monster Chaos Resistance
+#% increased Spell Damage while holding a Shield
+1 Added Passive Skill is Widespread Destruction
+#% of Damage taken gained as Mana over 4 seconds when Hit
+#% of Physical Damage Converted to Fire Damage
+#% increased Strength Requirement
+#% increased Spell Damage while Dual Wielding
+#% increased Critical Strike Chance with One Handed Melee Weapons
+# to Maximum Power Charges
+Minions have #% increased Attack Speed
+#% increased Cast Speed with Lightning Skills
+Minions deal # to # additional Lightning Damage
+Immunity to Freeze and Chill during Flask effect
+Removes Freeze and Chill on use
+#% increased Attack Speed if you've dealt a Critical Strike Recently
+Monsters have #% increased Critical Strike Chance
+Minions deal # to # additional Fire Damage
+Added Small Passive Skills also grant: # to Armour
+# to Maximum Charges
+#% to Critical Strike Multiplier with Two Handed Melee Weapons
+#% additional Physical Damage Reduction against Abyssal Monsters
+#% to Critical Strike Multiplier for Spells
+#% increased Flask Mana Recovery rate
+Adds # to # Chaos Damage (Local)
+#% increased Cast Speed with Cold Skills
+Recover #% of Life on Kill
+Monsters have a #% chance to cause Elemental Ailments on Hit
+#% increased total Recovery per second from Life Leech
+Gain #% of Physical Damage as Extra Fire Damage
+#% increased Spell Damage while wielding a Staff
+#% increased Physical Attack Damage while Dual Wielding
+Regenerate #% of Life per second while on Low Life
+#% chance to Avoid being Ignited
+Minions deal # to # additional Chaos Damage
+Area has patches of burning ground
+#% increased Mine Throwing Speed
+#% increased Skill Effect Duration
+#% increased Attack Speed with Maces or Sceptres
+Reflects # to # Physical Damage to Attackers on Block
+#% increased Global Evasion Rating when on Low Life
+Minions have #% increased Cast Speed
+Culling Strike
+#% of Physical Damage Converted to Cold Damage
+#% increased Critical Strike Chance with Elemental Skills
+Socketed Gems are supported by Level # Blind
+Area is a large Maze
+#% to Physical Damage over Time Multiplier
+You take #% reduced Extra Damage from Critical Strikes
+Area is inhabited by Skeletons
+# to maximum number of Spectres
+#% reduced Flask Charges used
+# to maximum number of Skeletons
+#% increased Damage if you've Killed Recently
+# to Level of Socketed Curse Gems
+#% increased Cast Speed while wielding a Staff
+Hits can't be Evaded
+# Energy Shield gained for each Enemy hit by your Attacks
+#% increased Attack Speed with Bows
+#% increased effect of Non-Curse Auras from your Skills
+#% increased Critical Strike Chance with Two Handed Melee Weapons
+#% increased Damage with Hits against Chilled Enemies
+#% increased Movement Speed when on Full Life
+Monsters are Hexproof
+#% of Chaos Damage Leeched as Life during Flask effect
+Gain #% of Physical Damage as Extra Chaos Damage during effect
+#% chance to Avoid being Shocked
+#% Chance to Block Attack Damage while wielding a Staff
+Socketed Gems are Supported by Level # Concentrated Effect
+Minions Regenerate #% of Life per second
+#% to Critical Strike Multiplier if you've Killed Recently
+#% increased Cast Speed while Dual Wielding
+Area is inhabited by # additional Rogue Exile
+#% increased Cast Speed with Fire Skills
+#% increased Damage with Wands
+Socketed Gems are Supported by Level # Increased Area of Effect
+Area contains an extra Harbinger
+Adds # to # Fire Damage to Spells and Attacks
+#% increased Chill Duration on Enemies
+# to Level of Socketed Bow Gems
+#% Chance to Block Spell Damage while wielding a Staff
+Mercury Footprints
+Implicit Modifier magnitudes are doubled
+#% reduced Effect of Chill on you
+Socketed Gems have #% reduced Mana Reservation
+# Mana gained when you Block
+Damage Penetrates #% Elemental Resistance if you haven't Killed Recently
+Regenerate #% of Energy Shield per second
+Primordial
+Curses have #% reduced effect on Monsters
