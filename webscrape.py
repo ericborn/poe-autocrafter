@@ -55,6 +55,9 @@ mod_df = mod_df[~mod_df['mod'].str.contains('Incubator')]
 # reset indexes
 mod_df.index = pd.RangeIndex(len(mod_df.index))
 
+# export list to csv
+mod_df.to_csv(r'C:\Code projects\git projects\poe-autocrafter\modlist.csv')
+
 # Selenium
 #####################################################
 # BS
