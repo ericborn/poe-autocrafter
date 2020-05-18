@@ -19,6 +19,14 @@ Scaling image by 3x produces much better results than the native resolution
 Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
 worse results
 
+!!!TODO!!!
+CREATE WEBSCRAPE FOR MOD LIST
+
+CREATE UI/WEBPAGE
+
+IMPLEMENT FASTER CHECK FOR MOD
+
+OUTPUT CURRENT ROLL/TOTAL ROLLS COUNTER
 
 details on converting python to standalone exe
 https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
@@ -34,13 +42,12 @@ pytesseract.pytesseract.tesseract_cmd = \
 r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
 # static values
-
 # various screen coordinate
 # top of screen, stash/inventory
 header_coords = (0, 0, 1920, 90)
 
 # top left inventory slot
-top_left_inventory_coords = (1298, 607)
+top_left_inventory_coords = (1300, 610)
 
 # item to be rolled in bottom middle of stash tab
 item_in_stash_coords = (355, 766)
@@ -91,8 +98,6 @@ def color_text(img, value):
                 if img_pixels[i,j] == value[k]:
                     img_pixels[i,j] = (255, 255, 255)
     return(img)
-
-
 
 # Takes an image as input, resize the image to 3x original size 
 # converts to b/w, create enhancer, apply contrast at 3 different values, 
@@ -224,7 +229,7 @@ if inv_found < 0 & stash_found < 0:
 
 # 3. screenshot currency item description and parse
 # move cursor to first item slot in inventory 1300, 615
-gui.moveTo(1300, 615)
+gui.moveTo(top_left_inventory_coords)
 
 # take a screenshot of the currency item description
 currency_img = screenshot(currency_description_coords)
