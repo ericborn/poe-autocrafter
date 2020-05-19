@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>POE AutoRoller</title>
+    <title>POE AutoCrafter</title>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"/>
     <!-- Added for search box -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -18,12 +18,18 @@
   </head>
   <body>
     <div class="header">
-      <h2>POE AutoRoller</h2>
+      <h2>POE AutoCrafter</h2>
     </div>
 
     <!-- Form -->
     <div class="container">
-      <form action="/" method="POST">
+     <!-- <form action="/" method="POST">-->
+
+        <div class="form-group">
+          <label for="Status Check">Status Check</label>
+          <input type="button" class="submit" value="Status Check" id="status_btn" onclick="statusCheck()"/>
+        </div>
+
         <div class="form-group">
           <label for="Number of Rolls">Desired Number of Rolls</label>
           <input type="Number" id="rolls"  name="rolls" placeholder="Number of Rolls"/>
@@ -39,7 +45,7 @@
 
         <br />
         <input type="button" class="submit" value="Roll it!" id="roll_btn" onclick="webData()"/>
-      </form>
+    <!--   </form> -->
     </div>
     <script type="text/javascript">
      $(".chosen").chosen();
