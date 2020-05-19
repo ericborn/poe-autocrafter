@@ -20,9 +20,11 @@ Used to find a particular tab within the inventory
 #609,130, 626,156
 
 # grey arrow
-(31,31,31), (239,239,239), (32,32,32)
+grey_arrow_coords = (31,31,31), (239,239,239), (32,32,32)
 
 # brown arrow
-(55,23,1), (254,237,184), (81,38,0)
+brown_arrow_coords = (55,23,1), (254,237,184), (81,38,0)
+
+from image_manip import color_text, image_adjustments, screenshot
 
 def 
