@@ -9,16 +9,19 @@ rolls item
 import pyautogui as gui
 from checks import check_for_mod as cfm
 
+# item to be rolled in bottom middle of stash tab
+item_in_stash_coords = (355, 766)
+
+# top left inventory slot
+top_left_inventory_coords = (1300, 610)
+
 def roll_item(mod, rolls):
     # move mouse to item location in stash tab 355, 766
     gui.moveTo(item_in_stash_coords)
     gui.PAUSE = 0.1
     
-    # screenshot the stash tab with the item to be crafted
-    stash_img = screenshot(stash_coords)
-    
-    # create a pixel map from the image
-    stash_img_pixels = stash_img.load()
+    # runs checks on item
+    cfm(mod)
     
     # checks if the item has the desired mod, if not picks up the currency
     # and starts to roll the item, each time making a check for the desired
