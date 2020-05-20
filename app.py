@@ -9,13 +9,30 @@ import eel
 
 eel.init('static')
 
-@eel.expose
-def status_check():
-    inv_stash_check = 0
-    rarity_check = 0
-    currency_check = 0
-    return(inv_stash_check, rarity_check, currency_check)
+def test_a():
+    a=1
+    return(a, 1)
+    
+def test_b():
+    a=0
+    return(a, 2)
+    
+def test_c():
+    a=-1
+    return(a, 3)
 
+test_list = [test_a, test_b, test_c]
+
+@eel.expose
+def status_check(num):
+    return(test_list[num]())
+
+#status_check(2)
+
+#for func in [test_a, test_b, test_c]:
+#    print(func())
+#    result = func()
+    
 @eel.expose
 def roll_function(roll_input, mod_input):
     desired_rolls = roll_input

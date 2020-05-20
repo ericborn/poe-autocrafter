@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>POE AutoCrafter</title>
+
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"/>
     <!-- Added for search box -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -12,6 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
 
+    <link href="css/app.css" rel="stylesheet">
     <script src="js/main.js"></script>
     <script type="text/javascript" src="/eel.js"></script>
 
@@ -20,16 +22,18 @@
     <div class="header">
       <h2>POE AutoCrafter</h2>
     </div>
-
     <!-- Form -->
     <div class="container">
      <!-- <form action="/" method="POST">-->
 
         <div class="form-group">
-          <label for="Status Check">Status Check</label>
           <input type="button" class="submit" value="Status Check" id="status_btn" onclick="statusCheck()"/>
+          <ul style="list-style: none;">
+            <li><span class="dot" id="dot1"></span> Inventory & Stash</li> 
+            <li><span class="dot" id="dot2"></span> Item Rarity </li>
+            <li><span class="dot" id="dot3"></span> Currency </li>
+          </ul>
         </div>
-
         <div class="form-group">
           <label for="Number of Rolls">Desired Number of Rolls</label>
           <input type="Number" id="rolls"  name="rolls" placeholder="Number of Rolls"/>
@@ -50,5 +54,6 @@
     <script type="text/javascript">
      $(".chosen").chosen();
     </script>
+
   </body>
 </html>
