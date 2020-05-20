@@ -6,38 +6,21 @@ Eric Born
 
 '''
 import eel
+from checks import check_for_mod as mod, inv_stash_check as isc, \
+                   check_for_magic as magic, check_for_currency as currency
 
 eel.init('static')
 
-def test_a():
-    a=1
-    return a
-    
-def test_b():
-    a=0
-    return a
-    
-def test_c():
-    a=-1
-    return a
-
-#test_list = [test_a, test_b, test_c]
-
-#@eel.expose
-#def status_check():
-#    for func in [test_a, test_b, test_c]:
-#        print(func())
-#        return(func())
-#    #return(test_list[num]())
-
+# 1st test is inventory stash check, 2nd is magic item, 3rd is currency
+# present in inventory
 @eel.expose
 def status_check(num):
     if num == 0:
-        return(test_a())
+        return(isc())
     if num == 1:
-        return(test_b())
+        return(magic())
     if num == 2:
-        return(test_c())
+        return(currency())
         
         
 #@eel.expose
@@ -48,11 +31,27 @@ def status_check(num):
 #    print(status_check(i))
 #status_check(3)
 
+
 @eel.expose
 def roll_function(roll_input, mod_input):
     desired_rolls = roll_input
     desired_mod = mod_input
-    print('1', desired_rolls, '\n2', desired_mod)
+    #print('1', desired_rolls, '\n2', desired_mod)
     return('1', desired_rolls, '\n2', desired_mod)
+    
+#desired_rolls = eel.webData()()
+
+#print(len(desired_rolls))
+#print(desired_rolls)
+#desired_mod = ''
+
+
+#def print_data(data):
+#    print(data[0], data[1])
+#    
+#eel.webData()(print_data)
+    
+#desired_rolls, desired_mod = eel.webData()
+#print(desired_rolls, desired_mod)
 
 eel.start('index.html')

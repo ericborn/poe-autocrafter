@@ -35,6 +35,7 @@ import pyautogui as gui
 import pytesseract
 from image_manip import color_text, image_adjustments, screenshot
 from checks import check_for_mod as cfm, inv_stash_check as isc
+from roll_item import roll_item
 
 # set path to tesseract.exe
 pytesseract.pytesseract.tesseract_cmd = \
@@ -89,98 +90,14 @@ cfm(desired_mod)
 isc()
 
 
-def roll_me(mod, rolls):
-    # move mouse to item location in stash tab 355, 766
-    gui.moveTo(item_in_stash_coords)
-    gui.PAUSE = 0.1
-    
-    # screenshot the stash tab with the item to be crafted
-    stash_img = screenshot(stash_coords)
-    
-    # create a pixel map from the image
-    stash_img_pixels = stash_img.load()
-    
-    # checks the color of the item to ensure its a magic item
-    for i in range(stash_img.size[0]):
-        for j in range(stash_img.size[1]):
-            if stash_img_pixels[i,j] == yellow_value:
-                raise Exception('This item is rare and cannot be alted. ' \
-                        'Place a magic item to be crafted.')
-            if stash_img_pixels[i,j] == grey_value:
-                raise Exception('This item is normal and cannot be alted. ' \
-                        'Place a magic item to be crafted.')
-    
-    # checks if the item has the desired mod, if not picks up the currency
-    # and starts to roll the item, each time making a check for the desired
-    # mod before rolling again
-    if cfm(mod) > 0:
-        raise Exception('This item has the desired mod.')
-    else:
-        # move mouse to currency item in inventory
-        gui.moveTo(top_left_inventory_coords)
-                    
-        # pick up currency for rolling
-        gui.rightClick()
-        
-        # move mouse to item location in stash tab 355, 766
-        gui.moveTo(item_in_stash_coords)
-        #gui.PAUSE = 0.1
-        for k in range(rolls):
-            if cfm(mod) > 0:
-                raise Exception('This item has the desired mod.')
-            else:
-                print('roll me!')
-
-                #shift and left click to roll
-                gui.keyDown('shift')
-                gui.leftClick()
-        
-        gui.keyUp('shift')
 
 
 
 
 
 
-# 3. screenshot currency item description and parse
-# move cursor to first item slot in inventory 1300, 615
-gui.moveTo(top_left_inventory_coords)
 
-# take a screenshot of the currency item description
-currency_img = screenshot(currency_description_coords)
-
-# colors the currency image item name to white
-color_text(currency_img, currency_value)
-
-# perform adjustments
-currency_img = image_adjustments(currency_img)
-
-#inventory_img = screenshot(top_left_inventory_coords)
-#inventory_img = image_adjustments(inventory_img)
-
-# parse the image for text
-currency_text = []
-
-for i in range(len(currency_img)):
-    currency_text.append(pytesseract.image_to_string(currency_img[i], \
-                                                          lang='eng', config =\
-                                                          '--psm 12').lower())
-
-# creates an empty list to store the currency type found in the inventory
-currency_to_roll = []
-
-# checks the parsed text against list of item types in inventory, appends to
-# currency_to_roll list 
-for i in range(len(currency_text)):
-    for j in range(len(currency_items)):
-        if bool(re.search(currency_items[j], currency_text[i])):
-            currency_to_roll.append(currency_items[j])
-    
-# check if the value is higher than 0, indiciating there is a currency to roll
-if len(currency_to_roll) < 1:
-    raise Exception('You do not have currency in your inventory.' \
-                    'Place it in the top left inventory slot dummy.') 
 
 # executes the mod check and rolls until the desired mod is found or max 
 # attempts are met
-roll_me(desired_mod, number_of_rolls)
+roll_item(desired_mod, number_of_rolls)
