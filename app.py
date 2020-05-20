@@ -11,15 +11,15 @@ eel.init('static')
 
 def test_a():
     a=1
-    return(a)
+    return a
     
 def test_b():
     a=0
-    return(a)
+    return a
     
 def test_c():
     a=-1
-    return(a)
+    return a
 
 test_list = [test_a, test_b, test_c]
 
@@ -35,9 +35,9 @@ def status_check(num):
     #print(test_list[num]())
     return(test_list[num]())
     #return(test_list[num]())
+  
+#status_check(0)
     
-status_check(1)
-
 @eel.expose
 def roll_function(roll_input, mod_input):
     desired_rolls = roll_input
