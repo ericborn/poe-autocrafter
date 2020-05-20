@@ -31,6 +31,15 @@ blue_value = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
                (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
                (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
 
+# grey RGB value for a normal item
+grey_value = (200, 200, 200)
+
+# yellow RGB value for a rare item
+yellow_value = (254, 254, 118)
+
+# greyish yellow RGB values for a currency item
+currency_value = ((170,158,129), (140,129,105), (150,139,113), (156,145,117))
+
 # create a list containing the words we're looking for in the image
 header_words = ['stash','inventory']
 
@@ -51,8 +60,25 @@ def check_for_mod(mod):
     for i in range(len(parsed_text)):      
         if bool(re.search(mod, parsed_text[i])):
             mod_found += 1
-
     return(mod_found)
+
+def check_for_color():
+    gui.moveTo(item_in_stash_coords)
+    img = screenshot(stash_coords)
+        
+    # create a pixel map from the image
+    img_pixels = img.load()
+    
+    # checks the color of the item to ensure its a magic item
+    for i in range(img.size[0]):
+        for j in range(img.size[1]):
+            if img_pixels[i,j] == yellow_value:
+                raise Exception('This item is rare and cannot be alted. ' \
+                        'Place a magic item to be crafted.')
+            if img_pixels[i,j] == grey_value:
+                raise Exception('This item is normal and cannot be alted. ' \
+                        'Place a magic item to be crafted.')
+    
     
 # checks for the stash and invetory to be open
 def inv_stash_check():
