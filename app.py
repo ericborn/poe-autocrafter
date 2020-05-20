@@ -21,7 +21,7 @@ def test_c():
     a=-1
     return a
 
-test_list = [test_a, test_b, test_c]
+#test_list = [test_a, test_b, test_c]
 
 #@eel.expose
 #def status_check():
@@ -32,12 +32,17 @@ test_list = [test_a, test_b, test_c]
 
 @eel.expose
 def status_check(num):
-    #print(test_list[num]())
-    return(test_list[num]())
-    #return(test_list[num]())
-  
-#status_check(0)
-    
+    if num == 0:
+        return(test_a())
+    if num == 1:
+        return(test_b())
+    if num == 2:
+        return(test_c())
+
+#for i in range(3):
+#    print(status_check(i))
+#status_check(3)
+
 @eel.expose
 def roll_function(roll_input, mod_input):
     desired_rolls = roll_input
