@@ -34,6 +34,7 @@ import re
 import pyautogui as gui
 import pytesseract
 from image_manip import color_text, image_adjustments, screenshot
+from checks import check_for_mod as cfm, inv_stash_check as isc
 
 # set path to tesseract.exe
 pytesseract.pytesseract.tesseract_cmd = \
@@ -72,8 +73,6 @@ blue_value = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
                (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
 
 # create a list containing the words we're looking for in the image
-header_words = ['stash','inventory']
-
 currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
                   'orb of transmutation', 'regal orb']
 
@@ -83,25 +82,12 @@ currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
 desired_mod = 'dexterity'
 number_of_rolls = 5
 
+# <= 0 mod not found, >=1 mod found
+cfm(desired_mod)
 
-def check_for_mod(mod):
-    gui.moveTo(item_in_stash_coords)
-    img = screenshot(stash_coords)
-    img = color_text(img, blue_value)
-    img = image_adjustments(img)
-    
-    parsed_text = []
-    for i in range(len(img)):
-        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
-                                                  config = '--psm 12').lower())
-        
-    mod_found = 0
-    #print(mod)
-    for i in range(len(parsed_text)):      
-        if bool(re.search(mod, parsed_text[i])):
-            mod_found += 1
+# -1 indicates stash or inventory is not open, 1 indicates both are open
+isc()
 
-    return(mod_found)
 
 def roll_me(mod, rolls):
     # move mouse to item location in stash tab 355, 766
@@ -127,7 +113,7 @@ def roll_me(mod, rolls):
     # checks if the item has the desired mod, if not picks up the currency
     # and starts to roll the item, each time making a check for the desired
     # mod before rolling again
-    if check_for_mod(mod) > 0:
+    if cfm(mod) > 0:
         raise Exception('This item has the desired mod.')
     else:
         # move mouse to currency item in inventory
@@ -140,7 +126,7 @@ def roll_me(mod, rolls):
         gui.moveTo(item_in_stash_coords)
         #gui.PAUSE = 0.1
         for k in range(rolls):
-            if check_for_mod(mod) > 0:
+            if cfm(mod) > 0:
                 raise Exception('This item has the desired mod.')
             else:
                 print('roll me!')
@@ -152,33 +138,9 @@ def roll_me(mod, rolls):
         gui.keyUp('shift')
 
 
-# 1. screenshot top of screen
-header_img = screenshot(header_coords)
-#header_img.show()
 
-# perform adjustments
-header_img = image_adjustments(header_img)
 
-# creates an empty list to store the parsed header text
-header_text = []
 
-# parse the headers text
-for i in range(len(header_img)):
-    header_text.append(pytesseract.image_to_string(header_img[i], lang='eng', 
-                                                  config = '--psm 12').lower())
-
-# 2. if inventory and stash are not open, raise error and quit
-inv_found = 0
-stash_found = 0
-for i in range(len(header_text)):
-    if bool(re.search(header_words[0], header_text[i])):
-        stash_found += 1
-    if bool(re.search(header_words[1], header_text[i])):
-        inv_found += 1    
-
-if inv_found < 0 & stash_found < 0:
-    raise Exception('The stash and inventory are not both open. ' \
-                    'Please open both and try again')
 
 # 3. screenshot currency item description and parse
 # move cursor to first item slot in inventory 1300, 615

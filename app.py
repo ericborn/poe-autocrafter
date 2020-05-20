@@ -38,6 +38,11 @@ def status_check(num):
         return(test_b())
     if num == 2:
         return(test_c())
+        
+        
+#@eel.expose
+#def status_check(num):
+#    return(num)
 
 #for i in range(3):
 #    print(status_check(i))

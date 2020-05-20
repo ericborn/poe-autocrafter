@@ -20,35 +20,32 @@ Enhancing contrast by 2 also improves parsing results, 1.5 and 2.5 produce
 worse results
 
 !!!TODO!!!
-CREATE WEBSCRAPE FOR MOD LIST
-
 CREATE UI/WEBPAGE
 
 IMPLEMENT FASTER CHECK FOR MOD
 
 OUTPUT CURRENT ROLL/TOTAL ROLLS COUNTER
+??OUTPUT ROLLS PASSED TO LOG FILE??
 
 details on converting python to standalone exe
 https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
 """
-
-from PIL import ImageGrab, ImageEnhance
 import re
 import pyautogui as gui
 import pytesseract
+from image_manip import color_text, image_adjustments, screenshot
 
 # set path to tesseract.exe
 pytesseract.pytesseract.tesseract_cmd = \
 r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
 # static values
-
 # various screen coordinate
 # top of screen, stash/inventory
 header_coords = (0, 0, 1920, 90)
 
 # top left inventory slot
-top_left_inventory_coords = (1298, 607)
+top_left_inventory_coords = (1300, 610)
 
 # item to be rolled in bottom middle of stash tab
 item_in_stash_coords = (355, 766)
@@ -85,6 +82,7 @@ currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
 # set desired mod and number of rolls to attempt
 desired_mod = 'dexterity'
 number_of_rolls = 5
+
 
 # function takes an image as an input, creates a pixel map, iterates over the
 # pixels and changes any blue ones to white. Helps tesseract read the text.
