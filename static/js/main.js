@@ -1,9 +1,4 @@
-function statusCheck(){
-	var status = (0,0);
-	for (let i = 0; i < 3; i++){
-		status = eel.status_check(i)changeColor(ret) {console.log(ret)}
-	}
-}
+//function status
 
 function webData(){
 	var rolls = document.getElementById("rolls").value
@@ -17,4 +12,22 @@ function changeColor(status, id){
       } else if (status == -1) {
       	document.getElementById(id).style.backgroundColor = "red";
       }
+}
+
+function statusCheck(){
+	//let num = 0;
+	//eel.status_check()(function(ret) {console.log(ret)})
+	let x = 0;
+	let y = '';
+	let d = 'dot';
+	//changeColor(x, y)
+	for (let i = 0; i < 3; i++){
+		//console.log(i)
+		//eel.status_check(i)(changeColor(ret) {console.log(ret)})
+		//let y = ''
+		x = eel.status_check(i)(function(ret) {console.log(ret)})
+		y = d + String(i)
+		//changeColor(x, string(y))
+		console.log(x, String(y))
+	}
 }
