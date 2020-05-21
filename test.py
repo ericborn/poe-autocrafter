@@ -34,7 +34,7 @@ import re
 import pyautogui as gui
 import pytesseract
 from image_manip import color_text, image_adjustments, screenshot
-from checks import check_for_mod as cfm, inv_stash_check as isc
+from checks import check_for_mod as cfm, check_inv_stash as isc
 from roll_item import roll_item
 
 # set path to tesseract.exe

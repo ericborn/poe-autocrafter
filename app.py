@@ -6,7 +6,7 @@ Eric Born
 
 '''
 import eel
-from checks import check_for_mod, inv_stash_check as isc, \
+from checks import check_for_mod, check_inv_stash as inv, \
                    check_for_magic as magic, check_for_currency as currency
 from roll_item import roll_item
 
@@ -17,7 +17,7 @@ eel.init('static')
 @eel.expose
 def status_check(num):
     if num == 0:
-        return(isc())
+        return(inv())
     if num == 1:
         return(magic())
     if num == 2:

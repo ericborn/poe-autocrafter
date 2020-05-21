@@ -14,7 +14,7 @@ import time as t
 import pytesseract
 import pyautogui as gui
 from image_manip import color_text, image_adjustments, screenshot
-from constatns import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
+from constants import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
                       ENTIRE_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS, \
                       CURRENCY_DESCRIPTION_COORDS, BLUE_COLOR, \
                       GREY_ITEM_COLOR, YELLOW_ITEM_COLOR, \
@@ -24,7 +24,7 @@ from constatns import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
 
 
 # checks for the stash and invetory to be open
-def inv_stash_check():
+def check_inv_stash():
     # Screenshot top of screen
     header_img = screenshot(HEADER_COORDS)
     #header_img.show()
@@ -146,7 +146,7 @@ def check_for_currency():
     else:
         return(1)
     
- # checks for the desired mod on the item being rolled
+# checks for the desired mod on the item being rolled
 def check_for_mod(mod):
     gui.moveTo(ITEM_IN_STASH_COORDS)
     
