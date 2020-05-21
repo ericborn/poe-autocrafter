@@ -35,11 +35,15 @@ def status_check(num):
 
 @eel.expose
 def roll_function(roll_number, desired_mod):
-    #for i in range(roll_number):
-    roll_item(roll_number, desired_mod)
-    print('1', roll_number, '\n2', desired_mod)
-    return('1', roll_number, '\n2', desired_mod)
- 
+    for i in range(roll_number):
+        mod_check = mod(desired_mod)
+        if mod_check == -1:
+            break
+        else:
+            roll_item(roll_number, desired_mod)
+#        print('1', roll_number, '\n2', desired_mod)
+#        return('1', roll_number, '\n2', desired_mod)
+     
     
     
 #desired_rolls = eel.webData()()
