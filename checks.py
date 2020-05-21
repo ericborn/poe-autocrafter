@@ -114,29 +114,25 @@ def check_for_magic():
         for j in range(img.size[1]):
             if img_pixels[i,j] == yellow_value:
                 yellow_count += 1
-                if yellow_count >= 5:
-                    return(-1)
-                    print('This item is rare and cannot be alted.'\
-                          ' Place a magic item to be crafted.')
-                    break
-            elif img_pixels[i,j] == grey_value:
-                grey_count += 1
-                if grey_count >= 5:
-                   return(-1) 
-                   print('This item is normal and cannot be alted.'\
-                        ' Place a magic item to be crafted.') 
-                break
-            elif img_pixels[i,j] == blue_value[0]:
-                blue_count += 1
-                if blue_count >= 5:
-                    return(1) 
-                    print('This item is magic and can be alted.')
-                    break
-            else:
-                return(-1)
-                print('Unknown item type. Please try again')
-                break
 
+            if img_pixels[i,j] == grey_value:
+                grey_count += 1
+
+            if img_pixels[i,j] == blue_value[1]:
+                blue_count += 1
+
+    # checks color counts to determine item rarity
+    if grey_count > 10:
+        return(-1) 
+        print('This item is normal and cannot be alted.'\
+              ' Place a magic item to be crafted.')
+    elif yellow_count > 10:
+        return(-1) 
+        print('This item is rare and cannot be alted.'\
+              ' Place a magic item to be crafted.')
+    elif yellow_count == 0 and blue_count > 10:
+        return(1) 
+        print('This item is magic and can be alted.')
 
 # screenshot currency item description and parse
 def check_for_currency():

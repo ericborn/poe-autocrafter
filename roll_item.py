@@ -15,10 +15,9 @@ item_in_stash_coords = (355, 766)
 # top left inventory slot
 top_left_inventory_coords = (1300, 610)
 
-def roll_item(mod, rolls):
+def roll_item(rolls, mod):
     # move mouse to item location in stash tab 355, 766
     gui.moveTo(item_in_stash_coords)
-    gui.PAUSE = 0.1
     
     # runs checks on item
     cfm(mod)

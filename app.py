@@ -8,10 +8,11 @@ Eric Born
 import eel
 from checks import check_for_mod as mod, inv_stash_check as isc, \
                    check_for_magic as magic, check_for_currency as currency
+from roll_item import roll_item
 
 eel.init('static')
 
-# 1st test is inventory stash check, 2nd is magic item, 3rd is currency
+# 1st test is inventory stash check, 2nd is magic rarity, 3rd is currency
 # present in inventory
 @eel.expose
 def status_check(num):
@@ -33,11 +34,13 @@ def status_check(num):
 
 
 @eel.expose
-def roll_function(roll_input, mod_input):
-    desired_rolls = roll_input
-    desired_mod = mod_input
+def roll_function(roll_number, desired_mod):
+    #for i in range(roll_number):
+    roll_item(roll_number, desired_mod)
     #print('1', desired_rolls, '\n2', desired_mod)
-    return('1', desired_rolls, '\n2', desired_mod)
+    #return('1', desired_rolls, '\n2', desired_mod)
+ 
+    
     
 #desired_rolls = eel.webData()()
 
