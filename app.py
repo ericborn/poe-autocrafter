@@ -6,7 +6,7 @@ Eric Born
 
 '''
 import eel
-from checks import check_for_mod as mod, inv_stash_check as isc, \
+from checks import check_for_mod, inv_stash_check as isc, \
                    check_for_magic as magic, check_for_currency as currency
 from roll_item import roll_item
 
@@ -32,17 +32,24 @@ def status_check(num):
 #    print(status_check(i))
 #status_check(3)
 
+test = 'TEXT'
+
+new_test = test.lower()
 
 @eel.expose
-def roll_function(roll_number, desired_mod):
-    for i in range(roll_number):
-        mod_check = mod(desired_mod)
+def roll_function(desired_rolls, desired_mod):
+    
+    mod_to_roll = desired_mod.lower()
+    num_of_rolls = int(desired_rolls)
+    for i in range(num_of_rolls):
+        mod_check = check_for_mod(mod_to_roll)
+        return(mod_check)
         if mod_check == -1:
             break
         else:
-            roll_item(roll_number, desired_mod)
-#        print('1', roll_number, '\n2', desired_mod)
-#        return('1', roll_number, '\n2', desired_mod)
+            roll_item()
+            return('roll', i, 'out of', num_of_rolls, \
+                   'looking for', mod_to_roll)
      
     
     

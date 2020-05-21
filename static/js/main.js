@@ -58,9 +58,9 @@ function changeColor(status, id){
 }
 
 // Used to report the desired number of rolls and mod back to python
-function webData(){
+async function webData(){
 	var rolls = document.getElementById("rolls").value
 	var mod = document.getElementById("desiredMod").value
-	eel.roll_function(rolls, mod)() //(function(ret) {console.log(ret)})
+	await eel.roll_function(rolls, mod)() //(function(ret) {console.log(ret)})
 	//return[rolls, mod];
 } 

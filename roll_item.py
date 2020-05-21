@@ -15,7 +15,7 @@ item_in_stash_coords = (355, 766)
 # top left inventory slot
 top_left_inventory_coords = (1300, 610)
 
-def roll_item(rolls, mod):
+def roll_item():
     # move mouse to currency item in inventory
     gui.moveTo(top_left_inventory_coords)
                     
