@@ -9,10 +9,14 @@ by moving the mouse over it, taking a screenshot, coloring the blue text to
 white, performing image adjustments, parsing text and checking that for the
 desired mod words.
 """
-import pyautogui as gui
-import pytesseract
 import re
+import time as t
+import pytesseract
+import pyautogui as gui
 from image_manip import color_text, image_adjustments, screenshot
+
+# pause 0.1 seconds after every autogui call
+#gui.PAUSE = 0.1
 
 # static values
 # various screen coordinate
@@ -90,31 +94,48 @@ def inv_stash_check():
         print('The stash and inventory are both open.')
 
 def check_for_magic():
+    # move to item coords in stash
     gui.moveTo(item_in_stash_coords)
+    
+    # sleep 0.1 second to allow item text to appear
+    t.sleep(0.1)
+    
+    # take screenshot
     img = screenshot(stash_coords)
         
     # create a pixel map from the image
     img_pixels = img.load()
     
+    yellow_count = 0
+    grey_count = 0
+    blue_count = 0
     # checks the color of the item to ensure its a magic item
     for i in range(img.size[0]):
         for j in range(img.size[1]):
-#            if img_pixels[i,j] == yellow_value:
-#                raise Exception('This item is rare and cannot be alted. ' \
-#                        'Place a magic item to be crafted.')
-#            if img_pixels[i,j] == grey_value:
-#                raise Exception('This item is normal and cannot be alted. ' \
-#                        'Place a magic item to be crafted.')
             if img_pixels[i,j] == yellow_value:
-                return(-1)
-                print('This item is rare and cannot be alted.'\
-                        'Place a magic item to be crafted.')
+                yellow_count += 1
+                if yellow_count >= 5:
+                    return(-1)
+                    print('This item is rare and cannot be alted.'\
+                          ' Place a magic item to be crafted.')
+                    break
             elif img_pixels[i,j] == grey_value:
-                return(-1) 
-                print('This item is normal and cannot be alted.'\
-                        ' Place a magic item to be crafted.')
+                grey_count += 1
+                if grey_count >= 5:
+                   return(-1) 
+                   print('This item is normal and cannot be alted.'\
+                        ' Place a magic item to be crafted.') 
+                break
+            elif img_pixels[i,j] == blue_value[0]:
+                blue_count += 1
+                if blue_count >= 5:
+                    return(1) 
+                    print('This item is magic and can be alted.')
+                    break
             else:
-                return(1, 'Item is magic, roll it')
+                return(-1)
+                print('Unknown item type. Please try again')
+                break
 
 
 # screenshot currency item description and parse
@@ -122,6 +143,9 @@ def check_for_currency():
     # move cursor to first item slot in inventory 1300, 615
     gui.moveTo(top_left_inventory_coords)
     
+    # sleep 0.1 second to allow item text to appear
+    t.sleep(0.1)
+   
     # take a screenshot of the currency item description
     img = screenshot(currency_description_coords)
     
@@ -163,6 +187,10 @@ def check_for_currency():
  # checks for the desired mod on the item being rolled
 def check_for_mod(mod):
     gui.moveTo(item_in_stash_coords)
+    
+    # sleep 0.1 second to allow item text to appear
+    t.sleep(0.1)
+
     img = screenshot(stash_coords)
     img = color_text(img, blue_value)
     img = image_adjustments(img)
