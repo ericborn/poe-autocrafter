@@ -201,7 +201,9 @@ def check_for_mod(mod):
     for i in range(len(parsed_text)):      
         if bool(re.search(mod, parsed_text[i])):
             mod_found += 1
-    if mod_found <= 0:
-        return(-1,)
+    # if mod found is greater than 0, mod is found so return -1 to stop rolling
+    # mod found = 0, return 1 which indicates continue to roll
+    if mod_found > 0:
+        return(-1)
     else:
         return(1)   

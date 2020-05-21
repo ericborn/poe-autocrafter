@@ -21,12 +21,15 @@ def roll_item(rolls, mod):
     
     # runs checks on item
     cfm(mod)
+
+    # if check for mods return is -1 stop rolling
+    # if return is 1 continue to roll
     
     # checks if the item has the desired mod, if not picks up the currency
     # and starts to roll the item, each time making a check for the desired
     # mod before rolling again
-    if cfm(mod) > 0:
-        raise Exception('This item has the desired mod.')
+    if cfm(mod) == -1:
+        print('This item has the desired mod.')
     else:
         # move mouse to currency item in inventory
         gui.moveTo(top_left_inventory_coords)
@@ -39,7 +42,7 @@ def roll_item(rolls, mod):
         #gui.PAUSE = 0.1
         for k in range(rolls):
             if cfm(mod) > 0:
-                raise Exception('This item has the desired mod.')
+                print('This item has the desired mod.')
             else:
                 print('roll me!')
 

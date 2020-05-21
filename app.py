@@ -37,8 +37,8 @@ def status_check(num):
 def roll_function(roll_number, desired_mod):
     #for i in range(roll_number):
     roll_item(roll_number, desired_mod)
-    #print('1', desired_rolls, '\n2', desired_mod)
-    #return('1', desired_rolls, '\n2', desired_mod)
+    print('1', roll_number, '\n2', desired_mod)
+    return('1', roll_number, '\n2', desired_mod)
  
     
     
