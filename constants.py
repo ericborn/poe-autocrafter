@@ -28,6 +28,9 @@ LEFT_ARROW_COORDS = (14,130, 33,156)
 RIGHT_ARROW_COORDS = (609,130, 626,156)
 
 # Colors
+# White used to color text
+WHITE_COLOR = (255, 255, 255)
+
 # grey RGB value for a normal item
 GREY_ITEM_COLOR = (200, 200, 200)
 
