@@ -33,6 +33,7 @@ https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalo
 import re
 import pyautogui as gui
 import pytesseract
+from collections import Counter
 from image_manip import color_text, image_adjustments, screenshot
 from checks import check_for_mod as cfm, check_inv_stash as isc
 from roll_item import roll_item
@@ -77,27 +78,36 @@ blue_value = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
 currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
                   'orb of transmutation', 'regal orb']
 
-#!!!TODO!!!
-#THESE NEED TO COME IN FROM THE UI
-# set desired mod and number of rolls to attempt
-desired_mod = 'dexterity'
-number_of_rolls = 5
+coords = (52,133,586,158)
 
-# <= 0 mod not found, >=1 mod found
-cfm(desired_mod)
+img = screenshot(coords)
 
-# -1 indicates stash or inventory is not open, 1 indicates both are open
-isc()
+img_set = img.getdata()
 
+img_pixels = img.load()
 
+for i in range(img.size[0]):
+    for j in range(img.size[1]):
+        if img_pixels[i,j] == YELLOW_ITEM_COLOR:
+            yellow_count += 1
 
-
-
+find_colors = []
 
 
+data = img.getdata()
+counts = Counter(data)
 
+counts[(211,157,93)]
 
+x = 211
+y = 157
+z = 93
 
-# executes the mod check and rolls until the desired mod is found or max 
-# attempts are met
-roll_item(desired_mod, number_of_rolls)
+count_list = []
+
+for i in range(10):
+    for j in range(10):
+        for k in range(10):
+            count_list.append(counts[(x,y,z)])
+
+counts.most_common(20)

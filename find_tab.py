@@ -6,28 +6,36 @@ Created on Mon May 18 12:32:31 2020
 
 Used to find a particular tab within the inventory
 """
+import pyautogui as gui
+import pytesseract
+from checks import check_inv_stash, check_for_mod
 from image_manip import color_text, image_adjustments, screenshot
 from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
                       ITEM_IN_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS,\
-                      TOP_LEFT_CORNER, STASH_TAB_COORDS
-import pyautogui as gui
-from checks import check_inv_stash, check_for_mod
+                      TOP_LEFT_CORNER, STASH_TAB_COORDS, STASH_BROWN_TEXT,\
+                      STASH_BLACK_TEXT
 
 #!!!TODO!!!
 # create function that takes tab name as input. Clicks tab scroll button to
 # the left and screenshots. repeats until the tab names havent changed. If tab
 # not found clicks right button x times and screenshots, parses text. Continues
 # until tab is found
+                      
+img = screenshot(STASH_TAB_COORDS)
+img = color_text(img, STASH_BROWN_TEXT)
+img = color_text(img, STASH_BLACK_TEXT)
+img = image_adjustments(img)
+
+img[0]
+
 
 # checks for the desired mod on the item being rolled
-def check_for_text(mod):
-    gui.moveTo(ITEM_IN_STASH_COORDS)
+def check_for_text(text, coords):
+    #gui.moveTo(ITEM_IN_STASH_COORDS)
     
-    # sleep 0.1 second to allow item text to appear
-    t.sleep(0.1)
-
-    img = screenshot(ENTIRE_STASH_COORDS)
-    img = color_text(img, BLUE_COLOR)
+    img = screenshot(coords)
+    img = color_text(img, STASH_BROWN_TEXT)
+    img = color_text(img, STASH_BLACK_TEXT)
     img = image_adjustments(img)
     
     parsed_text = []
