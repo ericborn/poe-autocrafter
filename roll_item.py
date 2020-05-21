@@ -7,23 +7,19 @@ Created on Wed May 20 12:50:53 2020
 rolls item
 """
 import pyautogui as gui
-#from checks import check_for_mod as cfm
+from constants import ITEM_IN_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS
 
-# item to be rolled in bottom middle of stash tab
-item_in_stash_coords = (355, 766)
-
-# top left inventory slot
-top_left_inventory_coords = (1300, 610)
-
+#!!!TODO!!!
+# NEED TO FIX CAP OF ROLLING 20 ALTS SINCE SHIFT IS BEING UNHELD AFTER EACH CLICK
 def roll_item():
     # move mouse to currency item in inventory
-    gui.moveTo(top_left_inventory_coords)
+    gui.moveTo(TOP_LEFT_INVENTORY_COORDS)
                     
     # pick up currency for rolling
     gui.rightClick()
     
     # move mouse to item location in stash tab 355, 766
-    gui.moveTo(item_in_stash_coords)
+    gui.moveTo(ITEM_IN_STASH_COORDS)
     
     # roll item
     gui.leftClick()

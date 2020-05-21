@@ -7,6 +7,7 @@ Created on Mon May 18 20:43:51 2020
 Functions relating to image manipulation
 """
 from PIL import ImageGrab, ImageEnhance
+from constants import WHITE_COLOR
 
 # function takes an image as an input, creates a pixel map, iterates over the
 # pixels and changes any blue ones to white. Helps tesseract read the text.
@@ -19,7 +20,7 @@ def color_text(img, value):
             for k in range(len(value)):
                 # change blue pixels to white
                 if img_pixels[i,j] == value[k]:
-                    img_pixels[i,j] = (255, 255, 255)
+                    img_pixels[i,j] = (WHITE_COLOR)
     return(img)
 
 # Takes an image as input, resize the image to 3x original size 

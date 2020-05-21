@@ -14,53 +14,19 @@ import time as t
 import pytesseract
 import pyautogui as gui
 from image_manip import color_text, image_adjustments, screenshot
+from constatns import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
+                      ENTIRE_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS, \
+                      CURRENCY_DESCRIPTION_COORDS, BLUE_COLOR, \
+                      GREY_ITEM_COLOR, YELLOW_ITEM_COLOR, \
+                      CURRENCY_ITEM_COLOR, CURRENCY_NAMES, HEADER_WORDS
 
-# pause 0.1 seconds after every autogui call
-#gui.PAUSE = 0.1
 
-# static values
-# various screen coordinate
-# top of screen, stash/inventory
-header_coords = (0, 0, 1920, 90)
 
-# item to be rolled in bottom middle of stash tab
-item_in_stash_coords = (355, 766)
-
-# entire stash tab
-stash_coords = (15, 170, 650, 750)
-
-# top left inventory slot
-top_left_inventory_coords = (1300, 610)
-
-# currency description box when currency in top left of inventory
-currency_description_coords = (1060,410,1533,588)
-
-# blue RGB values for magic a item
-blue_value = ((135, 135, 254), (98, 98, 188), (99, 99, 189), (74, 73, 142),\
-               (74, 74, 142), (73, 73, 141), (127, 127, 239), (81, 81, 155),\
-               (98, 98, 162), (108, 108, 178), (96, 96, 182), (125, 125, 233),\
-               (108, 108, 181), (97, 97, 184), (123, 123, 233),(109, 109, 207))
-
-# grey RGB value for a normal item
-grey_value = (200, 200, 200)
-
-# yellow RGB value for a rare item
-yellow_value = (254, 254, 118)
-
-# greyish yellow RGB values for a currency item
-currency_value = ((170,158,129), (140,129,105), (150,139,113), (156,145,117))
-
-# create a list containing the words we're looking for in the image
-currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
-                  'orb of transmutation', 'regal orb']
-
-# create a list containing the words we're looking for in the image
-header_words = ['stash','inventory']
 
 # checks for the stash and invetory to be open
 def inv_stash_check():
     # Screenshot top of screen
-    header_img = screenshot(header_coords)
+    header_img = screenshot(HEADER_COORDS)
     #header_img.show()
 
     # Perform adjustments
@@ -80,9 +46,9 @@ def inv_stash_check():
     inv_found = 0
     stash_found = 0
     for i in range(len(header_text)):
-        if bool(re.search(header_words[0], header_text[i])):
+        if bool(re.search(HEADER_WORDS[0], header_text[i])):
             stash_found += 1
-        if bool(re.search(header_words[1], header_text[i])):
+        if bool(re.search(HEADER_WORDS[1], header_text[i])):
             inv_found += 1    
     
     if inv_found < 1 or stash_found < 1:
@@ -95,13 +61,13 @@ def inv_stash_check():
 
 def check_for_magic():
     # move to item coords in stash
-    gui.moveTo(item_in_stash_coords)
+    gui.moveTo(ITEM_IN_STASH_COORDS)
     
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
     
     # take screenshot
-    img = screenshot(stash_coords)
+    img = screenshot(ENTIRE_STASH_COORDS)
         
     # create a pixel map from the image
     img_pixels = img.load()
@@ -112,13 +78,13 @@ def check_for_magic():
     # checks the color of the item to ensure its a magic item
     for i in range(img.size[0]):
         for j in range(img.size[1]):
-            if img_pixels[i,j] == yellow_value:
+            if img_pixels[i,j] == YELLOW_ITEM_COLOR:
                 yellow_count += 1
 
-            if img_pixels[i,j] == grey_value:
+            if img_pixels[i,j] == GREY_ITEM_COLOR:
                 grey_count += 1
 
-            if img_pixels[i,j] == blue_value[1]:
+            if img_pixels[i,j] == BLUE_COLOR[1]:
                 blue_count += 1
 
     # checks color counts to determine item rarity
@@ -137,16 +103,16 @@ def check_for_magic():
 # screenshot currency item description and parse
 def check_for_currency():
     # move cursor to first item slot in inventory 1300, 615
-    gui.moveTo(top_left_inventory_coords)
+    gui.moveTo(TOP_LEFT_INVENTORY_COORDS)
     
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
    
     # take a screenshot of the currency item description
-    img = screenshot(currency_description_coords)
+    img = screenshot(CURRENCY_DESCRIPTION_COORDS)
     
     # colors the currency image item name to white
-    color_text(img, currency_value)
+    color_text(img, CURRENCY_ITEM_COLOR)
     
     # perform adjustments
     img = image_adjustments(img)
@@ -168,9 +134,9 @@ def check_for_currency():
     # checks the parsed text against list of item types in inventory, appends to
     # currency_to_roll list 
     for i in range(len(currency_text)):
-        for j in range(len(currency_items)):
-            if bool(re.search(currency_items[j], currency_text[i])):
-                currency_to_roll.append(currency_items[j])
+        for j in range(len(CURRENCY_NAMES)):
+            if bool(re.search(CURRENCY_NAMES[j], currency_text[i])):
+                currency_to_roll.append(CURRENCY_NAMES[j])
     
     # check if the value is higher than 0, indiciating there is a currency to roll
     if len(currency_to_roll) < 1:
@@ -182,13 +148,13 @@ def check_for_currency():
     
  # checks for the desired mod on the item being rolled
 def check_for_mod(mod):
-    gui.moveTo(item_in_stash_coords)
+    gui.moveTo(ITEM_IN_STASH_COORDS)
     
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
 
-    img = screenshot(stash_coords)
-    img = color_text(img, blue_value)
+    img = screenshot(ENTIRE_STASH_COORDS)
+    img = color_text(img, BLUE_COLOR)
     img = image_adjustments(img)
     
     parsed_text = []
