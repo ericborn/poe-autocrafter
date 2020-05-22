@@ -19,7 +19,8 @@ from constants import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
                       CURRENCY_DESCRIPTION_COORDS, BLUE_COLOR, \
                       GREY_ITEM_COLOR, YELLOW_ITEM_COLOR, \
                       CURRENCY_ITEM_COLOR, CURRENCY_NAMES, HEADER_WORDS, \
-                      WHITE_COLOR
+                      WHITE_COLOR, STASH_YELLOW_TEXT, STASH_BLACK_TEXT, \
+                      BLACK_TEXT, YELLOW_TEXT
 
 # checks for the stash and invetory to be open
 def check_inv_stash():
@@ -170,3 +171,29 @@ def check_for_mod(mod):
         return(-1)
     else:
         return(1)   
+
+# checks for the desired mod on the item being rolled
+def check_for_text(text, coords):
+    #gui.moveTo(ITEM_IN_STASH_COORDS)
+    
+    img = screenshot(coords)
+    img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
+    img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
+    img = image_adjustments(img)
+    
+    parsed_text = []
+    for i in range(len(img)):
+        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
+                                                  config = '--psm 12').lower())
+        
+    mod_found = 0
+    #print(mod)
+    for i in range(len(parsed_text)):      
+        if bool(re.search(text, parsed_text[i])):
+            mod_found += 1
+    # if mod found is greater than 0, mod is found so return -1 to stop rolling
+    # mod found = 0, return 1 which indicates continue to roll
+    if mod_found > 0:
+        return(-1)
+    else:
+        return(1)  
