@@ -73,6 +73,9 @@ BLACK_TEXT = (42,28,13)
 # primary color of yellow text on stash tabs
 YELLOW_TEXT = (216,162,98)
 
+# Border around the highlighted item in stash
+YELLOW_BORDER = (231,180,119)
+
 # stash brown text
 STASH_YELLOW_TEXT = ((216,162,98),  (162,125,70),  (162,126,70),
                     (210,158,95),  (210,157,95),  (191,144,85),  (198,150,89),
