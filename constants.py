@@ -30,8 +30,8 @@ TAB_BOARDER_COORDS = ((43,130,120,156), (130,130,208,156),(220,130,291,156),
                       (529,130,594,156))
 
 # Coordinates for cursor positions
-# top left of screen
-TOP_LEFT_CORNER = (0, 0)
+# top left of screen, cannot use 0,0, triggers an autogui fail-safe
+TOP_LEFT_CORNER = (50, 50)
 
 # top left inventory slot
 TOP_LEFT_INVENTORY_COORDS = (1300, 610)

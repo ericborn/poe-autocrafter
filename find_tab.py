@@ -65,53 +65,65 @@ range(20,24)
 range(24,28)
 
 def click_on_tab(keyword):
-    for i in range(4):
-        if re.search(keyword, parsed_text[i]):
-            print(i)
-            gui.moveTo(TAB_CLICK_COORDS[0])
-            gui.leftClick()
-            break
-    for i in range(4,8): 
-        if re.search(keyword, parsed_text[i]):
-            print(i)
-            gui.moveTo(TAB_CLICK_COORDS[1])
-            gui.leftClick()
-            break
-    for i in range(8,12):
-        if re.search(keyword, parsed_text[i]):
-            print(i)
-            gui.moveTo(TAB_CLICK_COORDS[2])
-            gui.leftClick()
-            break
-    for i in range(12,16):
-        if re.search(keyword, parsed_text[i]):
-            gui.moveTo(TAB_CLICK_COORDS[3])
-            gui.leftClick()
-            break
-    for i in range(16,20):
-        if re.search(keyword, parsed_text[i]):
-            gui.moveTo(TAB_CLICK_COORDS[4])
-            gui.leftClick()
-            break
-    for i in range(20,24):
-        if re.search(keyword, parsed_text[i]):
-            gui.moveTo(TAB_CLICK_COORDS[5])
-            gui.leftClick()
-            break
-    for i in range(24,28):
-        if re.search(keyword, parsed_text[i]):
-            gui.moveTo(TAB_CLICK_COORDS[6])
-            gui.leftClick()
-            break
-    if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
-        scroll_stash(RIGHT_ARROW_CLICK_COORDS)
-    else:
-        scroll_stash(LEFT_ARROW_CLICK_COORDS)
+    check = 0
+    while (check < 1):
+        for i in range(4):
+            if re.search(keyword, parsed_text[i]):
+                print(i)
+                gui.moveTo(TAB_CLICK_COORDS[0])
+                gui.leftClick()
+                check += 1
+                break
+        for i in range(4,8): 
+            if re.search(keyword, parsed_text[i]):
+                print(i)
+                gui.moveTo(TAB_CLICK_COORDS[1])
+                gui.leftClick()
+                check += 1
+                break
+        for i in range(8,12):
+            if re.search(keyword, parsed_text[i]):
+                print(i)
+                gui.moveTo(TAB_CLICK_COORDS[2])
+                gui.leftClick()
+                check += 1
+                break
+        for i in range(12,16):
+            if re.search(keyword, parsed_text[i]):
+                gui.moveTo(TAB_CLICK_COORDS[3])
+                gui.leftClick()
+                check += 1
+                break
+        for i in range(16,20):
+            if re.search(keyword, parsed_text[i]):
+                gui.moveTo(TAB_CLICK_COORDS[4])
+                gui.leftClick()
+                check += 1
+                break
+        for i in range(20,24):
+            if re.search(keyword, parsed_text[i]):
+                gui.moveTo(TAB_CLICK_COORDS[5])
+                gui.leftClick()
+                check += 1
+                break
+        for i in range(24,28):
+            if re.search(keyword, parsed_text[i]):
+                gui.moveTo(TAB_CLICK_COORDS[6])
+                gui.leftClick()
+                check += 1
+                break
+
+        if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
+            scroll_stash(RIGHT_ARROW_CLICK_COORDS)
+            check += 1
+        else:
+            scroll_stash(LEFT_ARROW_CLICK_COORDS)
+            check += 1
 
 
 
 
-click_on_tab('misc')
+click_on_tab('dump')
 
 len(parsed_text)
        
@@ -166,7 +178,7 @@ check_for_text('dump', STASH_TAB_COORDS)
 # coords input indicates the arrow to check
 def check_stash_arrows(coords):
     # moves cursor to ensure its out of screenshot area
-    gui.moveTo()
+    gui.moveTo(TOP_LEFT_CORNER)
     
     # indicator for the arrow being grey or not
     grey = 0
@@ -187,17 +199,9 @@ def check_stash_arrows(coords):
                 grey = 1
     return(grey)
     
-    
-
 def scroll_stash(direction):
-    if check_inv_stash() == 1 and check_stash_arrows(direction) == 1:
-        # move mouse to arrow in stash
-        gui.moveTo(direction)
-        for i in range(8):
-            # roll item
-            gui.leftClick()
-    
-
-    
-    
-check = check_stash_arrows(LEFT_ARROW_CLICK_COORDS)
+    # move mouse to arrow in stash
+    gui.moveTo(direction)
+    for i in range(7):
+        # left click
+        gui.leftClick()
