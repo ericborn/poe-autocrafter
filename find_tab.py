@@ -6,6 +6,7 @@ Created on Mon May 18 12:32:31 2020
 
 Used to find a particular tab within the inventory
 """
+import re
 import pyautogui as gui
 import pytesseract
 from checks import check_inv_stash, check_for_mod
@@ -13,9 +14,9 @@ from image_manip import color_text, image_adjustments, screenshot
 from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
                       ITEM_IN_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS,\
                       TOP_LEFT_CORNER, STASH_TAB_COORDS, STASH_YELLOW_TEXT,\
-                      STASH_BLACK_TEXT, STASH_TAB_NAMES, \
-                      LEFT_ARROW_CLICK_COORDS, YELLOW_TEXT, BLACK_TEXT,\
-                      TAB_BOARDER_COORDS, TAB_CLICK_COORDS
+                      STASH_BLACK_TEXT, STASH_TAB_NAMES, BLACK_TEXT,\
+                      LEFT_ARROW_CLICK_COORDS, YELLOW_TEXT, TAB_CLICK_COORDS,\
+                      TAB_BOARDER_COORDS, RIGHT_ARROW_CLICK_COORDS
 
 #!!!TODO!!!
 # create function that takes tab name as input. Clicks tab scroll button to
@@ -68,35 +69,49 @@ def click_on_tab(keyword):
         if re.search(keyword, parsed_text[i]):
             print(i)
             gui.moveTo(TAB_CLICK_COORDS[0])
+            gui.leftClick()
             break
     for i in range(4,8): 
         if re.search(keyword, parsed_text[i]):
             print(i)
             gui.moveTo(TAB_CLICK_COORDS[1])
+            gui.leftClick()
             break
     for i in range(8,12):
         if re.search(keyword, parsed_text[i]):
             print(i)
             gui.moveTo(TAB_CLICK_COORDS[2])
+            gui.leftClick()
             break
     for i in range(12,16):
         if re.search(keyword, parsed_text[i]):
             gui.moveTo(TAB_CLICK_COORDS[3])
+            gui.leftClick()
             break
     for i in range(16,20):
         if re.search(keyword, parsed_text[i]):
             gui.moveTo(TAB_CLICK_COORDS[4])
-            break1
+            gui.leftClick()
+            break
     for i in range(20,24):
         if re.search(keyword, parsed_text[i]):
             gui.moveTo(TAB_CLICK_COORDS[5])
+            gui.leftClick()
             break
     for i in range(24,28):
         if re.search(keyword, parsed_text[i]):
             gui.moveTo(TAB_CLICK_COORDS[6])
+            gui.leftClick()
             break
- 
-click_on_tab('esse')
+    if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
+        scroll_stash(RIGHT_ARROW_CLICK_COORDS)
+    else:
+        scroll_stash(LEFT_ARROW_CLICK_COORDS)
+
+
+
+
+click_on_tab('misc')
 
 len(parsed_text)
        
@@ -153,6 +168,7 @@ def check_stash_arrows(coords):
     # moves cursor to ensure its out of screenshot area
     gui.moveTo()
     
+    # indicator for the arrow being grey or not
     grey = 0
 
     # take screenshot based upon coords inputting
@@ -177,7 +193,7 @@ def scroll_stash(direction):
     if check_inv_stash() == 1 and check_stash_arrows(direction) == 1:
         # move mouse to arrow in stash
         gui.moveTo(direction)
-        for i in range(6):
+        for i in range(8):
             # roll item
             gui.leftClick()
     
