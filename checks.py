@@ -18,10 +18,8 @@ from constants import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
                       ENTIRE_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS, \
                       CURRENCY_DESCRIPTION_COORDS, BLUE_COLOR, \
                       GREY_ITEM_COLOR, YELLOW_ITEM_COLOR, \
-                      CURRENCY_ITEM_COLOR, CURRENCY_NAMES, HEADER_WORDS
-
-
-
+                      CURRENCY_ITEM_COLOR, CURRENCY_NAMES, HEADER_WORDS, \
+                      WHITE_COLOR
 
 # checks for the stash and invetory to be open
 def check_inv_stash():
@@ -62,16 +60,16 @@ def check_inv_stash():
 def check_for_magic():
     # move to item coords in stash
     gui.moveTo(ITEM_IN_STASH_COORDS)
-    
+
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
-    
+
     # take screenshot
     img = screenshot(ENTIRE_STASH_COORDS)
-        
+
     # create a pixel map from the image
     img_pixels = img.load()
-    
+
     yellow_count = 0
     grey_count = 0
     blue_count = 0
@@ -104,40 +102,40 @@ def check_for_magic():
 def check_for_currency():
     # move cursor to first item slot in inventory 1300, 615
     gui.moveTo(TOP_LEFT_INVENTORY_COORDS)
-    
+
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
-   
+
     # take a screenshot of the currency item description
     img = screenshot(CURRENCY_DESCRIPTION_COORDS)
-    
+
     # colors the currency image item name to white
-    color_text(img, CURRENCY_ITEM_COLOR)
-    
+    color_text(img, CURRENCY_ITEM_COLOR, WHITE_COLOR)
+
     # perform adjustments
     img = image_adjustments(img)
-    
+
     #inventory_img = screenshot(top_left_inventory_coords)
     #inventory_img = image_adjustments(inventory_img)
-    
+
     # parse the image for text
     currency_text = []
-    
+
     for i in range(len(img)):
         currency_text.append(pytesseract.image_to_string(img[i], lang='eng', \
                                                          config = '--psm 12')\
                                                         .lower())
-    
+
     # creates an empty list to store the currency type found in the inventory
     currency_to_roll = []
-    
+
     # checks the parsed text against list of item types in inventory, appends to
     # currency_to_roll list 
     for i in range(len(currency_text)):
         for j in range(len(CURRENCY_NAMES)):
             if bool(re.search(CURRENCY_NAMES[j], currency_text[i])):
                 currency_to_roll.append(CURRENCY_NAMES[j])
-    
+
     # check if the value is higher than 0, indiciating there is a currency to roll
     if len(currency_to_roll) < 1:
         return(-1)
@@ -145,25 +143,24 @@ def check_for_currency():
               'Place it in the top left inventory slot dummy.')
     else:
         return(1)
-    
+
 # checks for the desired mod on the item being rolled
 def check_for_mod(mod):
     gui.moveTo(ITEM_IN_STASH_COORDS)
-    
+
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
 
     img = screenshot(ENTIRE_STASH_COORDS)
-    img = color_text(img, BLUE_COLOR)
+    img = color_text(img, BLUE_COLOR, WHITE_COLOR)
     img = image_adjustments(img)
-    
+
     parsed_text = []
     for i in range(len(img)):
         parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
                                                   config = '--psm 12').lower())
-        
+
     mod_found = 0
-    #print(mod)
     for i in range(len(parsed_text)):      
         if bool(re.search(mod, parsed_text[i])):
             mod_found += 1

@@ -37,6 +37,8 @@ from collections import Counter
 from image_manip import color_text, image_adjustments, screenshot
 from checks import check_for_mod as cfm, check_inv_stash as isc
 from roll_item import roll_item
+from constants import STASH_YELLOW_TEXT, STASH_BLACK_TEXT, BLACK_TEXT,\
+                      YELLOW_TEXT
 
 # set path to tesseract.exe
 pytesseract.pytesseract.tesseract_cmd = \
@@ -82,20 +84,28 @@ coords = (52,133,586,158)
 
 img = screenshot(coords)
 
-img_set = img.getdata()
+img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
+img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
 
+img = image_adjustments(img)
+
+parsed_text = []
+for i in range(len(img)):
+    parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
+                                              config = '--psm 12').lower())
+parsed_text
+
+
+
+
+
+img_set = img.getdata()
 img_pixels = img.load()
 
-for i in range(img.size[0]):
-    for j in range(img.size[1]):
-        if img_pixels[i,j] == YELLOW_ITEM_COLOR:
-            yellow_count += 1
+counts = Counter(img_set)
 
-find_colors = []
+counts.most_common(50)
 
-
-data = img.getdata()
-counts = Counter(data)
 
 counts[(211,157,93)]
 
@@ -110,4 +120,4 @@ for i in range(10):
         for k in range(10):
             count_list.append(counts[(x,y,z)])
 
-counts.most_common(20)
+

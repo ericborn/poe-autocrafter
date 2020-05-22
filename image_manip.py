@@ -7,20 +7,19 @@ Created on Mon May 18 20:43:51 2020
 Functions relating to image manipulation
 """
 from PIL import ImageGrab, ImageEnhance
-from constants import WHITE_COLOR
 
 # function takes an image as an input, creates a pixel map, iterates over the
 # pixels and changes any blue ones to white. Helps tesseract read the text.
-def color_text(img, value):
+def color_text(img, sample_color, output_color):
     # create a pixel map from the image
     img_pixels = img.load()
     # loops that evaluate the stash image pixels and change any blue to white
     for i in range(img.size[0]):
         for j in range(img.size[1]):
-            for k in range(len(value)):
+            for k in range(len(sample_color)):
                 # change blue pixels to white
-                if img_pixels[i,j] == value[k]:
-                    img_pixels[i,j] = (WHITE_COLOR)
+                if img_pixels[i,j] == sample_color[k]:
+                    img_pixels[i,j] = (output_color)
     return(img)
 
 # Takes an image as input, resize the image to 3x original size 
@@ -46,12 +45,7 @@ def image_adjustments(img):
                   img_enhance_2_5]
     return(stash_image_list)
 
-# Testing functions
-#stash_img = color_text(stash_img)
-#img_list = image_adjustments(header_img)
-
 # function that takes an input, coords, and makes a screenshot based upon them.
 def screenshot(coords):
     img = ImageGrab.grab(bbox = (coords))
     return(img)
-    
