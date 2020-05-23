@@ -116,14 +116,16 @@ def click_on_tab(keyword):
         if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
             scroll_stash(RIGHT_ARROW_CLICK_COORDS)
             check += 1
+            print('click right')
         else:
             scroll_stash(LEFT_ARROW_CLICK_COORDS)
             check += 1
+            print('click left')
 
 
 
 
-click_on_tab('dump')
+click_on_tab('dgfsg')
 
 len(parsed_text)
        
@@ -171,7 +173,6 @@ for i in range(8,11):
 
 check_for_text('dump', STASH_TAB_COORDS)
 
-
 # Function that checks if the area screenshotted has grey pixels.
 # grey indicates the stash cannot be scrolled any further in that direction
 # 0 means grey, no scroll, 1 means brown and can be scrolled
@@ -195,6 +196,7 @@ def check_stash_arrows(coords):
         for j in range(img.size[1]):
             if img_pixels[i,j] == GREY_ARROW_COLOR:
                 grey = 0
+                break
             else:
                 grey = 1
     return(grey)
