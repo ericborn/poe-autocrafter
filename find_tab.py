@@ -64,68 +64,161 @@ range(16,20)
 range(20,24)
 range(24,28)
 
+#def click_on_tab(keyword):
+#    check = 0
+#    while check < 1:
+#        for i in range(4):
+#            if re.search(keyword, parsed_text[i]):
+#                print(i)
+#                gui.moveTo(TAB_CLICK_COORDS[0])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        for i in range(4,8): 
+#            if re.search(keyword, parsed_text[i]):
+#                print(i)
+#                gui.moveTo(TAB_CLICK_COORDS[1])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        for i in range(8,12):
+#            if re.search(keyword, parsed_text[i]):
+#                print(i)
+#                gui.moveTo(TAB_CLICK_COORDS[2])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        for i in range(12,16):
+#            if re.search(keyword, parsed_text[i]):
+#                gui.moveTo(TAB_CLICK_COORDS[3])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        for i in range(16,20):
+#            if re.search(keyword, parsed_text[i]):
+#                gui.moveTo(TAB_CLICK_COORDS[4])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        for i in range(20,24):
+#            if re.search(keyword, parsed_text[i]):
+#                gui.moveTo(TAB_CLICK_COORDS[5])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        for i in range(24,28):
+#            if re.search(keyword, parsed_text[i]):
+#                gui.moveTo(TAB_CLICK_COORDS[6])
+#                gui.leftClick()
+#                check += 1
+#                break
+#        
+#        for i in range(7):
+#            if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
+#                scroll_stash(LEFT_ARROW_CLICK_COORDS)
+#                check += 1
+#                print('click left')
+#        for i in range(7):
+#            if check_stash_arrows(RIGHT_ARROW_COORDS) == 0:
+#                scroll_stash(RIGHT_ARROW_CLICK_COORDS)
+#                check += 1
+#                print('click right')         
+
+#!!!TODO!!!
+# FIND A WAY TO CLICK LEFT/RIGHT IF THE WORD ISNT FOUND
 def click_on_tab(keyword):
-    check = 0
-    while (check < 1):
-        for i in range(4):
-            if re.search(keyword, parsed_text[i]):
-                print(i)
-                gui.moveTo(TAB_CLICK_COORDS[0])
-                gui.leftClick()
-                check += 1
-                break
-        for i in range(4,8): 
-            if re.search(keyword, parsed_text[i]):
-                print(i)
-                gui.moveTo(TAB_CLICK_COORDS[1])
-                gui.leftClick()
-                check += 1
-                break
-        for i in range(8,12):
-            if re.search(keyword, parsed_text[i]):
-                print(i)
-                gui.moveTo(TAB_CLICK_COORDS[2])
-                gui.leftClick()
-                check += 1
-                break
-        for i in range(12,16):
-            if re.search(keyword, parsed_text[i]):
-                gui.moveTo(TAB_CLICK_COORDS[3])
-                gui.leftClick()
-                check += 1
-                break
-        for i in range(16,20):
-            if re.search(keyword, parsed_text[i]):
-                gui.moveTo(TAB_CLICK_COORDS[4])
-                gui.leftClick()
-                check += 1
-                break
-        for i in range(20,24):
-            if re.search(keyword, parsed_text[i]):
-                gui.moveTo(TAB_CLICK_COORDS[5])
-                gui.leftClick()
-                check += 1
-                break
-        for i in range(24,28):
-            if re.search(keyword, parsed_text[i]):
-                gui.moveTo(TAB_CLICK_COORDS[6])
-                gui.leftClick()
-                check += 1
-                break
-
-        if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
-            scroll_stash(RIGHT_ARROW_CLICK_COORDS)
-            check += 1
-            print('click right')
-        else:
-            scroll_stash(LEFT_ARROW_CLICK_COORDS)
-            check += 1
-            print('click left')
+    #check = 0
+    go_left = check_stash_arrows(LEFT_ARROW_COORDS)
+    go_right = check_stash_arrows(RIGHT_ARROW_COORDS)
+    print(go_left, go_right)
+    for i in range(28):
+        if re.search(keyword, parsed_text[i]) and i <= 3:
+            gui.moveTo(TAB_CLICK_COORDS[0])
+            gui.leftClick()
+            break
+        elif re.search(keyword, parsed_text[i]) and 4 <= i <= 7:
+            gui.moveTo(TAB_CLICK_COORDS[1])
+            gui.leftClick()
+            break
+        elif re.search(keyword, parsed_text[i]) and 8 <= i <= 11:
+            gui.moveTo(TAB_CLICK_COORDS[2])
+            gui.leftClick()
+            break
+        elif re.search(keyword, parsed_text[i]) and 12 <= i <= 15:
+            gui.moveTo(TAB_CLICK_COORDS[3])
+            gui.leftClick()
+            break
+        elif re.search(keyword, parsed_text[i]) and 16 <= i <= 19:
+            gui.moveTo(TAB_CLICK_COORDS[4])
+            gui.leftClick()
+            break
+        elif re.search(keyword, parsed_text[i]) and 20 <= i <= 23:
+            gui.moveTo(TAB_CLICK_COORDS[5])
+            gui.leftClick()
+            break
+        elif re.search(keyword, parsed_text[i]) and 24 <= i <= 27:
+            gui.moveTo(TAB_CLICK_COORDS[6])
+            gui.leftClick()
+            break
 
 
+click_on_tab('jjjj')
+
+# take screenshot based upon coords inputting
+img = screenshot(LEFT_ARROW_COORDS)
+
+# convert image to pixel map
+img_pixels = img.load()
+
+grey = 0
+
+# check pixel map for gray values indicating 
+#stash cannot be scrolled that way any further
+for i in range(img.size[0]):
+    for j in range(img.size[1]):
+        if img_pixels[i,j] == GREY_ARROW_COLOR:
+            grey += 1
+            break
+print(grey)
 
 
-click_on_tab('dgfsg')
+# Function that checks if the area screenshotted has grey pixels.
+# grey indicates the stash cannot be scrolled any further in that direction
+# 0 means grey, no scroll, 1 means brown and can be scrolled
+# coords input indicates the arrow to check
+def check_stash_arrows(coords):
+    # moves cursor to ensure its out of screenshot area
+    gui.moveTo(TOP_LEFT_CORNER)
+    
+    # indicator for the arrow being grey or not
+    grey = 0
+
+    # take screenshot based upon coords inputting
+    img = screenshot(coords)
+    
+    # convert image to pixel map
+    img_pixels = img.load()
+    
+    # check pixel map for gray values indicating 
+    #stash cannot be scrolled that way any further
+    for i in range(img.size[0]):
+        for j in range(img.size[1]):
+            if img_pixels[i,j] == GREY_ARROW_COLOR:
+                grey += 1
+                break
+
+    return(grey)
+    
+def scroll_stash(direction):
+    # move mouse to arrow in stash
+    gui.moveTo(direction)
+    for i in range(7):
+        # left click
+        gui.leftClick()
+
+
+
+
 
 len(parsed_text)
        
@@ -153,57 +246,5 @@ for i in range(8,11):
     # unpack list of lists
     for i in range(3):
         parsed_text[i] = [x for l in parsed_text[i] for x in l]
-     
-        
-        
-        
+  
     parsed_text[2][0]
-    
-    mod_found = 0
-    #print(mod)
-    for i in range(len(parsed_text)):      
-        if bool(re.search(mod, parsed_text[i])):
-            mod_found += 1
-    # if mod found is greater than 0, mod is found so return -1 to stop rolling
-    # mod found = 0, return 1 which indicates continue to roll
-    if mod_found > 0:
-        return(-1)
-    else:
-        return(1)   
-
-check_for_text('dump', STASH_TAB_COORDS)
-
-# Function that checks if the area screenshotted has grey pixels.
-# grey indicates the stash cannot be scrolled any further in that direction
-# 0 means grey, no scroll, 1 means brown and can be scrolled
-# coords input indicates the arrow to check
-def check_stash_arrows(coords):
-    # moves cursor to ensure its out of screenshot area
-    gui.moveTo(TOP_LEFT_CORNER)
-    
-    # indicator for the arrow being grey or not
-    grey = 0
-
-    # take screenshot based upon coords inputting
-    img = screenshot(coords)
-    
-    # convert image to pixel map
-    img_pixels = img.load()
-    
-    # check pixel map for gray values indicating 
-    #stash cannot be scrolled that way any further
-    for i in range(img.size[0]):
-        for j in range(img.size[1]):
-            if img_pixels[i,j] == GREY_ARROW_COLOR:
-                grey = 0
-                break
-            else:
-                grey = 1
-    return(grey)
-    
-def scroll_stash(direction):
-    # move mouse to arrow in stash
-    gui.moveTo(direction)
-    for i in range(7):
-        # left click
-        gui.leftClick()
