@@ -114,4 +114,5 @@ STASH_TAB_NAMES = ['SPLT','ESSE','MAPS','MISC','CARD','GEMS','CURR','VEIL',
                    'JEWL','UNQE','FOSS','INFL','DUMP','INCU']
 
 SORT_SEARCH_NAMES = ['splinter', 'delirium orb', 'essence', 'map', 'oil', 
-                     'card', 'gem', 'currency', 'veiled', 'prophecy']
+                     'card', 'gem', 'currency', 'veiled', 'prophecy', 'shaper',
+                     'elder', 'redeemer', 'crusader', 'warlord', 'hunter']

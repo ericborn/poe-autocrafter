@@ -171,6 +171,8 @@ def scroll_stash(direction):
         # left click
         gui.leftClick()
 
+
+
 for i in range(60):
     #for j in range(len(SORT_SEARCH_NAMES)):
     for j in range(1):
@@ -200,11 +202,37 @@ for i in range(60):
 # search for, finds the highlighted item, moves it to the players inventory,
 # finds and moves to the appropriate tab and moves the items from the inventory
 # to the tab
-for i in range(len(SORT_SEARCH_NAMES)):
-    screenshot(ENTIRE_STASH_COORDS)
-    stash_search(SORT_SEARCH_NAMES[i])
-    YELLOW_BORDER
-    
+            
+# !!!TODO!!!
+# NEED TO ADD BREAK THAT WHEN len(pixel_list) == 0: IT CHANGES FROM PULLING
+# ITEMS OUT OF STASH TO MOVING TO THE NEW TAB AND PUTTING ITEMS
+# COULD KEEP A COUNTER DEPENDING ON WHICH ITEMS ARE BEING PULLED REACHES
+# MAX INVENTORY BEFORE SWITCHING MODES. Currency, essence, splinters, etc. 
+# counts to 60, influenced counts to 6. 60 item slots in inventory.
+# NEEDS TO CHECK FOR THE ITEM AGAIN AFTER MOVING TO INVENTORY AND BACK TO STASH
+# UNLESS LIST WAS ALREADY AT 0 IN PREVIOUS CHECK
+            
+for i in range(60):
+    #for j in range(len(SORT_SEARCH_NAMES)):
+    for j in range(1):
+        stash_search(SORT_SEARCH_NAMES[0])
+        stash_shot = screenshot(ENTIRE_STASH_COORDS)
+        
+        # convert image to pixel map
+        stash_shot_pixels = stash_shot.load()
+        
+        pixel_list = []
+        
+        for k in range(stash_shot.size[0]):
+                for l in range(stash_shot.size[1]):
+                    if stash_shot_pixels[k,l] == YELLOW_BORDER:
+                        pixel_list.append([k,l])
+                        break
+        if len(pixel_list) == 0:
+            break
+        else:
+            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
+            move_to_inventory()
 
 
 len(parsed_text)
