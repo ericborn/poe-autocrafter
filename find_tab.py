@@ -114,6 +114,8 @@ move_to_inventory()
 def stash_search(keyword):
     gui.moveTo(STASH_SEARCH_BOX)
     gui.leftClick()
+    gui.hotkey('ctrl', 'a')
+    gui.hotkey('backspace')
     gui.typewrite(keyword)
 
 stash_search('map')
@@ -169,26 +171,29 @@ def scroll_stash(direction):
         # left click
         gui.leftClick()
 
-test_1 = screenshot(ENTIRE_STASH_COORDS)
-stash_search(SORT_SEARCH_NAMES[0])
-test2 = screenshot(ENTIRE_STASH_COORDS)
+for i in range(60):
+    #for j in range(len(SORT_SEARCH_NAMES)):
+    for j in range(1):
+        stash_search(SORT_SEARCH_NAMES[0])
+        stash_shot = screenshot(ENTIRE_STASH_COORDS)
+        
+        # convert image to pixel map
+        stash_shot_pixels = stash_shot.load()
+        
+        pixel_list = []
+        
+        for k in range(stash_shot.size[0]):
+                for l in range(stash_shot.size[1]):
+                    if stash_shot_pixels[k,l] == YELLOW_BORDER:
+                        pixel_list.append([k,l])
+                        break
+        if len(pixel_list) == 0:
+            break
+        else:
+            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
+            move_to_inventory()
 
-# convert image 1 to pixel map
-test_1_pixels = test_1.load()
 
-# convert image 2 to pixel map
-test_2_pixels = test2.load()
-
-pixel_list = []
-
-for i in range(test_1.size[0]):
-        for j in range(test_1.size[1]):
-            if test_1_pixels[i,j] == test_2_pixels[i,j]:
-                pixel_list.append([i,j])
-
-pixel_list = list(set(pixel_list))
-
-gui.moveTo(pixel_list[0])
 
 # Main sort function
 # iterates through the SORT_SEARCH_NAMES list using the terms as items to
