@@ -16,153 +16,107 @@ from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
                       TOP_LEFT_CORNER, STASH_TAB_COORDS, STASH_YELLOW_TEXT,\
                       STASH_BLACK_TEXT, STASH_TAB_NAMES, BLACK_TEXT,\
                       LEFT_ARROW_CLICK_COORDS, YELLOW_TEXT, TAB_CLICK_COORDS,\
-                      TAB_BOARDER_COORDS, RIGHT_ARROW_CLICK_COORDS
+                      TAB_BOARDER_COORDS, RIGHT_ARROW_CLICK_COORDS,\
+                      STASH_SEARCH_BOX, SORT_SEARCH_NAMES, YELLOW_BORDER,\
+                      ENTIRE_STASH_COORDS
 
-#!!!TODO!!!
-# create function that takes tab name as input. Clicks tab scroll button to
-# the left and screenshots. repeats until the tab names havent changed. If tab
-# not found clicks right button x times and screenshots, parses text. Continues
-# until tab is found
-                      
-img = screenshot((220,130, 291,156))
-img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
-img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
-img = image_adjustments(img)
+def check_stash_tabs():
+    parsed_text = []
+    for i in range(len(TAB_BOARDER_COORDS)):
+        img = screenshot(TAB_BOARDER_COORDS[i])
+        img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
+        img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
+        img = image_adjustments(img)
+        for j in range(len(img)):
+            parsed_text.append(pytesseract.image_to_string(img[j], lang='eng', 
+                                                      config = '--psm 12').lower())
+    return(parsed_text)
+    
+check_stash_tabs()
 
-# checks for the desired mod on the item being rolled
 def check_for_text(text, coords):
     #gui.moveTo(ITEM_IN_STASH_COORDS)
     
     img = screenshot(coords)
-    img = color_text(img, STASH_YELLOW_TEXT)
-    img = color_text(img, STASH_BLACK_TEXT)
-    img = image_adjustments(img)
-
-
-img = screenshot((302,130, 362,156))
-img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
-img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
-img = image_adjustments(img)
-
-parsed_text = []
-for i in range(len(TAB_BOARDER_COORDS)):
-    img = screenshot(TAB_BOARDER_COORDS[i])
-    img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
     img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
+    img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
     img = image_adjustments(img)
-    for j in range(len(img)):
-        parsed_text.append(pytesseract.image_to_string(img[j], lang='eng', 
+    
+    parsed_text = []
+    for i in range(len(img)):
+        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
                                                   config = '--psm 12').lower())
-
-parsed_text
-
-range(3)
-range(4,7)
-range(8,12)
-range(12,16)
-range(16,20)
-range(20,24)
-range(24,28)
-
-#def click_on_tab(keyword):
-#    check = 0
-#    while check < 1:
-#        for i in range(4):
-#            if re.search(keyword, parsed_text[i]):
-#                print(i)
-#                gui.moveTo(TAB_CLICK_COORDS[0])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        for i in range(4,8): 
-#            if re.search(keyword, parsed_text[i]):
-#                print(i)
-#                gui.moveTo(TAB_CLICK_COORDS[1])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        for i in range(8,12):
-#            if re.search(keyword, parsed_text[i]):
-#                print(i)
-#                gui.moveTo(TAB_CLICK_COORDS[2])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        for i in range(12,16):
-#            if re.search(keyword, parsed_text[i]):
-#                gui.moveTo(TAB_CLICK_COORDS[3])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        for i in range(16,20):
-#            if re.search(keyword, parsed_text[i]):
-#                gui.moveTo(TAB_CLICK_COORDS[4])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        for i in range(20,24):
-#            if re.search(keyword, parsed_text[i]):
-#                gui.moveTo(TAB_CLICK_COORDS[5])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        for i in range(24,28):
-#            if re.search(keyword, parsed_text[i]):
-#                gui.moveTo(TAB_CLICK_COORDS[6])
-#                gui.leftClick()
-#                check += 1
-#                break
-#        
-#        for i in range(7):
-#            if check_stash_arrows(LEFT_ARROW_COORDS) == 0:
-#                scroll_stash(LEFT_ARROW_CLICK_COORDS)
-#                check += 1
-#                print('click left')
-#        for i in range(7):
-#            if check_stash_arrows(RIGHT_ARROW_COORDS) == 0:
-#                scroll_stash(RIGHT_ARROW_CLICK_COORDS)
-#                check += 1
-#                print('click right')         
+        
+    text_found = 0
+    #print(mod)
+    for i in range(len(parsed_text)):      
+        if bool(re.search(text, parsed_text[i])):
+            text_found += 1
+    # if mod found is greater than 0, mod is found so return -1 to stop rolling
+    # mod found = 0, return 1 which indicates continue to roll
+    if text_found > 0:
+        return(-1)
+    else:
+        return(1) 
 
 #!!!TODO!!!
 # FIND A WAY TO CLICK LEFT/RIGHT IF THE WORD ISNT FOUND
 def click_on_tab(keyword):
-    #check = 0
-    go_left = check_stash_arrows(LEFT_ARROW_COORDS)
-    go_right = check_stash_arrows(RIGHT_ARROW_COORDS)
-    print(go_left, go_right)
+    # takes a screenshot of the stash area, parses text and stores it as a list
+    stash_text = check_stash_tabs()
+    
+    # loops through the parsed text and depending on where its found
+    # clicks on the appropriate tab
+    click_check = 0
     for i in range(28):
-        if re.search(keyword, parsed_text[i]) and i <= 3:
-            gui.moveTo(TAB_CLICK_COORDS[0])
-            gui.leftClick()
+        if re.search(keyword, stash_text[i]) and i <= 3:
+            gui.leftClick(TAB_CLICK_COORDS[0])
+            click_check += 1
             break
-        elif re.search(keyword, parsed_text[i]) and 4 <= i <= 7:
-            gui.moveTo(TAB_CLICK_COORDS[1])
-            gui.leftClick()
+        elif re.search(keyword, stash_text[i]) and 4 <= i <= 7:
+            gui.leftClick(TAB_CLICK_COORDS[1])
+            click_check += 1
             break
-        elif re.search(keyword, parsed_text[i]) and 8 <= i <= 11:
-            gui.moveTo(TAB_CLICK_COORDS[2])
-            gui.leftClick()
+        elif re.search(keyword, stash_text[i]) and 8 <= i <= 11:
+            gui.leftClick(TAB_CLICK_COORDS[2])
+            click_check += 1
             break
-        elif re.search(keyword, parsed_text[i]) and 12 <= i <= 15:
-            gui.moveTo(TAB_CLICK_COORDS[3])
-            gui.leftClick()
+        elif re.search(keyword, stash_text[i]) and 12 <= i <= 15:
+            gui.leftClick(TAB_CLICK_COORDS[3])
+            click_check += 1
             break
-        elif re.search(keyword, parsed_text[i]) and 16 <= i <= 19:
-            gui.moveTo(TAB_CLICK_COORDS[4])
-            gui.leftClick()
+        elif re.search(keyword, stash_text[i]) and 16 <= i <= 19:
+            gui.leftClick(TAB_CLICK_COORDS[4])
+            click_check += 1
             break
-        elif re.search(keyword, parsed_text[i]) and 20 <= i <= 23:
-            gui.moveTo(TAB_CLICK_COORDS[5])
-            gui.leftClick()
+        elif re.search(keyword, stash_text[i]) and 20 <= i <= 23:
+            gui.leftClick(TAB_CLICK_COORDS[5])
+            click_check += 1
             break
-        elif re.search(keyword, parsed_text[i]) and 24 <= i <= 27:
-            gui.moveTo(TAB_CLICK_COORDS[6])
-            gui.leftClick()
+        elif re.search(keyword, stash_text[i]) and 24 <= i <= 27:
+            gui.leftClick(TAB_CLICK_COORDS[6])
+            click_check += 1
             break
+    return(click_check)
 
 
-click_on_tab('jjjj')
+click_on_tab('splt')
+
+def move_to_inventory():
+    gui.keyDown('ctrl')
+    gui.leftClick()
+    gui.keyUp('ctrl')
+
+move_to_inventory()
+
+# moves to search box location, clicks to start the cursor, 
+# types the search word
+def stash_search(keyword):
+    gui.moveTo(STASH_SEARCH_BOX)
+    gui.leftClick()
+    gui.typewrite(keyword)
+
+stash_search('map')
 
 # take screenshot based upon coords inputting
 img = screenshot(LEFT_ARROW_COORDS)
@@ -206,7 +160,6 @@ def check_stash_arrows(coords):
             if img_pixels[i,j] == GREY_ARROW_COLOR:
                 grey += 1
                 break
-
     return(grey)
     
 def scroll_stash(direction):
@@ -216,8 +169,37 @@ def scroll_stash(direction):
         # left click
         gui.leftClick()
 
+test_1 = screenshot(ENTIRE_STASH_COORDS)
+stash_search(SORT_SEARCH_NAMES[0])
+test2 = screenshot(ENTIRE_STASH_COORDS)
 
+# convert image 1 to pixel map
+test_1_pixels = test_1.load()
 
+# convert image 2 to pixel map
+test_2_pixels = test2.load()
+
+pixel_list = []
+
+for i in range(test_1.size[0]):
+        for j in range(test_1.size[1]):
+            if test_1_pixels[i,j] == test_2_pixels[i,j]:
+                pixel_list.append([i,j])
+
+pixel_list = list(set(pixel_list))
+
+gui.moveTo(pixel_list[0])
+
+# Main sort function
+# iterates through the SORT_SEARCH_NAMES list using the terms as items to
+# search for, finds the highlighted item, moves it to the players inventory,
+# finds and moves to the appropriate tab and moves the items from the inventory
+# to the tab
+for i in range(len(SORT_SEARCH_NAMES)):
+    screenshot(ENTIRE_STASH_COORDS)
+    stash_search(SORT_SEARCH_NAMES[i])
+    YELLOW_BORDER
+    
 
 
 len(parsed_text)

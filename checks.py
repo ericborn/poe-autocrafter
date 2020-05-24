@@ -186,14 +186,14 @@ def check_for_text(text, coords):
         parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
                                                   config = '--psm 12').lower())
         
-    mod_found = 0
+    text_found = 0
     #print(mod)
     for i in range(len(parsed_text)):      
         if bool(re.search(text, parsed_text[i])):
-            mod_found += 1
+            text_found += 1
     # if mod found is greater than 0, mod is found so return -1 to stop rolling
     # mod found = 0, return 1 which indicates continue to roll
-    if mod_found > 0:
+    if text_found > 0:
         return(-1)
     else:
         return(1)  

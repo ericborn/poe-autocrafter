@@ -22,7 +22,7 @@ RIGHT_ARROW_COORDS = (609,130, 626,156)
 STASH_TAB_COORDS = (35, 128, 606, 158)
 
 # entire stash tab
-ENTIRE_STASH_COORDS = (15, 170, 650, 750)
+ENTIRE_STASH_COORDS = (18, 162, 647, 792)
 
 # coords for the boarders of each stash tab
 TAB_BOARDER_COORDS = ((43,130,120,156), (130,130,208,156),(220,130,291,156),  
@@ -112,3 +112,6 @@ HEADER_WORDS = ['stash','inventory']
 # Names for the stash tabs, used for sorting
 STASH_TAB_NAMES = ['SPLT','ESSE','MAPS','MISC','CARD','GEMS','CURR','VEIL',
                    'JEWL','UNQE','FOSS','INFL','DUMP','INCU']
+
+SORT_SEARCH_NAMES = ['splinter', 'delirium orb', 'essence', 'map', 'oil', 
+                     'card', 'gem', 'currency', 'veiled', 'prophecy']
