@@ -115,6 +115,8 @@ CURRENCY_NAMES = ['orb of alteration', 'chaos orb', 'orb of scouring',
 # Text for the stash and inventory headers
 HEADER_WORDS = ['stash','inventory']
 
+EQUIPMENT_SORTING_INDEX = [7, 1, 1, 4, 1, 1, 4, 1, 1, 1, 2, 1, 1, 6, 1]
+
 # Names for the stash tabs, used for sorting
 STASH_TAB_NAMES = ['splt', 'splt', 'splt', 'splt', 'splt', 'splt', 'splt',
                    'esse', 'prop', 'misc', 'misc', 'misc', 'misc', 'veil',
