@@ -193,19 +193,21 @@ for i in range(6):
         print('found it')
         break
 
-# divide the total_items by 5, which is number of items in the inventory column
-# uses ceiling from math to round up which results in the total number of 
-# columns needed to click through
+# divide the total_items, which is number of items in the moved to the 
+# inventory, by 5 which is the max slots per column. uses ceiling from math to 
+# round up which results in the total number of columns needed to click 
+# through.
 
-m.ceil(total_items / 5)
-for j in range(m.ceil(total_items / 5)):
-    for i in range(total_items):
-        #print(i, j)
-        print([INVENTORY_Y_COORDS[i], INVENTORY_X_COORDS[j]])
-        
-        gui.moveTo([INVENTORY_Y_COORDS[i], INVENTORY_X_COORDS[j])
-        item_to_inventory()
-
+total_moved = 0
+for i in range(m.ceil(total_items / 5)):
+    for j in range(5):
+        if total_moved == total_items:
+            break
+        else:
+            print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
+            gui.moveTo(INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j])
+            total_moved += 1
+            item_to_inventory()
 
 # search for the first item from the SORT_SEARCH_NAMES list
 stash_search(SORT_SEARCH_NAMES[0])
