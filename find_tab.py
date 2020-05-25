@@ -73,31 +73,31 @@ def click_on_tab(keyword):
         if re.search(keyword, stash_text[i]) and i <= 3:
             gui.leftClick(TAB_CLICK_COORDS[0])
             click_check += 1
-            break
+            return(click_check)
         elif re.search(keyword, stash_text[i]) and 4 <= i <= 7:
             gui.leftClick(TAB_CLICK_COORDS[1])
             click_check += 1
-            break
+            return(click_check)
         elif re.search(keyword, stash_text[i]) and 8 <= i <= 11:
             gui.leftClick(TAB_CLICK_COORDS[2])
             click_check += 1
-            break
+            return(click_check)
         elif re.search(keyword, stash_text[i]) and 12 <= i <= 15:
             gui.leftClick(TAB_CLICK_COORDS[3])
             click_check += 1
-            break
+            return(click_check)
         elif re.search(keyword, stash_text[i]) and 16 <= i <= 19:
             gui.leftClick(TAB_CLICK_COORDS[4])
             click_check += 1
-            break
+            return(click_check)
         elif re.search(keyword, stash_text[i]) and 20 <= i <= 23:
             gui.leftClick(TAB_CLICK_COORDS[5])
             click_check += 1
-            break
+            return(click_check)
         elif re.search(keyword, stash_text[i]) and 24 <= i <= 27:
             gui.leftClick(TAB_CLICK_COORDS[6])
             click_check += 1
-            break
+            return(click_check)
     return(click_check)
 
 def item_to_inventory():
@@ -137,7 +137,7 @@ def check_stash_arrows(coords):
         for j in range(img.size[1]):
             if img_pixels[i,j] == GREY_ARROW_COLOR:
                 grey += 1
-                break
+                return(grey)
     return(grey)
     
 def scroll_stash(direction):
@@ -148,15 +148,47 @@ def scroll_stash(direction):
         gui.leftClick()
 
 
+def move_from_stash():
+    # screenshot the stash
+    stash_shot = screenshot(ENTIRE_STASH_COORDS)
+    
+    # convert image to pixel map
+    stash_shot_pixels = stash_shot.load()
+    
+    # create empty list to store item yellow border coordinates
+    pixel_list = []
+    
+    # total_items moved into the inventory
+    total_items = 0
+    
+    for k in range(stash_shot.size[0]):
+        for l in range(stash_shot.size[1]):
+            if stash_shot_pixels[k,l] == YELLOW_BORDER:
+                pixel_list.append([k,l])
+                break
+
+    if len(pixel_list) == 0:
+        print('none found')
+        return(total_items)
+    else:
+        gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
+        total_items += 1
+        item_to_inventory()
+
+
 # find and click on a dump tab
 click_on_tab('dump')
 
+#for i in range(len(STASH_TAB_NAMES)):
+    
 # search for the first item from the SORT_SEARCH_NAMES list
 stash_search(SORT_SEARCH_NAMES[0])
 
+# used to track the total items moved from the stash to the inventory
+# later used to move the same number of items into the appropriate stash tab
 total_items = 0
 
-for i in range(60):
+for j in range(60):
     # screenshot the stash
     stash_shot = screenshot(ENTIRE_STASH_COORDS)
     
@@ -183,14 +215,17 @@ for i in range(60):
 # search for splinter tab
 # if the click_on_tab returns 0, the tab name wasnt found
 # check to see if the left scroll arrow is grey, if it is, scroll right
+number_of_scrolls = 0
 for i in range(6):
-    tab_check = click_on_tab(STASH_TAB_NAMES[0])
+    tab_check = click_on_tab(STASH_TAB_NAMES[1])
 
     if tab_check == 0:
         #if check_stash_arrows(LEFT_ARROW_COORDS) > 0:
         scroll_stash(RIGHT_ARROW_CLICK_COORDS)
+        number_of_scrolls += 1
     else:
         print('found it')
+        gui.leftClick()
         break
 
 # divide the total_items, which is number of items in the moved to the 
@@ -204,63 +239,20 @@ for i in range(m.ceil(total_items / 5)):
         if total_moved == total_items:
             break
         else:
-            print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
+            #print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
             gui.moveTo(INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j])
             total_moved += 1
             item_to_inventory()
 
-# search for the first item from the SORT_SEARCH_NAMES list
-stash_search(SORT_SEARCH_NAMES[0])
+# scroll back to where dump was found
+for i in range(number_of_scrolls):
+    scroll_stash(LEFT_ARROW_CLICK_COORDS)
+
+# click on dump
+click_on_tab('dump')
 
 
-
-
-
-
-
-# take screenshot based upon coords inputting
-img = screenshot(LEFT_ARROW_COORDS)
-
-# convert image to pixel map
-img_pixels = img.load()
-
-grey = 0
-
-# check pixel map for gray values indicating 
-#stash cannot be scrolled that way any further
-for i in range(img.size[0]):
-    for j in range(img.size[1]):
-        if img_pixels[i,j] == GREY_ARROW_COLOR:
-            grey += 1
-            break
-print(grey)
-
-
-
-
-
-
-for i in range(60):
-    #for j in range(len(SORT_SEARCH_NAMES)):
-    for j in range(1):
-        stash_search(SORT_SEARCH_NAMES[0])
-        stash_shot = screenshot(ENTIRE_STASH_COORDS)
-        
-        # convert image to pixel map
-        stash_shot_pixels = stash_shot.load()
-        
-        pixel_list = []
-        
-        for k in range(stash_shot.size[0]):
-                for l in range(stash_shot.size[1]):
-                    if stash_shot_pixels[k,l] == YELLOW_BORDER:
-                        pixel_list.append([k,l])
-                        break
-        if len(pixel_list) == 0:
-            break
-        else:
-            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
-            move_to_inventory()
+check_stash_arrows(RIGHT_ARROW_COORDS)
 
 
 
