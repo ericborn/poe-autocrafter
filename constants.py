@@ -48,6 +48,12 @@ RIGHT_ARROW_CLICK_COORDS = (615,145)
 TAB_CLICK_COORDS = ((80,145), (165,145), (255,145), (330,145), (400,145), 
                     (480,145), (560,145))
 
+INVENTORY_Y_COORDS = [612,667,720,773,822]
+
+INVENTORY_X_COORDS = [1296,1350,1403,1457,1507,1562,
+                      1614,1666,1718,1770,1822,1874]
+
+
 # stash search box
 STASH_SEARCH_BOX = (520, 895)
 
@@ -110,21 +116,18 @@ CURRENCY_NAMES = ['orb of alteration', 'chaos orb', 'orb of scouring',
 HEADER_WORDS = ['stash','inventory']
 
 # Names for the stash tabs, used for sorting
-STASH_TAB_NAMES = ['SPLT','SPLT','SPLT','SPLT','SPLT','SPLT','SPLT',
-                   'ESSE','PROP','MISC','MISC','MISC','MISC','VEIL',
-                   'CARD','JEWL','JEWL','JEWL','JEWL','INCU','FOSS',
-                   'CURR','GEMS','GEMS','MAPS','UNQE','INFL','INFL',
-                   'INFL','INFL','INFL','INFL','GEAR']
+STASH_TAB_NAMES = ['splt', 'splt', 'splt', 'splt', 'splt', 'splt', 'splt',
+                   'esse', 'prop', 'misc', 'misc', 'misc', 'misc', 'veil',
+                   'card', 'jewl', 'jewl', 'jewl', 'jewl', 'incu', 'foss',
+                   'curr', 'gems', 'gems', 'maps', 'unqe', 'infl', 'infl',
+                   'infl', 'infl', 'infl', 'infl', 'gear']
 
-SORT_SEARCH_NAMES = ['Splinter','scarab','sacrifice at dawn',
+SORT_SEARCH_NAMES = ['splinter','scarab','sacrifice at dawn',
                      'sacrifice at dusk', 'sacrifice at noon', 
-                     'sacrifice at midnight', 'divine vessel','Essence'
-                     'prophecy to your','Oil','tane''s','stacked deck',
-                     'delirium orb','Veiled','Card','eye jewel','cobalt jewel',
+                     'sacrifice at midnight', 'divine vessel','essence',
+                     'prophecy to your','oil','tane\'s','stacked deck',
+                     'delirium orb','veiled','card','eye jewel','cobalt jewel',
                      'viridian jewel', 'crimson jewel','incubator','fossil',
-                     'Currency','quality gem','vaal gem','Map','unique',
+                     'currency','quality gem','vaal gem','Map','unique',
                      'shaper','elder', 'redeemer', 'crusader', 'warlord',
                      'hunter', 'talisman']
-
-
-
