@@ -184,12 +184,52 @@ click_on_tab('dump')
 total_items = 0
 
 # works 
+for i in range(len(SORT_SEARCH_NAMES)):
+    if i < 7:
+        print(i, 'splt')
+    if i == 7:
+        print(i, 'esse')
+    if i == 8:
+        print(i, 'prop')
+    if 9 <= i <= 12:
+        print(i, 'misc')
+    if i == 13:
+        print(i, 'veil')
+    if i == 14:
+        print(i, 'card')
+    if 15 <= i <= 18:
+        print(i, 'jewl')
+    if i == 19:
+        print(i, 'incu')
+    if i == 20:
+        print(i, 'foss')
+    if i == 21:
+        print(i, 'curr')
+    if 22 <= i <= 23:
+        print(i, 'gems')
+    if i == 24:
+        print(i, 'maps')
+    if i == 25:
+        print(i, 'unqe')
+    if 26 <= i <= 31:
+        print(i, 'infl')   
+    if i == 32:
+        print(i, 'gear')
+        
+
+    
+
 if total_items < 60:
     for i in range(len(EQUIPMENT_SORTING_INDEX)):
-    #for j in range(EQUIPMENT_SORTING_INDEX[i]):    
+        for j in range(EQUIPMENT_SORTING_INDEX[i]): 
+            print(EQUIPMENT_SORTING_INDEX[i])
+            STASH_TAB_NAMES
+            
+            
+            
         # search for the first item from the SORT_SEARCH_NAMES list
         #print(EQUIPMENT_SORTING_INDEX[j])
-        print(SORT_SEARCH_NAMES[i])
+            print(SORT_SEARCH_NAMES[j])
         
         stash_search(SORT_SEARCH_NAMES[i])
     
