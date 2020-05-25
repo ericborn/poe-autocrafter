@@ -140,40 +140,59 @@ def check_stash_arrows(coords):
                 return(grey)
     return(grey)
     
-def scroll_stash(direction):
+def click_stash_arrow(direction):
     # move mouse to arrow in stash
     gui.moveTo(direction)
     for i in range(7):
         # left click
         gui.leftClick()
 
+def scroll_stash(stash_tab_name):
+    # if the click_on_tab returns 0, the tab name wasnt found
+    # check to see if the left scroll arrow is grey, if it is, scroll right
+    number_of_scrolls = 0
+    for i in range(6):
+        tab_check = click_on_tab(stash_tab_name)
+    
+        if tab_check == 0:
+            #if check_stash_arrows(LEFT_ARROW_COORDS) > 0:
+            click_stash_arrow(RIGHT_ARROW_CLICK_COORDS)
+            number_of_scrolls += 1
+        else:
+            print('found it')
+            gui.leftClick()
+            return(number_of_scrolls)
+
+
 
 def move_from_stash():
-    # screenshot the stash
-    stash_shot = screenshot(ENTIRE_STASH_COORDS)
-    
-    # convert image to pixel map
-    stash_shot_pixels = stash_shot.load()
-    
-    # create empty list to store item yellow border coordinates
-    pixel_list = []
-    
     # total_items moved into the inventory
-    #total_items = 0
+    total_items = 0
     
-    for k in range(stash_shot.size[0]):
-        for l in range(stash_shot.size[1]):
-            if stash_shot_pixels[k,l] == YELLOW_BORDER:
-                pixel_list.append([k,l])
-                break
+    for i in range(60):
+    
+        # screenshot the stash
+        img = screenshot(ENTIRE_STASH_COORDS)
+        
+        # convert image to pixel map
+        img_pixels = img.load()
+        
+        # create empty list to store item yellow border coordinates
+        pixel_list = []
 
-    if len(pixel_list) == 0:
-        print('none found')
-        return(0)
-    else:
-        gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
-        item_to_inventory()
-        return(1)
+        for k in range(img.size[0]):
+            for l in range(img.size[1]):
+                if img_pixels[k,l] == YELLOW_BORDER:
+                    pixel_list.append([k,l])
+                    break
+    
+        if len(pixel_list) == 0:
+            print('none found')
+            return(total_items)
+        else:
+            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
+            item_to_inventory()
+            total_items += 1
 
 def move_to_stash(total_items):
     # divide the total_items, which is number of items in the moved to the 
@@ -184,12 +203,15 @@ def move_to_stash(total_items):
     for i in range(m.ceil(total_items / 5)):
         for j in range(5):
             if total_moved == total_items:
-                return()
+                return
             else:
                 #print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
                 gui.moveTo(INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j])
                 total_moved += 1
                 item_to_inventory()
+
+#for i in range(len(STASH_TAB_NAMES)):
+#    print(i, STASH_TAB_NAMES[i])
 
 # find and click on a dump tab
 click_on_tab('dump')
@@ -198,59 +220,302 @@ click_on_tab('dump')
 # later used to move the same number of items into the appropriate stash tab
 total_items = 0
 
-
-
 if total_items < 60: 
-    for i in range(len(SORT_SEARCH_NAMES)):
-        
-        if i <= 6 or total_items == 60:
+    for i in range(12):
+    #for i in range(len(SORT_SEARCH_NAMES)):
+        if i <= 3 and total_items <= 60:
             stash_search(SORT_SEARCH_NAMES[i])
-            move_from_stash()
-        
-        if i == 6 or total_items == 60:
-            move_to_stash(total_items)
-            print(total_items, 'splt')
-            total_items = 0
-        if i == 7:
-            print(i, 'esse')
-        if i == 8:
-            print(i, 'prop')
-        if 9 <= i <= 12:
-            print(i, 'misc')
-        if i == 13:
-            print(i, 'veil')
-        if i == 14:
-            print(i, 'card')
-        if 15 <= i <= 18:
-            print(i, 'jewl')
-        if i == 19:
-            print(i, 'incu')
-        if i == 20:
-            print(i, 'foss')
-        if i == 21:
-            print(i, 'curr')
-        if 22 <= i <= 23:
-            print(i, 'gems')
-        if i == 24:
-            print(i, 'maps')
-        if i == 25:
-            print(i, 'unqe')
-        if 26 <= i <= 31:
-            print(i, 'infl')   
-        if i == 32:
-            print(i, 'gear')
+            total_items += move_from_stash()
+            print(i)
 
-        stop_check = 0
+        if i == 3 or total_items == 60:
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+
+        if  3 < i <= 11 and total_items <= 60:
+            stash_search(SORT_SEARCH_NAMES[i])
+            total_items += move_from_stash()
+            print(i)
+            
+        if i == 11 or total_items == 60:
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+
+        if i == 12 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+         
+        if i == 13 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+
+        if i == 14 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+
+        if i == 15 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+
+        if 15 < i <= 19 and total_items <= 60:
+            stash_search(SORT_SEARCH_NAMES[i])
+            total_items += move_from_stash()
+            print(i)
+
+        if i == 19 or total_items == 60:
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
         
-        for j in range(60):
-            stop_check = move_from_stash()
-            if stop_check == 0:
-                break
-            else:
-                total_items += stop_check
+        if i == 20 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
     
+        if i == 21 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+        if i == 22 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
     
-    
+        if 22 < i <= 24 and total_items <= 60:
+            stash_search(SORT_SEARCH_NAMES[i])
+            total_items += move_from_stash()
+            print(i)
+
+        if i == 24 or total_items == 60:
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+                
+        if i == 25 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()        
+       
+        if i == 26 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()  
+          
+        if 26 < i <= 32 and total_items <= 60:
+            stash_search(SORT_SEARCH_NAMES[i])
+            total_items += move_from_stash()
+            print(i)
+
+        if i == 32 or total_items == 60:
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+
+        if i == 33 or total_items == 60:
+            scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+
+            number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
+            move_to_stash(total_items)
+            print(i)
+            print(total_items)
+            total_items = 0
+            
+            # scroll back to where dump was found
+            for j in range(number_of_scrolls):
+                click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+            
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+        
+            # click on dump
+            click_on_tab('dump')
+            gui.leftClick()
+            
+            
 #    # screenshot the stash
 #    stash_shot = screenshot(ENTIRE_STASH_COORDS)
 #    
@@ -274,32 +539,11 @@ if total_items < 60:
 #        total_items += 1
 #        item_to_inventory()
 
-# search for splinter tab
-# if the click_on_tab returns 0, the tab name wasnt found
-# check to see if the left scroll arrow is grey, if it is, scroll right
-number_of_scrolls = 0
-for i in range(6):
-    tab_check = click_on_tab(STASH_TAB_NAMES[0])
-
-    if tab_check == 0:
-        #if check_stash_arrows(LEFT_ARROW_COORDS) > 0:
-        scroll_stash(RIGHT_ARROW_CLICK_COORDS)
-        number_of_scrolls += 1
-    else:
-        print('found it')
-        gui.leftClick()
-        break
 
 
 
 
-# scroll back to where dump was found
-for i in range(number_of_scrolls):
-    scroll_stash(LEFT_ARROW_CLICK_COORDS)
 
-# click on dump
-click_on_tab('dump')
-gui.leftClick()
 
 
 
