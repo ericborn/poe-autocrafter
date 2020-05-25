@@ -103,16 +103,28 @@ STASH_BLACK_TEXT = ((42,28,13), (60,53,47), (53,38,13), (85,57,10), (81,55,11),
 
 # String lists
 # List of currency types
-CURRENCY_NAMES = ['orb of alteration', 'chaos orb', 'orb of scouring', \
+CURRENCY_NAMES = ['orb of alteration', 'chaos orb', 'orb of scouring',
                   'orb of transmutation', 'regal orb']
 
 # Text for the stash and inventory headers
 HEADER_WORDS = ['stash','inventory']
 
 # Names for the stash tabs, used for sorting
-STASH_TAB_NAMES = ['SPLT','ESSE','MAPS','MISC','CARD','GEMS','CURR','VEIL',
-                   'JEWL','UNQE','FOSS','INFL','DUMP','INCU']
+STASH_TAB_NAMES = ['SPLT','SPLT','SPLT','SPLT','SPLT','SPLT','SPLT',
+                   'ESSE','PROP','MISC','MISC','MISC','MISC','VEIL',
+                   'CARD','JEWL','JEWL','JEWL','JEWL','INCU','FOSS',
+                   'CURR','GEMS','GEMS','MAPS','UNQE','INFL','INFL',
+                   'INFL','INFL','INFL','INFL','GEAR']
 
-SORT_SEARCH_NAMES = ['splinter', 'delirium orb', 'essence', 'map', 'oil', 
-                     'card', 'gem', 'currency', 'veiled', 'prophecy', 'shaper',
-                     'elder', 'redeemer', 'crusader', 'warlord', 'hunter']
+SORT_SEARCH_NAMES = ['Splinter','scarab','sacrifice at dawn',
+                     'sacrifice at dusk', 'sacrifice at noon', 
+                     'sacrifice at midnight', 'divine vessel','Essence'
+                     'prophecy to your','Oil','tane''s','stacked deck',
+                     'delirium orb','Veiled','Card','eye jewel','cobalt jewel',
+                     'viridian jewel', 'crimson jewel','incubator','fossil',
+                     'Currency','quality gem','vaal gem','Map','unique',
+                     'shaper','elder', 'redeemer', 'crusader', 'warlord',
+                     'hunter', 'talisman']
+
+
+
