@@ -220,15 +220,17 @@ click_on_tab('dump')
 # later used to move the same number of items into the appropriate stash tab
 total_items = 0
 
+#!!!TODO!!!
+# CHECKING FOR TOTAL_ITEMS != 0 MAY HAVE BROKE THE MOVE BACK AND CLICK ON DUMP
+# RUN THROUGH 0-13 MANUALLY TO CHECK
 if total_items < 60: 
-    #for i in range(12):
     for i in range(len(SORT_SEARCH_NAMES)):
         if i <= 3 and total_items <= 60:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
 
-        if i == 3 or total_items == 60:
+        if (i == 3 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
             print(i)
@@ -248,7 +250,7 @@ if total_items < 60:
             total_items += move_from_stash()
             print(i)
             
-        if i == 11 or total_items == 60:
+        if (i == 11 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
             print(i)
@@ -263,7 +265,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
 
-        if i == 12 or total_items == 60:
+        if (i == 12 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -281,7 +283,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
          
-        if i == 13 or total_items == 60:
+        if (i == 13 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -299,7 +301,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
 
-        if i == 14 or total_items == 60:
+        if (i == 14 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -317,7 +319,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
 
-        if i == 15 or total_items == 60:
+        if (i == 15 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -340,7 +342,7 @@ if total_items < 60:
             total_items += move_from_stash()
             print(i)
 
-        if i == 19 or total_items == 60:
+        if- (i == 19 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -358,7 +360,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
             
-        if i == 20 or total_items == 60:
+        if (i == 20 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -376,7 +378,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
     
-        if i == 21 or total_items == 60:
+        if (i == 21 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -394,7 +396,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
             
-        if i == 22 or total_items == 60:
+        if (i == 22 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -417,7 +419,7 @@ if total_items < 60:
             total_items += move_from_stash()
             print(i)
 
-        if i == 24 or total_items == 60:
+        if (i == 24 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
             print(i)
@@ -428,7 +430,7 @@ if total_items < 60:
             for j in range(number_of_scrolls):
                 click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
                 
-        if i == 25 or total_items == 60:
+        if (i == 25 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -446,7 +448,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()     
        
-        if i == 26 or total_items == 60:
+        if (i == 26 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -469,7 +471,7 @@ if total_items < 60:
             total_items += move_from_stash()
             print(i)
 
-        if i == 32 or total_items == 60:
+        if (i == 32 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -487,7 +489,7 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
             
-        if i == 33 or total_items == 60:
+        if (i == 33 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
