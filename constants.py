@@ -118,20 +118,18 @@ HEADER_WORDS = ['stash','inventory']
 EQUIPMENT_SORTING_INDEX = [4, 8, 1, 1, 1, 1, 4, 1, 1, 1, 2, 1, 1, 6, 1]
 
 # Names for the stash tabs, used for sorting
-STASH_TAB_NAMES = ['misc', 'misc', 'misc', 'misc', 'splt', 'splt', 'splt',
-                   'splt', 'splt', 'splt', 'splt', 'splt', 'esse', 'prop',
-                   'veil', 'card', 'jewl', 'jewl', 'jewl', 'jewl', 'incu',
-                   'foss', 'curr', 'gems', 'gems', 'maps', 'unqe', 'infl',
-                   'infl', 'infl', 'infl', 'infl', 'infl', 'gear']
+STASH_TAB_NAMES = ['misc', 'splt', 'esse', 'prop','veil', 'card', 'jewl',
+                   'incu', 'foss', 'curr', 'gems', 'maps', 'unqe', 'infl',
+                   'gear']
 
-SORT_SEARCH_NAMES = ['oil','tane\'s','stacked deck','delirium orb',
-                     'splinter','scarab','sacrifice at dawn',
+SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck','delirium orb'],
+                     ['splinter','scarab','sacrifice at dawn',
                      'sacrifice at dusk', 'sacrifice at noon', 
                      'sacrifice at midnight', 'divine vessel',
-                     'offering to the goddess','essence','prophecy to your',
-                     'veiled',
-                     'card','eye jewel','cobalt jewel','viridian jewel', 
-                     'crimson jewel','incubator','fossil',
-                     'currency','quality gem','vaal gem','Map','unique',
-                     'shaper','elder', 'redeemer', 'crusader', 'warlord',
-                     'hunter', 'talisman']
+                     'offering to the goddess'],['essence'],
+                     ['prophecy to your'],['veiled'],['card'],
+                     ['eye jewel','cobalt jewel','viridian jewel', 
+                     'crimson jewel'],['incubator'],['fossil'],['currency'],
+                     ['quality gem','vaal gem'],['Map'],['unique'],
+                     ['shaper','elder', 'redeemer', 'crusader', 'warlord',
+                     'hunter'], ['talisman']]
