@@ -219,19 +219,60 @@ click_on_tab('dump')
 
 # used to track the total items moved from the stash to the inventory
 # later used to move the same number of items into the appropriate stash tab
+#total_items = 0
+
+count = 0
 total_items = 0
-
-
-def search_and_move(search_name):
-    total_items = 0
-    for i in range(len(search_name)):
-        stash_search(search_name[i])
+while count < 60:
+    for i in range(len(SORT_SEARCH_NAMES[i])):
+        items = 0
+        print(SORT_SEARCH_NAMES[i])
         t.sleep(1)
-        total_items += move_from_stash()
+        items += 1
+    if items == 0:
+        count += 10
+        print(count)
+    elif items >= 1:
+        count += 1
+        print(count)
+print(total_items)
+
+fake_item_list = ['card', 'card', 'card']
+
+for i in range(len(SORT_SEARCH_NAMES[i])):
+    items = 0
+    if SORT_SEARCH_NAMES[i] == fake_item_list[0]:
+        items += 1
+        fake_item_list.pop
+if items == 0:
+    count += 10
+    print(count)
+elif items >= 1:
+    count += 1
+    print(count)
+
+
+
+
+# breaks out of the function if 60 items moved, which is max inventory
+def search_and_move(search_name):
+    count = 0
+    total_items = 0
+    while count < 60:
+        for i in range(len(search_name)):
+            stash_search(search_name[i])
+            t.sleep(1)
+            total_items += move_from_stash()
+        if total_items == 0:
+            count += 10
+            print(count)
+        elif total_items >= 1:
+            count += 1
+            print(count)
         print(search_name)
     return(total_items)
 
-def scroll_and_put(tab_name, total_items):
+def scroll_and_put(tab_name, total_items, dump_position):
     if total_items == 0:
         return()
     else:
@@ -246,12 +287,19 @@ def scroll_and_put(tab_name, total_items):
         
         # click on dump
         #click_on_tab('dump')
-        gui.leftClick(TAB_CLICK_COORDS[0])
+        t.sleep(0.5)
+        gui.moveTo(TAB_CLICK_COORDS[dump_position])
+        t.sleep(0.2)
+        gui.leftClick()
+
+#!!!TODO!!!
+# NEED TO MAKE CHECKS FOR NON-SINGLE SPACE ITEMS (ARMOR, WEPS, ETC.)
+# WHEN MOVING FROM INV TO STASH, IT CLICKS THE BOXES WHERE ITEMS MAY NOT EXIST
 
 total_items = 0
-for i in range(5):
-    total_items = search_and_move(SORT_SEARCH_NAMES[0])
-    scroll_and_put(STASH_TAB_NAMES[0], total_items)
+for i in range(len(SORT_SEARCH_NAMES)):
+    total_items = search_and_move(SORT_SEARCH_NAMES[i])
+    scroll_and_put(STASH_TAB_NAMES[i], total_items, 0)
 
 
 # CHECKING FOR TOTAL_ITEMS != 0 MAY HAVE BROKE THE MOVE BACK AND CLICK ON DUMP
