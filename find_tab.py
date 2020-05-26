@@ -7,6 +7,7 @@ Created on Mon May 18 12:32:31 2020
 Used to find a particular tab within the inventory
 """
 import re
+import time as t
 import math as m
 import pyautogui as gui
 import pytesseract
@@ -220,21 +221,53 @@ click_on_tab('dump')
 # later used to move the same number of items into the appropriate stash tab
 total_items = 0
 
-#!!!TODO!!!
+
+def search_and_move(search_name):
+    total_items = 0
+    for i in range(len(search_name)):
+        stash_search(search_name[i])
+        t.sleep(1)
+        total_items += move_from_stash()
+        print(search_name)
+    return(total_items)
+
+def scroll_and_put(tab_name, total_items):
+    if total_items == 0:
+        return()
+    else:
+        number_of_scrolls = scroll_stash(tab_name)
+        move_to_stash(total_items)
+        print('moved', total_items)
+        total_items = 0
+        
+        # scroll back to where dump was found
+        for j in range(number_of_scrolls):
+            click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+        
+        # click on dump
+        #click_on_tab('dump')
+        gui.leftClick(TAB_CLICK_COORDS[0])
+
+total_items = 0
+for i in range(5):
+    total_items = search_and_move(SORT_SEARCH_NAMES[0])
+    scroll_and_put(STASH_TAB_NAMES[0], total_items)
+
+
 # CHECKING FOR TOTAL_ITEMS != 0 MAY HAVE BROKE THE MOVE BACK AND CLICK ON DUMP
 # RUN THROUGH 0-13 MANUALLY TO CHECK
 if total_items < 60: 
     for i in range(len(SORT_SEARCH_NAMES)):
         if i <= 3 and total_items <= 60:
             stash_search(SORT_SEARCH_NAMES[i])
+            t.sleep(1)
             total_items += move_from_stash()
-            print(i)
+            print('item', i)
 
         if (i == 3 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
-            print(i)
-            print(total_items)
+            print('moved', total_items)
             total_items = 0
             
             # scroll back to where dump was found
@@ -247,14 +280,14 @@ if total_items < 60:
 
         if  3 < i <= 11 and total_items <= 60:
             stash_search(SORT_SEARCH_NAMES[i])
+            t.sleep(1)
             total_items += move_from_stash()
-            print(i)
+            print('item', i)
             
         if (i == 11 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
-            print(i)
-            print(total_items)
+            print('moved', total_items)
             total_items = 0
             
             # scroll back to where dump was found
@@ -265,14 +298,16 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
 
-        if (i == 12 or total_items == 60) and total_items != 0:
+        if i == 12 or total_items == 60:
             stash_search(SORT_SEARCH_NAMES[i])
+            t.sleep(1)
             total_items += move_from_stash()
-            print(i)
-            
+            print('item', i)
+        
+        if (i == 12 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
-            print(total_items)
+            print('moved', total_items)
             total_items = 0
             
             # scroll back to where dump was found
@@ -283,11 +318,12 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
          
-        if (i == 13 or total_items == 60) and total_items != 0:
+        if i == 13 or total_items == 60:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
-            
+        
+        if (i == 13 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
             print(total_items)
@@ -301,11 +337,12 @@ if total_items < 60:
             click_on_tab('dump')
             gui.leftClick()
 
-        if (i == 14 or total_items == 60) and total_items != 0:
+        if i == 14 or total_items == 60:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
-            
+        
+        if (i == 14 or total_items == 60) and total_items != 0:
             number_of_scrolls = scroll_stash(STASH_TAB_NAMES[i])
             move_to_stash(total_items)
             print(total_items)
@@ -342,7 +379,7 @@ if total_items < 60:
             total_items += move_from_stash()
             print(i)
 
-        if- (i == 19 or total_items == 60) and total_items != 0:
+        if (i == 19 or total_items == 60) and total_items != 0:
             stash_search(SORT_SEARCH_NAMES[i])
             total_items += move_from_stash()
             print(i)
@@ -556,54 +593,54 @@ if total_items < 60:
        
 # NEEDS TO REVERSE THE NUMBER OF CLICKS IT MOVED TO FIND THE TAB TO DROP IN    
     
-for i in range(60):
-    #for j in range(len(SORT_SEARCH_NAMES)):
-    for j in range(1):
-        stash_search(SORT_SEARCH_NAMES[0])
-        stash_shot = screenshot(ENTIRE_STASH_COORDS)
-        
-        # convert image to pixel map
-        stash_shot_pixels = stash_shot.load()
-        
-        pixel_list = []
-        
-        for k in range(stash_shot.size[0]):
-                for l in range(stash_shot.size[1]):
-                    if stash_shot_pixels[k,l] == YELLOW_BORDER:
-                        pixel_list.append([k,l])
-                        break
-        if len(pixel_list) == 0:
-            break
-        else:
-            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
-            move_to_inventory()
-
-
-len(parsed_text)
-       
-for i in range(8,11):
-    if re.search('esse', parsed_text[i]):
-        print(i)
-        gui.moveTo(TAB_CLICK_COORDS[1])
-    
-        print(parsed_text[8:11])
-        
-    
-    # split on \n
-    for i in range(len(parsed_text)):
-        parsed_text[i] = parsed_text[i].split('\n')
-     
-    # remove empty strings
-    for i in range(len(parsed_text)):
-        parsed_text[i] = [x for x in parsed_text[i] if x != '']
-        
-    # split on ~
-    for i in range(len(parsed_text[i])):
-        for j in range(len(parsed_text[j])):
-            parsed_text[i][j] = parsed_text[i][j].split(' ~ ')
-            
-    # unpack list of lists
-    for i in range(3):
-        parsed_text[i] = [x for l in parsed_text[i] for x in l]
-  
-    parsed_text[2][0]
+#for i in range(60):
+#    #for j in range(len(SORT_SEARCH_NAMES)):
+#    for j in range(1):
+#        stash_search(SORT_SEARCH_NAMES[0])
+#        stash_shot = screenshot(ENTIRE_STASH_COORDS)
+#        
+#        # convert image to pixel map
+#        stash_shot_pixels = stash_shot.load()
+#        
+#        pixel_list = []
+#        
+#        for k in range(stash_shot.size[0]):
+#                for l in range(stash_shot.size[1]):
+#                    if stash_shot_pixels[k,l] == YELLOW_BORDER:
+#                        pixel_list.append([k,l])
+#                        break
+#        if len(pixel_list) == 0:
+#            break
+#        else:
+#            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
+#            move_to_inventory()
+#
+#
+#len(parsed_text)
+#       
+#for i in range(8,11):
+#    if re.search('esse', parsed_text[i]):
+#        print(i)
+#        gui.moveTo(TAB_CLICK_COORDS[1])
+#    
+#        print(parsed_text[8:11])
+#        
+#    
+#    # split on \n
+#    for i in range(len(parsed_text)):
+#        parsed_text[i] = parsed_text[i].split('\n')
+#     
+#    # remove empty strings
+#    for i in range(len(parsed_text)):
+#        parsed_text[i] = [x for x in parsed_text[i] if x != '']
+#        
+#    # split on ~
+#    for i in range(len(parsed_text[i])):
+#        for j in range(len(parsed_text[j])):
+#            parsed_text[i][j] = parsed_text[i][j].split(' ~ ')
+#            
+#    # unpack list of lists
+#    for i in range(3):
+#        parsed_text[i] = [x for l in parsed_text[i] for x in l]
+#  
+#    parsed_text[2][0]
