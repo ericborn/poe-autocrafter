@@ -123,13 +123,13 @@ STASH_TAB_NAMES = ['misc', 'splt', 'esse', 'prop','veil', 'card', 'jewl',
                    'gear']
 
 SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck','delirium orb'],
-                     ['splinter','scarab','sacrifice at dawn',
+                     ['splinter of','scarab','sacrifice at dawn',
                      'sacrifice at dusk', 'sacrifice at noon', 
-                     'sacrifice at midnight', 'divine vessel',
+                     'sacrifice at midnight', 'timeless', 'divine vessel',
                      'offering to the goddess'],['essence'],
                      ['prophecy to your'],['veiled'],['card'],
                      ['eye jewel','cobalt jewel','viridian jewel', 
-                     'crimson jewel'],['incubator'],['fossil'],['currency'],
-                     ['quality gem','vaal gem'],['Map'],['unique'],
-                     ['shaper','elder', 'redeemer', 'crusader', 'warlord',
-                     'hunter'], ['talisman']]
+                     'crimson jewel'],['incubator'],['fossil'],['currency', 
+                     'simulacrum'],['quality gem','vaal gem'],['Map'],
+                     ['unique'],['shaper','elder', 'redeemer', 'crusader', 
+                     'warlord', 'hunter'], ['talisman']]
