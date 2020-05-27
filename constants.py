@@ -159,18 +159,16 @@ FOSSIL_DICT = {'jagged': (129,236),
                'hollow': (501,371),
                'fractured': (564,371),
                'glyphic': (129,435),
-               'faceted': (534,435)}
+               'faceted': (534,435),
+               'primitive alchemical': (130,606),
+               'primitive chaotic': (527,606),
+               'potent alchemical': (84,688),
+               'powerful alchemical': (174,688),
+               'prime alchemical': (275,688),
+               'prime chaotic': (381,688),
+               'powerful chaotic': (483,688),
+               'potent chaotic': (573,688)}
     
-RESSONATOR_DICT = {'primitive alchemical': (130,606),
-                   'primitive chaotic': (527,606),
-                   'potent alchemical': (84,688),
-                   'powerful alchemical': (174,688),
-                   'prime alchemical': (275,688),
-                   'prime chaotic': (381,688),
-                   'powerful chaotic': (483,688),
-                   'potent chaotic': (573,688)}
-
-
 #FOSSIL_NAMES = ['jagged', 'dense', 'frigid', 'aberrant', 'scorched', 
 #                'metallic', 'pristine', 'bound', 'corroded', 'perfect', 
 #                'prismatic', 'enchanted', 'aetheric', 'lucent', 'serrated',

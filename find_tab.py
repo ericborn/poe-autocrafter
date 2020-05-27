@@ -253,7 +253,8 @@ elif items >= 1:
 
 
 
-
+#!!!TODO!!!
+#BREAK DOESNT WORK
 # breaks out of the function if 60 items moved, which is max inventory
 def search_and_move(search_name):
     count = 0
