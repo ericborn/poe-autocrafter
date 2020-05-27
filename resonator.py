@@ -29,7 +29,7 @@ def unstack_and_move(item_type, number, x, y):
 
 #!!!TODO!!!
 # NEED 3 DIFFERENT PATHS DEPENDING ON RES SIZE 1,2,4
-def resonator_unstack(res_type, foss_type, total_items): 
+def resonator_builder(res_type, foss_type, total_items):
     total_moved = 0
     
     # single socket, 60 max
@@ -40,8 +40,10 @@ def resonator_unstack(res_type, foss_type, total_items):
                 if total_moved == total_items:
                     return(total_moved)
                 else:
-                    #print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
+                    #print(res_type, total_items, i, j)
+                    #print(foss_type, total_items, i, j)
                     unstack_and_move(res_type, total_items, i, j)
+                    unstack_and_move(foss_type, total_items, i, j)
                     total_moved += 1
     if (res_type == 'primitive chaotic' or res_type == 'primitive alchemical')\
         and total_items > 60:
@@ -51,25 +53,5 @@ def resonator_unstack(res_type, foss_type, total_items):
     
     # 4 socket, 12 max
 
-resonator_unstack('primitive alchemical', 5)
-
-#def fossil_socket(foss_type, total_items, x, y):
-#    gui.moveTo(FOSSIL_DICT[foss_type])
-#    gui.keyDown('shift')
-#    gui.leftClick()
-#    gui.keyDown('enter')
-#    gui.keyUp('enter')
-#    gui.moveTo(INVENTORY_X_COORDS[x], INVENTORY_Y_COORDS[y])
-#    gui.leftClick()
-#    gui.keyUp('shift')
-
-total_moved = 0
-total_items = 5
-for i in range(m.ceil(15 / 5)):
-            for j in range(5):
-                if total_moved == total_items:
-                    print(total_moved)
-                else:
-                    #print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
-                    unstack_and_move('primitive alchemical', total_items, i, j)
-                    total_moved += 1
+# uses prim alchemical and dense
+#resonator_builder('primitive alchemical', 'dense', 16)
