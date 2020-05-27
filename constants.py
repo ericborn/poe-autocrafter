@@ -133,3 +133,59 @@ SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck','delirium orb'],
                      'simulacrum'],['quality gem','vaal gem'],['Map'],
                      ['unique'],['shaper','elder', 'redeemer', 'crusader', 
                      'warlord', 'hunter'], ['talisman']]
+
+# Fossil tab
+FOSSIL_DICT = {'jagged': (129,236),
+               'dense': (197,236),
+               'frigid': (266,236),
+               'aberrant': (333,236),
+               'scorched': (398,236),
+               'metallic': (467,236),
+               'pristine': (534,236),
+               'bound': (66,300),
+               'corroded': (129,300),
+               'perfect': (197,300),
+               'prismatic': (266,300),
+               'enchanted': (333,300),
+               'aetheric': (398,300),
+               'lucent': (467,300),
+               'serrated': (534,300),
+               'shuddering': (600,300),
+               'tangled': (101,371),
+               'bloodstained': (168,371),
+               'gilded': (266,371),
+               'encrusted': (329,371),
+               'sanctified': (398,371),
+               'hollow': (501,371),
+               'fractured': (564,371),
+               'glyphic': (129,435),
+               'faceted': (534,435)}
+    
+RESSONATOR_DICT = {'primitive alchemical': (130,606),
+                   'primitive chaotic': (527,606),
+                   'potent alchemical': (84,688),
+                   'powerful alchemical': (174,688),
+                   'prime alchemical': (275,688),
+                   'prime chaotic': (381,688),
+                   'powerful chaotic': (483,688),
+                   'potent chaotic': (573,688)}
+
+
+#FOSSIL_NAMES = ['jagged', 'dense', 'frigid', 'aberrant', 'scorched', 
+#                'metallic', 'pristine', 'bound', 'corroded', 'perfect', 
+#                'prismatic', 'enchanted', 'aetheric', 'lucent', 'serrated',
+#                'shuddering', 'tangled', 'bloodstained','gilded', 'encrusted', 
+#                'sanctified', 'hollow', 'fractured', 'glyphic', 'faceted']
+
+#FOSSIL_COORDS = [(129,236), (197,236), (266,236), (333,236), (398,236),
+#                    (467,236), (534,236), (66,300),  (129,300), (197,300),
+#                    (266,300), (333,300), (398,300), (467,300), (534,300),
+#                    (600,300), (101,371), (168,371), (266,371), (329,371),
+#                    (398,371), (501,371), (564,371), (129,435), (534,435)]
+
+#RESSONATORS = ['primitive alchemical', 'primitive chaotic', 
+#               'potent alchemical', 'powerful alchemical', 'prime alchemical',
+#               'prime chaotic', 'powerful chaotic','potent chaotic']
+#
+#RESONNATOR_COORDS = [(130,606), (527,606), (84,688), (174,688), (275,688),
+#                        (381,688), (483,688), (573,688)]
