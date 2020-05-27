@@ -20,33 +20,51 @@ for i in FOSSIL_DICT:
 for i in RESSONATOR_DICT:
     gui.moveTo(RESSONATOR_DICT[i])
     t.sleep(1)
+    
+    
+gui.moveTo(RESSONATOR_DICT['primitive alchemical'])
+gui.keyDown('shift')
+gui.leftClick()
+gui.keyDown('enter')
+gui.keyUp('enter')
+gui.moveTo(INVENTORY_X_COORDS[0], INVENTORY_Y_COORDS[0])
+gui.leftClick()
+gui.keyUp('shift')
 
 
-def move_from_stash(number, res_type):
+# unstack and move
+def unstack_and_move(res_type, number, x, y):
     gui.moveTo(RESSONATOR_DICT[res_type])
-    gui.keyDown('ctrl')
-    for i in range(number):
-        gui.leftClick()
-    gui.keyUp('ctrl')
-
+    gui.keyDown('shift')
+    gui.leftClick()
+    gui.keyDown('enter')
+    gui.keyUp('enter')
+    gui.moveTo(INVENTORY_X_COORDS[x], INVENTORY_Y_COORDS[y])
+    gui.leftClick()
+    gui.keyUp('shift')
 
 #!!!TODO!!!
 # NEED 3 DIFFERENT PATHS DEPENDING ON RES SIZE 1,2,4
-def resonator_unstack(number, res_type):  
+def resonator_unstack(res_type, total_items): 
     total_moved = 0
     
     # single socket, 60 max
-    if res_type == 'primitive':
-        for i in range(m.ceil(number / 5)):
+    if (res_type == 'primitive chaotic' or res_type == 'primitive alchemical')\
+        and total_items <= 60:
+        for i in range(m.ceil(total_items / 5)):
             for j in range(5):
-                if total_moved == number:
+                if total_moved == total_items:
                     return
                 else:
                     #print([INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j]])
-                    gui.moveTo(INVENTORY_X_COORDS[i], INVENTORY_Y_COORDS[j])
+                    unstack_and_move(res_type, total_items, i, j)
                     total_moved += 1
-                    item_to_inventory()
-                    
+    if (res_type == 'primitive chaotic' or res_type == 'primitive alchemical')\
+        and total_items <= 60:
+        return('Error')
+    return(total_moved)                
     # 2 socket, 24 max
     
     # 4 socket, 12 max
+    
+resonator_unstack('primitive alchemical', 8)
