@@ -256,20 +256,29 @@ elif items >= 1:
 #!!!TODO!!!
 #BREAK DOESNT WORK
 # breaks out of the function if 60 items moved, which is max inventory
+#def search_and_move(search_name):
+#    count = 0
+#    total_items = 0
+#    while count < 60:
+#        for i in range(len(search_name)):
+#            stash_search(search_name[i])
+#            t.sleep(1)
+#            total_items += move_from_stash()
+#        if total_items == 0:
+#            count += 10
+#            print(count)
+#        elif total_items >= 1:
+#            count += 1
+#            print(count)
+#        print(search_name)
+#    return(total_items)
+    
 def search_and_move(search_name):
-    count = 0
     total_items = 0
-    while count < 60:
-        for i in range(len(search_name)):
-            stash_search(search_name[i])
-            t.sleep(1)
-            total_items += move_from_stash()
-        if total_items == 0:
-            count += 10
-            print(count)
-        elif total_items >= 1:
-            count += 1
-            print(count)
+    for i in range(len(search_name)):
+        stash_search(search_name[i])
+        t.sleep(1)
+        total_items += move_from_stash()
         print(search_name)
     return(total_items)
 
@@ -299,12 +308,11 @@ def scroll_and_put(tab_name, total_items, dump_position):
 
 total_items = 0
 for i in range(len(SORT_SEARCH_NAMES)):
-    total_items = search_and_move(SORT_SEARCH_NAMES[i])
+    items = 0
+    items = search_and_move(SORT_SEARCH_NAMES[i])
+    total_items += items
     scroll_and_put(STASH_TAB_NAMES[i], total_items, 0)
 
-
-# CHECKING FOR TOTAL_ITEMS != 0 MAY HAVE BROKE THE MOVE BACK AND CLICK ON DUMP
-# RUN THROUGH 0-13 MANUALLY TO CHECK
 if total_items < 60: 
     for i in range(len(SORT_SEARCH_NAMES)):
         if i <= 3 and total_items <= 60:
