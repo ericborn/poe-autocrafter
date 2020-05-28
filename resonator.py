@@ -54,4 +54,4 @@ def resonator_builder(res_type, foss_type, total_items):
     # 4 socket, 12 max
 
 # uses prim alchemical and dense
-#resonator_builder('primitive alchemical', 'dense', 16)
+resonator_builder('primitive alchemical', 'scorched', 10)
