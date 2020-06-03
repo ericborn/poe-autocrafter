@@ -4,6 +4,8 @@ Created on Wed May 27 08:57:16 2020
 
 @author: Eric
 """
+import sys
+sys.path.append(r'C:\Code projects\git projects\poe-autocrafter')
 import time as t
 import math as m
 import pyautogui as gui
@@ -54,4 +56,4 @@ def resonator_builder(res_type, foss_type, total_items):
     # 4 socket, 12 max
 
 # uses prim alchemical and dense
-resonator_builder('primitive alchemical', 'scorched', 10)
+resonator_builder('primitive chaotic', 'dense', 60)
