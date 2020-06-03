@@ -13,6 +13,7 @@ import time as t
 import math as m
 import pyautogui as gui
 import pytesseract
+import keyboard
 from checks import check_inv_stash, check_for_mod
 from image_manip import color_text, image_adjustments, screenshot
 from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
@@ -242,15 +243,16 @@ def scroll_and_put(tab_name, total_items, dump_position):
         gui.moveTo(TAB_CLICK_COORDS[dump_position])
         t.sleep(0.2)
         gui.leftClick()
-
-
-
+  
+    
+# wont work for items larger than 1x1, need to develop a system for scanning
+# inventory and putting those items different than 1 square at a time
 for i in range(len(SORT_SEARCH_NAMES)):
-    #items = 0
+    items = 0
     items = search_and_move(SORT_SEARCH_NAMES[i])
     
     # click on tab, put items, click back on dump
-    if i <= 5:
+    if items > 0 and i <= 5:
         
         # move mouse to tab and click then put items
         gui.moveTo(TAB_CLICK_COORDS[i + 1])
@@ -264,7 +266,7 @@ for i in range(len(SORT_SEARCH_NAMES)):
         gui.leftClick()
         
     # click scroll x times, click on tab, put items, scroll back, click on dump
-    if i >= 6:
+    elif items > 0 and i >= 6:
         for i in range(i-6):
             click_stash_arrow(RIGHT_ARROW_COORDS)
         
@@ -280,8 +282,7 @@ for i in range(len(SORT_SEARCH_NAMES)):
         
         gui.moveTo(TAB_CLICK_COORDS[0])
         t.sleep(0.2)
-        gui.leftClick()
- 
+        gui.leftClick() 
 
            
 for i in range(len(SORT_SEARCH_NAMES)):
@@ -293,22 +294,6 @@ for i in range(len(SORT_SEARCH_NAMES)):
         print('tab number ', 6)
         print('click left', i-6, ' times')
             
-            
-            
-            
-        click_stash_arrow()
-    
-
-    print(SORT_SEARCH_NAMES[i])
-    
-    gui.moveTo(TAB_CLICK_COORDS[i + 1])
-    t.sleep(0.2)
-    gui.leftClick()
-
-for i in range(len(SORT_SEARCH_NAMES)):
-    items = search_and_move(SORT_SEARCH_NAMES[i])
-    scroll_and_put(STASH_TAB_NAMES[i], items, 0)
-
 
 ##for i in range(len(STASH_TAB_NAMES)):
 ##    print(i, STASH_TAB_NAMES[i])
