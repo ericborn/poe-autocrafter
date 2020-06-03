@@ -118,21 +118,43 @@ HEADER_WORDS = ['stash','inventory']
 EQUIPMENT_SORTING_INDEX = [4, 8, 1, 1, 1, 1, 4, 1, 1, 1, 2, 1, 1, 6, 1]
 
 # Names for the stash tabs, used for sorting
-STASH_TAB_NAMES = ['misc', 'splt', 'esse', 'prop','veil', 'card', 'jewl',
-                   'incu', 'foss', 'curr', 'gems', 'maps', 'unqe', 'infl',
-                   'gear']
+#STASH_TAB_NAMES = ['misc', 'splt', 'esse', 'prop','veil', 'card', 'jewl',
+#                   'incu', 'foss', 'curr', 'gems', 'maps', 'unqe', 'infl',
+#                   'gear']
 
-SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck','delirium orb'],
-                     ['splinter of','scarab','sacrifice at dawn',
-                     'sacrifice at dusk', 'sacrifice at noon', 
-                     'sacrifice at midnight', 'timeless', 'divine vessel',
-                     'offering to the goddess'],['essence'],
+STASH_TAB_NAMES = ['dump', 'incu', 'misc', 'splt', 'esse', 'prop', 'veil', 
+                   'card', 'jewl', 'foss', 'curr', 'gems', 'maps', 'unqe',
+                   'infl']                       
+
+STASH_DICT = {'dump': 0, 
+              'misc': 1, 
+              'incu': 2, 
+              'splt': 3, 
+              'esse': 4, 
+              'prop': 5, 
+              'veil': 6, 
+              'card': 7, 
+              'jewl': 8, 
+              'foss': 9, 
+              'curr': 10, 
+              'gems': 11, 
+              'maps': 12, 
+              'unqe': 13,
+              'infl': 14}
+
+# !!!TODO!!!
+# INCUBATOR PICKED UP DURING SCARAB CHECK
+SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck', 'delirium orb'],
+                     ['incubator'], ['splinter of','scarab',
+                     'sacrifice at dawn', 'sacrifice at dusk', 
+                     'sacrifice at noon', 'sacrifice at midnight', 'timeless', 
+                     'divine vessel', 'offering to the goddess'],['essence'],
                      ['prophecy to your'],['veiled'],['card'],
                      ['eye jewel','cobalt jewel','viridian jewel', 
-                     'crimson jewel'],['incubator'],['fossil'],['currency', 
+                     'crimson jewel'],['fossil'],['currency', 
                      'simulacrum'],['quality gem','vaal gem'],['Map'],
                      ['unique'],['shaper','elder', 'redeemer', 'crusader', 
-                     'warlord', 'hunter'], ['talisman']]
+                     'warlord', 'hunter']]
 
 # Fossil tab
 FOSSIL_DICT = {'jagged': (129,236),
