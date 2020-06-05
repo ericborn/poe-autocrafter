@@ -13,7 +13,9 @@ import time as t
 import math as m
 import pyautogui as gui
 import pytesseract
-import keyboard
+#import pprint as pp
+import numpy as np
+from PIL import Image
 from checks import check_inv_stash, check_for_mod
 from image_manip import color_text, image_adjustments, screenshot
 from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
@@ -179,12 +181,18 @@ def move_from_stash():
         # convert image to pixel map
         img_pixels = img.load()
         
+        
+        
         # create empty list to store item yellow border coordinates
         pixel_list = []
 
         for k in range(img.size[0]):
             for l in range(img.size[1]):
                 if img_pixels[k,l] == YELLOW_BORDER:
+                    gui.moveTo(k, l)
+                    t.sleep(5)
+                    
+                    
                     pixel_list.append([k,l])
                     break
     
@@ -195,6 +203,32 @@ def move_from_stash():
             gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
             item_to_inventory()
             total_items += 1
+
+print(img)
+
+img_list = np.array(list(img.getdata()))
+
+indices = np.where(img_list == YELLOW_BORDER)
+
+indices[0][1]
+
+coordinates = zip(indices[0], indices[1])
+
+
+
+def chunks(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
+
+
+pp.pprint(list(chunks(img_list, img.size[0])))
+
+
+test_list = [img_list[i:i + img.size[0]] for i in range(0, len(img_list), img.size[0])]
+
+len(test_list)
+
+gui.moveTo([pixel_list[0][0], pixel_list[0][1]])
 
 def move_to_stash(total_items):
     # divide the total_items, which is number of items in the moved to the 
@@ -224,25 +258,25 @@ def search_and_move(search_name):
             print(search_name)
     return(total_items)
 
-def scroll_and_put(tab_name, total_items, dump_position):
-    if total_items == 0:
-        return()
-    else:
-        number_of_scrolls = scroll_stash(tab_name)
-        move_to_stash(total_items)
-        print('moved', total_items)
-        total_items = 0
-        
-        # scroll back to where dump was found
-        for j in range(number_of_scrolls):
-            click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
-        
-        # click on dump
-        #click_on_tab('dump')
-        t.sleep(0.5)
-        gui.moveTo(TAB_CLICK_COORDS[dump_position])
-        t.sleep(0.2)
-        gui.leftClick()
+#def scroll_and_put(tab_name, total_items, dump_position):
+#    if total_items == 0:
+#        return()
+#    else:
+#        number_of_scrolls = scroll_stash(tab_name)
+#        move_to_stash(total_items)
+#        print('moved', total_items)
+#        total_items = 0
+#        
+#        # scroll back to where dump was found
+#        for j in range(number_of_scrolls):
+#            click_stash_arrow(LEFT_ARROW_CLICK_COORDS)
+#        
+#        # click on dump
+#        #click_on_tab('dump')
+#        t.sleep(0.5)
+#        gui.moveTo(TAB_CLICK_COORDS[dump_position])
+#        t.sleep(0.2)
+#        gui.leftClick()
 
 # wont work for items larger than 1x1, need to develop a system for scanning
 # inventory and putting those items different than 1 square at a time
