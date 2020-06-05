@@ -22,7 +22,7 @@ RIGHT_ARROW_COORDS = (609,130, 626,156)
 STASH_TAB_COORDS = (35, 128, 606, 158)
 
 # entire stash tab
-ENTIRE_STASH_COORDS = (18, 162, 647, 792)
+ENTIRE_STASH_COORDS = (12, 162, 647, 792)
 
 # coords for the boarders of each stash tab
 TAB_BOARDER_COORDS = ((43,130,120,156), (130,130,208,156),(220,130,291,156),  
