@@ -155,7 +155,8 @@ STASH_DICT = {'dump': 0,
 
 # list with only 1x1 items
 SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck', 'delirium orb'],
-                     ['incubator'], ['splinter of','scarab',
+                     ['"requires 4"', '"requires 3"', '"requires 2"', 
+                      'incubator'], ['splinter of','scarab',
                      'sacrifice at dawn', 'sacrifice at dusk', 
                      'sacrifice at noon', 'sacrifice at midnight', 'timeless', 
                      'divine vessel', 'offering to the goddess'],['essence'],
