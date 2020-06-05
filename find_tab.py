@@ -243,8 +243,7 @@ def scroll_and_put(tab_name, total_items, dump_position):
         gui.moveTo(TAB_CLICK_COORDS[dump_position])
         t.sleep(0.2)
         gui.leftClick()
-  
-    
+
 # wont work for items larger than 1x1, need to develop a system for scanning
 # inventory and putting those items different than 1 square at a time
 for i in range(len(SORT_SEARCH_NAMES)):
@@ -256,33 +255,40 @@ for i in range(len(SORT_SEARCH_NAMES)):
         
         # move mouse to tab and click then put items
         gui.moveTo(TAB_CLICK_COORDS[i + 1])
-        t.sleep(0.2)
+        t.sleep(0.1)
         gui.leftClick()
         move_to_stash(items)
+        t.sleep(0.1)
         
         # move back to dump tab and click
         gui.moveTo(TAB_CLICK_COORDS[0])
-        t.sleep(0.2)
+        t.sleep(0.1)
         gui.leftClick()
         
     # click scroll x times, click on tab, put items, scroll back, click on dump
     elif items > 0 and i >= 6:
-        for i in range(i-6):
-            click_stash_arrow(RIGHT_ARROW_COORDS)
+        for j in range(i-5):
+            # scroll stash right
+            gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
+            t.sleep(0.1)
+            gui.leftClick()
         
         # move mouse to tab and click then put items
         gui.moveTo(TAB_CLICK_COORDS[6])
-        t.sleep(0.2)
+        t.sleep(0.1)
         gui.leftClick()
         move_to_stash(items)
         
         # move back to dump tab and click
-        for i in range(i-6):
-            click_stash_arrow(LEFT_ARROW_COORDS)
+        for k in range(i-5):
+            # scroll stash left
+            gui.moveTo(LEFT_ARROW_CLICK_COORDS)
+            t.sleep(0.1)
+            gui.leftClick()
         
         gui.moveTo(TAB_CLICK_COORDS[0])
-        t.sleep(0.2)
-        gui.leftClick() 
+        t.sleep(0.1)
+        gui.leftClick()
 
            
 for i in range(len(SORT_SEARCH_NAMES)):
