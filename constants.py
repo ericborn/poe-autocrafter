@@ -155,15 +155,17 @@ STASH_DICT = {'dump': 0,
 
 # list with only 1x1 items
 SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck', 'delirium orb'],
-                     ['"requires 4"', '"requires 3"', '"requires 2"', 
-                      'incubator'], ['splinter of','scarab',
+                     ['incubator'], ['splinter of','scarab',
                      'sacrifice at dawn', 'sacrifice at dusk', 
                      'sacrifice at noon', 'sacrifice at midnight', 'timeless', 
                      'divine vessel', 'offering to the goddess'],['essence'],
                      ['prophecy to your'],['card'], ['eye jewel',
                      'cobalt jewel','viridian jewel','crimson jewel'],
-                     ['fossil'],['currency', 'simulacrum'],['quality gem',
-                     'vaal gem'],['Map']]
+                     ['"place in a resonator"', 'primitive resonator'],
+                     ['"requires 4"'], ['"requires 3"'], ['"requires 2"'],
+                     ['currency', 'simulacrum'],['quality gem', 'vaal gem'],
+                     ['Map']]
+                     
 
 
 # full list with larger than 1x1 items
