@@ -169,6 +169,17 @@ def scroll_stash(stash_tab_name):
             gui.leftClick()
             return(number_of_scrolls)
 
+def scan_pixels(img):
+    for k in range(img.size[0]):
+        for l in range(img.size[1]):
+            r, g, b = img.getpixel((k, l))
+            if img.getpixel((k, l)) == YELLOW_BORDER:
+                print(f"Found yellow at {k},{l}!")
+                return([k,l])         
+    return(0)
+
+
+
 def move_from_stash():
     # total_items moved into the inventory
     total_items = 0
@@ -179,30 +190,35 @@ def move_from_stash():
         img = screenshot(ENTIRE_STASH_COORDS)
         
         # convert image to pixel map
-        img_pixels = img.load()
+        #img_pixels = img.load()
         
         
         
         # create empty list to store item yellow border coordinates
-        pixel_list = []
+        pixel_coord = scan_pixels(img)
 
-        for k in range(img.size[0]):
-            for l in range(img.size[1]):
-                if img_pixels[k,l] == YELLOW_BORDER:
-                    gui.moveTo(k, l)
-                    t.sleep(5)
-                    
-                    
-                    pixel_list.append([k,l])
-                    break
+#        for k in range(img.size[0]):
+#            for l in range(img.size[1]):
+#                if img_pixels[k,l] == YELLOW_BORDER:
+#                    gui.moveTo(k, l)
+#                    t.sleep(5)
+#                    
+#                    
+#                    pixel_list.append([k,l])
+#                    break
     
         if len(pixel_list) == 0:
             print('none found')
             return(total_items)
         else:
-            gui.moveTo([pixel_list[0][0] + 25, pixel_list[0][1] + 170])
+            gui.moveTo([pixel_coord[0][0] + 25, pixel_list[0][1] + 170])
             item_to_inventory()
             total_items += 1
+
+
+
+img.getpixel((0, 0))
+
 
 print(img)
 
@@ -214,6 +230,7 @@ indices[0][1]
 
 coordinates = zip(indices[0], indices[1])
 
+print(set(coordinates))
 
 
 def chunks(lst, n):
