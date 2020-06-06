@@ -13,9 +13,7 @@ import time as t
 import math as m
 import pyautogui as gui
 import pytesseract
-#import pprint as pp
 import numpy as np
-from PIL import Image
 from checks import check_inv_stash, check_for_mod
 from image_manip import color_text, image_adjustments, screenshot
 from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
@@ -174,11 +172,9 @@ def scan_pixels(img):
         for l in range(img.size[1]):
             r, g, b = img.getpixel((k, l))
             if img.getpixel((k, l)) == YELLOW_BORDER:
-                print(f"Found yellow at {k},{l}!")
+                #print(f"Found yellow at {k},{l}!")
                 return([k,l])         
     return(0)
-
-
 
 def move_from_stash():
     # total_items moved into the inventory
@@ -188,64 +184,19 @@ def move_from_stash():
     
         # screenshot the stash
         img = screenshot(ENTIRE_STASH_COORDS)
-        
-        # convert image to pixel map
-        #img_pixels = img.load()
-        
-        
-        
+
         # create empty list to store item yellow border coordinates
         pixel_coord = scan_pixels(img)
 
-#        for k in range(img.size[0]):
-#            for l in range(img.size[1]):
-#                if img_pixels[k,l] == YELLOW_BORDER:
-#                    gui.moveTo(k, l)
-#                    t.sleep(5)
-#                    
-#                    
-#                    pixel_list.append([k,l])
-#                    break
-    
-        if len(pixel_list) == 0:
+        # pixels are offset by 25/170 because the screenshot does not start at
+        # (0, 0) but (12, 162)
+        if pixel_coord == 0:
             print('none found')
             return(total_items)
         else:
-            gui.moveTo([pixel_coord[0][0] + 25, pixel_list[0][1] + 170])
+            gui.moveTo([pixel_coord[0] + 25, pixel_coord[1] + 170])
             item_to_inventory()
             total_items += 1
-
-
-
-img.getpixel((0, 0))
-
-
-print(img)
-
-img_list = np.array(list(img.getdata()))
-
-indices = np.where(img_list == YELLOW_BORDER)
-
-indices[0][1]
-
-coordinates = zip(indices[0], indices[1])
-
-print(set(coordinates))
-
-
-def chunks(lst, n):
-    for i in range(0, len(lst), n):
-        yield lst[i:i + n]
-
-
-pp.pprint(list(chunks(img_list, img.size[0])))
-
-
-test_list = [img_list[i:i + img.size[0]] for i in range(0, len(img_list), img.size[0])]
-
-len(test_list)
-
-gui.moveTo([pixel_list[0][0], pixel_list[0][1]])
 
 def move_to_stash(total_items):
     # divide the total_items, which is number of items in the moved to the 
@@ -295,11 +246,62 @@ def search_and_move(search_name):
 #        t.sleep(0.2)
 #        gui.leftClick()
 
+items = search_and_move(SORT_SEARCH_NAMES[10])
+
+#gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
+#t.sleep(0.1)
+#gui.leftClick()
+
+gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
+t.sleep(0.1)
+gui.leftClick()
+
+gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
+t.sleep(0.1)
+gui.leftClick()
+
+gui.moveTo(TAB_CLICK_COORDS[6])
+t.sleep(0.1)
+gui.leftClick()
+
+move_to_stash(items)
+
+#gui.moveTo(LEFT_ARROW_CLICK_COORDS)
+#t.sleep(0.1)
+#gui.leftClick()
+
+gui.moveTo(LEFT_ARROW_CLICK_COORDS)
+t.sleep(0.1)
+gui.leftClick()
+
+gui.moveTo(LEFT_ARROW_CLICK_COORDS)
+t.sleep(0.1)
+gui.leftClick()
+
+gui.moveTo(TAB_CLICK_COORDS[0])
+t.sleep(0.1)
+gui.leftClick()
+
 # wont work for items larger than 1x1, need to develop a system for scanning
 # inventory and putting those items different than 1 square at a time
 for i in range(len(SORT_SEARCH_NAMES)):
     items = 0
-    items = search_and_move(SORT_SEARCH_NAMES[i])
+    
+    # single slot item
+    if i <= 7:
+        items = search_and_move(SORT_SEARCH_NAMES[i])
+    
+    # 4 slot item
+    if 7 < i >= 9:
+        items = search_and_move(SORT_SEARCH_NAMES[i])
+        items = items * 4
+        
+    if i == 10:
+        items = search_and_move(SORT_SEARCH_NAMES[i])
+        items = items * 2
+        
+    if i > 10:
+        items = search_and_move(SORT_SEARCH_NAMES[i])
     
     # click on tab, put items, click back on dump
     if items > 0 and i <= 5:
