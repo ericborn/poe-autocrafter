@@ -30,31 +30,40 @@ OUTPUT CURRENT ROLL/TOTAL ROLLS COUNTER
 details on converting python to standalone exe
 https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
 """
-import re
-import pyautogui as gui
-import pytesseract
-from image_manip import color_text, image_adjustments, screenshot
-from checks import check_for_mod as cfm, inv_stash_check as isc
+#import re
+#import pyautogui as gui
+#import pytesseract
+#from image_manip import color_text, image_adjustments, screenshot
+from checks import check_for_mod as check_mod, check_inv_stash as check_inv, \
+                   check_for_magic as check_magic, \
+                   check_for_currency as check_currency
 from roll_item import roll_item
-import constants
+#import constants
 
 # set path to tesseract.exe
-pytesseract.pytesseract.tesseract_cmd = \
-r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
-
-# create a list containing the words we're looking for in the image
-header_words = ['stash','inventory']
-
-currency_items = ['orb of alteration', 'chaos orb', 'orb of scouring', \
-                  'orb of transmutation', 'regal orb']
+#pytesseract.pytesseract.tesseract_cmd = \
+#r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
 #!!!TODO!!!
 #THESE NEED TO COME IN FROM THE UI
 # set desired mod and number of rolls to attempt
-desired_mod = 'dexterity'
-number_of_rolls = 5
+desired_mod = 'flaring'
+currency_item = 'orb of alteration'
+number_of_rolls = 25
 
+# !!!TODO!!!
+# implement stop if any of these fail
 # 1. check for stash/inventory being open
-isc()
+check_inv()
 
+# 2. check that the item is magic
+check_magic()
 
+# 3. check that mod doesnt already exist
+check_mod(desired_mod)
+
+# 4. check for currency
+check_currency()
+
+# Roll item
+roll_item()

@@ -35,7 +35,7 @@ def roll_function(desired_rolls, desired_mod):
         mod_check = check_for_mod(mod_to_roll)
         print(mod_check)
 
-        if mod_check == -1:
+        if mod_check == 0:
             break
         else:
             roll_item()
@@ -43,4 +43,3 @@ def roll_function(desired_rolls, desired_mod):
                    'looking for', mod_to_roll)
 
 eel.start('index.html')
-

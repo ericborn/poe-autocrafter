@@ -100,7 +100,7 @@ def check_for_magic():
         print('This item is magic and can be alted.')
 
 # screenshot currency item description and parse
-def check_for_currency():
+def check_for_currency(curr_item):
     # move cursor to first item slot in inventory 1300, 615
     gui.moveTo(TOP_LEFT_INVENTORY_COORDS)
 
@@ -126,24 +126,38 @@ def check_for_currency():
         currency_text.append(pytesseract.image_to_string(img[i], lang='eng', \
                                                          config = '--psm 12')\
                                                         .lower())
+    return(search_text(curr_item, currency_text))
+#    # creates an empty list to store the currency type found in the inventory
+#    currency_to_roll = []
+#
+#    # checks the parsed text against list of item types in inventory, appends to
+#    # currency_to_roll list 
+#    for i in range(len(currency_text)):
+#        for j in range(len(CURRENCY_NAMES)):
+#            if bool(re.search(CURRENCY_NAMES[j], currency_text[i])):
+#                currency_to_roll.append(CURRENCY_NAMES[j])
+#
+#    # check if the value is higher than 0, indiciating there is a currency to roll
+#    if len(currency_to_roll) < 1:
+#        return(-1)
+#        print('You do not have currency in your inventory.' \
+#              'Place it in the top left inventory slot dummy.')
+#    else:
+#        return(1)
 
-    # creates an empty list to store the currency type found in the inventory
-    currency_to_roll = []
-
-    # checks the parsed text against list of item types in inventory, appends to
-    # currency_to_roll list 
-    for i in range(len(currency_text)):
-        for j in range(len(CURRENCY_NAMES)):
-            if bool(re.search(CURRENCY_NAMES[j], currency_text[i])):
-                currency_to_roll.append(CURRENCY_NAMES[j])
-
-    # check if the value is higher than 0, indiciating there is a currency to roll
-    if len(currency_to_roll) < 1:
-        return(-1)
-        print('You do not have currency in your inventory.' \
-              'Place it in the top left inventory slot dummy.')
-    else:
+# search text is the text were looking for, parsed is the text were looking in
+def search_text(search_text, parsed_text):
+    text_found = 0
+    #print(mod)
+    for i in range(len(parsed_text)):      
+        if bool(re.search(search_text, parsed_text[i])):
+            text_found += 1
+    # if mod found is greater than 0, mod is found so return -1 to stop rolling
+    # mod found = 0, return 1 which indicates continue to roll
+    if text_found > 0:
         return(1)
+    else:
+        return(0)
 
 # checks for the desired mod on the item being rolled
 def check_for_mod(mod):
@@ -170,44 +184,47 @@ def check_for_mod(mod):
     # resize image
     img = image_adjustments(img)
 
+    # parse the text from each imageand a create a list of strings from each images
     parsed_text = []
     for i in range(len(img)):
         parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
                                                   config = '--psm 12').lower())
 
-    mod_found = 0
-    for i in range(len(parsed_text)):      
-        if bool(re.search(mod, parsed_text[i])):
-            mod_found += 1
-    # if mod found is greater than 0, mod is found so return -1 to stop rolling
-    # mod found = 0, return 1 which indicates continue to roll
-    if mod_found > 0:
-        return(-1)
-    else:
-        return(1)   
+    return(search_text(mod, parsed_text))
+
+#    mod_found = 0
+#    for i in range(len(parsed_text)):      
+#        if bool(re.search(mod, parsed_text[i])):
+#            mod_found += 1
+#    # if mod found is greater than 0, mod is found so return -1 to stop rolling
+#    # mod found = 0, return 1 which indicates continue to roll
+#    if mod_found > 0:
+#        return(-1)
+#    else:
+#        return(1)   
 
 # checks for the desired mod on the item being rolled
-def check_for_text(text, coords):
-    #gui.moveTo(ITEM_IN_STASH_COORDS)
-    
-    img = screenshot(coords)
-    img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
-    img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
-    img = image_adjustments(img)
-    
-    parsed_text = []
-    for i in range(len(img)):
-        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
-                                                  config = '--psm 12').lower())
-        
-    text_found = 0
-    #print(mod)
-    for i in range(len(parsed_text)):      
-        if bool(re.search(text, parsed_text[i])):
-            text_found += 1
-    # if mod found is greater than 0, mod is found so return -1 to stop rolling
-    # mod found = 0, return 1 which indicates continue to roll
-    if text_found > 0:
-        return(-1)
-    else:
-        return(1)  
+#def check_for_text(text, coords):
+#    #gui.moveTo(ITEM_IN_STASH_COORDS)
+#    
+#    img = screenshot(coords)
+#    img = color_text(img, STASH_BLACK_TEXT, BLACK_TEXT)
+#    img = color_text(img, STASH_YELLOW_TEXT, YELLOW_TEXT)
+#    img = image_adjustments(img)
+#    
+#    parsed_text = []
+#    for i in range(len(img)):
+#        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
+#                                                  config = '--psm 12').lower())
+#        
+#    text_found = 0
+#    #print(mod)
+#    for i in range(len(parsed_text)):      
+#        if bool(re.search(text, parsed_text[i])):
+#            text_found += 1
+#    # if mod found is greater than 0, mod is found so return -1 to stop rolling
+#    # mod found = 0, return 1 which indicates continue to roll
+#    if text_found > 0:
+#        return(-1)
+#    else:
+#        return(1)  
