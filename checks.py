@@ -147,13 +147,28 @@ def check_for_currency():
 
 # checks for the desired mod on the item being rolled
 def check_for_mod(mod):
+    
+    # moves to item coords
     gui.moveTo(ITEM_IN_STASH_COORDS)
-
+    
+    # holds down alt to display indepth item text
+    gui.keyDown('alt')
+    
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
 
+    # screenshot stash coords
     img = screenshot(ENTIRE_STASH_COORDS)
+    
+    # left off alt
+    gui.keyUp('alt')
+    
+    # adjust image colors, turn blue white
     img = color_text(img, BLUE_COLOR, WHITE_COLOR)
+    
+    
+    
+    # resize image
     img = image_adjustments(img)
 
     parsed_text = []

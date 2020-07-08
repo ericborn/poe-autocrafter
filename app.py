@@ -3,7 +3,7 @@ Eric Born
 
 18 May 2020
 
-
+Framework for the apps front end
 '''
 import eel
 from checks import check_for_mod, check_inv_stash as inv, \
@@ -43,3 +43,4 @@ def roll_function(desired_rolls, desired_mod):
                    'looking for', mod_to_roll)
 
 eel.start('index.html')
+
