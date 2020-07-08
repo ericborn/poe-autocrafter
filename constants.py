@@ -64,6 +64,11 @@ WHITE_COLOR = (255, 255, 255)
 # grey RGB value for a normal item
 GREY_ITEM_COLOR = (200, 200, 200)
 
+# grey RGB values for item mod text
+GREY_COLOR = ((128,128,128), (75,75,75),(93,93,93),(112,112,112), (81,81,81),
+              (120,120,120), (108,108,108), (116,116,116), (103,103,103),
+              (124,124,124), (98,98,98), (67,67,67))
+
 # yellow RGB value for a rare item
 YELLOW_ITEM_COLOR = (254, 254, 118)
 

@@ -16,7 +16,7 @@ import pyautogui as gui
 from image_manip import color_text, image_adjustments, screenshot
 from constants import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
                       ENTIRE_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS, \
-                      CURRENCY_DESCRIPTION_COORDS, BLUE_COLOR, \
+                      CURRENCY_DESCRIPTION_COORDS, BLUE_COLOR, GREY_COLOR, \
                       GREY_ITEM_COLOR, YELLOW_ITEM_COLOR, \
                       CURRENCY_ITEM_COLOR, CURRENCY_NAMES, HEADER_WORDS, \
                       WHITE_COLOR, STASH_YELLOW_TEXT, STASH_BLACK_TEXT, \
@@ -165,8 +165,7 @@ def check_for_mod(mod):
     
     # adjust image colors, turn blue white
     img = color_text(img, BLUE_COLOR, WHITE_COLOR)
-    
-    
+    img = color_text(img, GREY_COLOR, WHITE_COLOR)
     
     # resize image
     img = image_adjustments(img)
