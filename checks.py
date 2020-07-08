@@ -41,22 +41,22 @@ def check_inv_stash():
                                                        config = '--psm 12')\
                                                        .lower())
 
-    # If inventory and stash are not open, raise error and quit
+    # count inventory and stash text
     inv_found = 0
     stash_found = 0
     for i in range(len(header_text)):
         if bool(re.search(HEADER_WORDS[0], header_text[i])):
             stash_found += 1
         if bool(re.search(HEADER_WORDS[1], header_text[i])):
-            inv_found += 1    
-    
+            inv_found += 1   
+            
+    # If inventory and stash counts are less than 1 return -1, 
+    # if both greater than 1 return 1
     if inv_found < 1 or stash_found < 1:
         return(-1)
-        print('The stash and inventory are not both open. '\
-              'Please open both and try again')
     if inv_found > 0 and stash_found > 0:
         return(1)
-        print('The stash and inventory are both open.')
+        
 
 def check_for_magic():
     # move to item coords in stash
@@ -89,15 +89,10 @@ def check_for_magic():
     # checks color counts to determine item rarity
     if grey_count > 10:
         return(-1) 
-        print('This item is normal and cannot be alted.'\
-              ' Place a magic item to be crafted.')
     elif yellow_count > 10:
         return(-1) 
-        print('This item is rare and cannot be alted.'\
-              ' Place a magic item to be crafted.')
-    elif yellow_count == 0 and blue_count > 10:
+    elif yellow_count == 0 and grey_count == 0 and blue_count > 10:
         return(1) 
-        print('This item is magic and can be alted.')
 
 # screenshot currency item description and parse
 def check_for_currency(curr_item):

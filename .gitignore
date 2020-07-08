@@ -2,3 +2,4 @@ venv/
 layout sample.*
 __pycache__/
 *.pyc
+*.pyc
