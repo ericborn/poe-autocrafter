@@ -38,6 +38,7 @@ from checks import check_for_mod as check_mod, check_inv_stash as check_inv, \
                    check_for_magic as check_magic, \
                    check_for_currency as check_currency
 from roll_item import roll_item
+from math import ceil
 #import constants
 
 # set path to tesseract.exe
@@ -49,7 +50,11 @@ from roll_item import roll_item
 # set desired mod and number of rolls to attempt
 desired_mod = 'flaring'
 currency_item = 'orb of alteration'
-number_of_rolls = 25
+number_of_rolls = 41
+
+# max stack size for an alt is 20, divide the number of rolls by max stack size
+# and take the ceiling which will give the total number of stacks to access
+stacks = ceil(number_of_rolls / 20)
 
 # !!!TODO!!!
 # implement stop if any of these fail
@@ -64,6 +69,8 @@ check_mod(desired_mod)
 
 # 4. check for currency
 check_currency()
+
+
 
 # Roll item
 roll_item()
