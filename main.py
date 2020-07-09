@@ -38,7 +38,7 @@ from checks import check_for_mod as check_mod, check_inv_stash as check_inv, \
                    check_for_magic as check_magic, \
                    check_for_currency as check_currency
 from roll_item import roll_item
-from math import ceil
+from math import ceil, floor
 #import constants
 
 # set path to tesseract.exe
@@ -50,21 +50,30 @@ from math import ceil
 # set desired mod and number of rolls to attempt
 #desired_mod = 'flaring'
 
-mod = 'burning'
+mod = 'polar' #'flaring'
 currency_item = 'orb of alteration'
-item_stack = 20
+item_stack = 5 #20
 number_of_rolls = 10
+rolled_mods = []
 
-perform_rolls(mod, number_of_rolls)
+
+perform_rolls(currency_item, mod, number_of_rolls)
 
 # !!!TODO!!!
 # implement stop if any of these fail
-def perform_rolls(desired_mod, roll_num):
+def perform_rolls(currency_item, desired_mod, roll_num):
     # max stack size for an alt is 20, divide the number of rolls by max stack
     # size and take the ceiling which will give the total number of stacks to
     # access
-    stacks = ceil(number_of_rolls / 20)
-    columns = ceil(stacks / 5)
+    total_rows = ceil(number_of_rolls / 20)
+    
+    # 5 rows per column
+    #total_columns = ceil(total_rows / 5)
+    
+    # setup variables for while loop to process rolling
+    row = 0
+    col = 0
+    roll = 0
     
     # 1. check for stash/inventory being open
     if check_inv() == -1:
@@ -80,44 +89,44 @@ def perform_rolls(desired_mod, roll_num):
     else:
         print('This item is magic and can be alted.')
         
-        
-        
     # 3. check that mod doesnt already exist
-    check_mod(desired_mod)
+    if check_mod(desired_mod) == -1:
+        return('This item already has the desired mod.')
+    else:
+        print('No %s found' % desired_mod)
     
     # 4. check for currency
-    check_currency()
+    if check_currency(currency_item) == 1:
+        return('wrong type or missing currency.')
+    else:
+        print('Currency found')
     
-    # trying to create a loop that will actually perform the number of stacks
-    # instead of defaulting to total columns all rows
+#    # 5. Roll item
+#    roll_item(0, 0)
+#    
+#    # 6. check for the mod
+#    if check_mod(desired_mod) == -1:
+#        return('This item already has the desired mod.')
+#    else:
+#        print('No %s found' % desired_mod)
     
-    #col = 0
-    #row = 5    
-      
-    #for stack in range(stacks):
-    #    print(stack, stack % 5)
-    #    
-    #row % 5
-    #    
-    #for column in range(columns):
-    #    row += 1
-    #    if row % 5 == 0 
-    #        for stack in range(stack % 5):
-    #        #for row in range(5):
-    #            print(column, stack % 5)
-    # gui.moveTo(INVENTORY_X_COORDS[0], INVENTORY_Y_COORDS[1]) 
+    # gui.moveTo(INVENTORY_X_COORDS[0], INVENTORY_Y_COORDS[1])     
+    # while loop than handles rolling
+    # increments 0-4
+    while roll < number_of_rolls:
+        for item in range(item_stack):
+            #print(item, col, row)
             
-    for col in range(columns):
-        for row in range(5):
-            #print(col,row)
-            for item in range(item_stack):
-                print(item, col, row)
-                #roll_item(col, row)
-                if check_mod(desired_mod) == 1:
-                    return(desired_mod, 'rolled')
-    
-    # Roll item
-    roll_item()
-    
-    # check for mod again
-    check_mod(desired_mod)
+            # roll the item
+            roll_item(col, row)
+            # check for mod, break if the mod is found
+            if check_mod(desired_mod) == -1:
+                return('This item already has the desired mod.')
+            else:
+                print('No %s found' % desired_mod)
+            roll += 1
+                
+        row += 1
+        if row > 4:
+            row = 0
+            col += 1
