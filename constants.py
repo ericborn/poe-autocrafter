@@ -186,6 +186,10 @@ SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck', 'delirium orb'],
 #                     ['unique'],['shaper','elder', 'redeemer', 'crusader', 
 #                     'warlord', 'hunter']]
 
+# dictionary with mods and their stats                   
+MOD_DICT = {'polar' : r'adds.+(cold damage)',
+            'flaring' : r'adds.+(physical damage)'}
+
 # Fossil tab
 FOSSIL_DICT = {'jagged': (129,236),
                'dense': (197,236),

@@ -20,7 +20,7 @@ from constants import HEADER_COORDS, ITEM_IN_STASH_COORDS, \
                       GREY_ITEM_COLOR, YELLOW_ITEM_COLOR, \
                       CURRENCY_ITEM_COLOR, CURRENCY_NAMES, HEADER_WORDS, \
                       WHITE_COLOR, STASH_YELLOW_TEXT, STASH_BLACK_TEXT, \
-                      BLACK_TEXT, YELLOW_TEXT
+                      BLACK_TEXT, YELLOW_TEXT, MOD_DICT
 
 # checks for the stash and invetory to be open
 def check_inv_stash():
@@ -140,19 +140,31 @@ def check_for_currency(curr_item):
 #    else:
 #        return(1)
 
+#MOD_DICT[mod]
+#
+#test = r'adds.+(cold damage)'
+#bool(re.search(test, parsed_text_list[0]))
+#
+#bool(re.search(MOD_DICT[mod], parsed_text_list[0]))
+    
 # search text is the text were looking for, parsed is the text were looking in
-def search_text(search_text, parsed_text):
+def search_text(search_text, parsed_text, alt_text = ''):
     text_found = 0
+    alt_found = 0
     #print(mod)
     for i in range(len(parsed_text)):      
         if bool(re.search(search_text, parsed_text[i])):
             text_found += 1
+        if alt_text != '':
+            if bool(re.search(MOD_DICT[search_text], parsed_text[i])):
+                alt_found += 1
+
     # if mod found is greater than 0, mod is found so return -1 to stop rolling
     # mod found = 0, return 1 which indicates continue to roll
-    if text_found > 0:
-        return(1)
+    if text_found > 0 or alt_found > 0:
+        return(-1)
     else:
-        return(0)
+        return(1)
 
 # checks for the desired mod on the item being rolled
 def check_for_mod(mod):
@@ -160,8 +172,9 @@ def check_for_mod(mod):
     # moves to item coords
     gui.moveTo(ITEM_IN_STASH_COORDS)
     
+    # Realized mod type is in name, dont need to parse alt text
     # holds down alt to display indepth item text
-    gui.keyDown('alt')
+    #gui.keyDown('alt')
     
     # sleep 0.1 second to allow item text to appear
     t.sleep(0.1)
@@ -169,23 +182,28 @@ def check_for_mod(mod):
     # screenshot stash coords
     img = screenshot(ENTIRE_STASH_COORDS)
     
+    # sleep 0.1 second to allow item text to appear
+    t.sleep(0.1)
+    
     # left off alt
-    gui.keyUp('alt')
+    #gui.keyUp('alt')
     
     # adjust image colors, turn blue white
     img = color_text(img, BLUE_COLOR, WHITE_COLOR)
-    img = color_text(img, GREY_COLOR, WHITE_COLOR)
+    #img = color_text(img, GREY_COLOR, WHITE_COLOR)
     
     # resize image
     img = image_adjustments(img)
 
     # parse the text from each imageand a create a list of strings from each images
-    parsed_text = []
+    parsed_text_list = []
     for i in range(len(img)):
-        parsed_text.append(pytesseract.image_to_string(img[i], lang='eng', 
+        parsed_text_list.append(pytesseract.image_to_string(img[i], lang='eng', 
                                                   config = '--psm 12').lower())
-
-    return(search_text(mod, parsed_text))
+    
+#    parsed_text_list[1].split('\n')
+    
+    return(search_text(mod, parsed_text_list))
 
 #    mod_found = 0
 #    for i in range(len(parsed_text)):      

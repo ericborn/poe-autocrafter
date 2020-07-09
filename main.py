@@ -30,34 +30,22 @@ OUTPUT CURRENT ROLL/TOTAL ROLLS COUNTER
 details on converting python to standalone exe
 https://stackoverflow.com/questions/5458048/how-to-make-a-python-script-standalone-executable-to-run-without-any-dependency
 """
-#import re
-#import pyautogui as gui
-#import pytesseract
-#from image_manip import color_text, image_adjustments, screenshot
 from checks import check_for_mod as check_mod, check_inv_stash as check_inv, \
                    check_for_magic as check_magic, \
                    check_for_currency as check_currency
 from roll_item import roll_item
 from math import ceil, floor
-#import constants
-
-# set path to tesseract.exe
-#pytesseract.pytesseract.tesseract_cmd = \
-#r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 
 #!!!TODO!!!
 #THESE NEED TO COME IN FROM THE UI
 # set desired mod and number of rolls to attempt
 #desired_mod = 'flaring'
 
-mod = 'polar' #'flaring'
+mod = 'flaring'
 currency_item = 'orb of alteration'
-item_stack = 5 #20
-number_of_rolls = 10
+item_stack = 20
+number_of_rolls = 35
 rolled_mods = []
-
-
-perform_rolls(currency_item, mod, number_of_rolls)
 
 # !!!TODO!!!
 # implement stop if any of these fail
@@ -65,7 +53,7 @@ def perform_rolls(currency_item, desired_mod, roll_num):
     # max stack size for an alt is 20, divide the number of rolls by max stack
     # size and take the ceiling which will give the total number of stacks to
     # access
-    total_rows = ceil(number_of_rolls / 20)
+    #total_rows = ceil(number_of_rolls / 20)
     
     # 5 rows per column
     #total_columns = ceil(total_rows / 5)
@@ -101,16 +89,7 @@ def perform_rolls(currency_item, desired_mod, roll_num):
     else:
         print('Currency found')
     
-#    # 5. Roll item
-#    roll_item(0, 0)
-#    
-#    # 6. check for the mod
-#    if check_mod(desired_mod) == -1:
-#        return('This item already has the desired mod.')
-#    else:
-#        print('No %s found' % desired_mod)
-    
-    # gui.moveTo(INVENTORY_X_COORDS[0], INVENTORY_Y_COORDS[1])     
+    # 5. repeating rolling item and checking for mod
     # while loop than handles rolling
     # increments 0-4
     while roll < number_of_rolls:
@@ -130,3 +109,7 @@ def perform_rolls(currency_item, desired_mod, roll_num):
         if row > 4:
             row = 0
             col += 1
+
+# !!!TODO!!!
+# Implement logging of rolls achieved
+perform_rolls(currency_item, mod, number_of_rolls)
