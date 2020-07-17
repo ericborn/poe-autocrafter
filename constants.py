@@ -131,21 +131,17 @@ STASH_TAB_NAMES = ['dump', 'incu', 'misc', 'splt', 'esse', 'prop', 'veil',
 STASH_DICT = {'dump': 0,
               'oils': 1,
               'tane': 2,
-              '$$$$': 3,
-              'deli': 4,
+              'deli': 3,
+              'incu': 4,
               'frag': 5,
-              
-              
-              'incu': 2,
-              'splt': 3,
-              'esse': 4,
-              'prop': 5,
-              'card': 6,
-              'jewl': 7,
-              'foss': 8,
-              'curr': 9,
-              'gems': 10,
-              'maps': 11}
+              'esse': 6,
+              'prop': 7,
+              'card': 8,
+              'jewl': 9,
+              'foss': 10,
+              '$$$$': 11,
+              'gems': 12,
+              'maps': 13}
 
 # full list with larger than 1x1 items
 #STASH_DICT = {'dump': 0, 
@@ -165,8 +161,7 @@ STASH_DICT = {'dump': 0,
 #              'infl': 14}
 
 # list with only 1x1 items
-SORT_SEARCH_NAMES = [['oil'], ['tane\'s'], ['stacked deck'], ['simulacrum',
-                     'delirium orb'],
+SORT_SEARCH_NAMES = [['oil'], ['tane\'s'], ['simulacrum', 'delirium orb'],
                      ['incubator'], ['splinter of','scarab',
                      'sacrifice at dawn', 'sacrifice at dusk', 
                      'sacrifice at noon', 'sacrifice at midnight', 'timeless', 
@@ -174,8 +169,8 @@ SORT_SEARCH_NAMES = [['oil'], ['tane\'s'], ['stacked deck'], ['simulacrum',
                      ['prophecy to your'],['card'], ['eye jewel',
                      'cobalt jewel','viridian jewel','crimson jewel'],
                      ['"place in a resonator"', 'primitive resonator'],
-                     ['"requires 4"'], ['"requires 3"'], ['"requires 2"'],
-                     ['currency', ],['quality gem', 'vaal gem'],
+                     #['"requires 4"'], ['"requires 3"'], ['"requires 2"'],
+                     ['currency', 'stacked deck'],['quality gem', 'vaal gem'],
                      ['Map']]
                      
 
