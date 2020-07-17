@@ -22,9 +22,7 @@ def status_check(num):
         return(magic())
     if num == 2:
         return(currency())
-        
-#!!!TODO!!!
-# NEED TO FIX CAP OF ROLLING 20 ALTS SINCE SHIFT IS BEING UNHELD AFTER EACH CLICK
+
 @eel.expose
 def roll_function(desired_rolls, desired_mod):
     num_of_rolls = int(desired_rolls)
