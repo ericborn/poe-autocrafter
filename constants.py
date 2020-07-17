@@ -139,10 +139,9 @@ STASH_DICT = {'dump': 0,
               'card': 8,
               'jewl': 9,
               'foss': 10,
-              'foss_lrg': 11,
-              '$$$$': 12,
-              'gems': 13,
-              'maps': 14}
+              '$$$$': 11,
+              'gems': 12,
+              'maps': 13}
 
 # full list with larger than 1x1 items
 #STASH_DICT = {'dump': 0, 
@@ -162,15 +161,18 @@ STASH_DICT = {'dump': 0,
 #              'infl': 14}
 
 # list with only 1x1 items
-SORT_SEARCH_NAMES = [['oil'], ['tane\'s'], ['simulacrum', 'delirium orb'],
-                     ['incubator'], ['splinter of','scarab',
-                     'sacrifice at dawn', 'sacrifice at dusk', 
+SORT_SEARCH_NAMES = [['oil'], ['tane\'s', 'abrasive catalyst', 
+                     'tempering catalyst', 'fertile catalyst', 
+                     'prismatic catalyst', 'intrinsic catalyst', 
+                     'imbued catalyst', 'turbulent catalyst'], ['simulacrum', 
+                     'delirium orb'], ['incubator'], ['splinter of','scarab',
+                     'sacrifice at dawn', 'sacrifice at dusk', 'fragment of',
                      'sacrifice at noon', 'sacrifice at midnight', 'timeless', 
                      'divine vessel', 'offering to the goddess'],['essence'],
                      ['prophecy to your'],['card'], ['eye jewel',
                      'cobalt jewel','viridian jewel','crimson jewel'],
-                     ['"place in a resonator"', 'primitive resonator'],
-                     ['"requires 4"', '"requires 3"', '"requires 2"'],
+                     ['"place in a resonator"', 'primitive resonator',
+                     '"requires 4"', '"requires 3"', '"requires 2"'],
                      ['currency', 'stacked deck'],['quality gem', 'vaal gem'],
                      ['Map']]
                      
