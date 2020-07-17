@@ -245,13 +245,23 @@ def search_and_move(search_name):
 #        gui.moveTo(TAB_CLICK_COORDS[dump_position])
 #        t.sleep(0.2)
 #        gui.leftClick()
-
+items = 5
+items *= 4
 
 # wont work for items larger than 1x1, need to develop a system for scanning
 # inventory and putting those items different than 1 square at a time
 for i in range(len(SORT_SEARCH_NAMES)):
     items = search_and_move(SORT_SEARCH_NAMES[i])
- 
+
+    if i <= 9:    
+        print(SORT_SEARCH_NAMES[i])
+    if i > 9 and i <= 12:
+        print(SORT_SEARCH_NAMES[i])
+        items *= 4
+        move_to_stash(items)
+    if i >= 13:
+        print(SORT_SEARCH_NAMES[i])
+    
 #    # single slot item
 #    if i <= 7:
 #        items = search_and_move(SORT_SEARCH_NAMES[i])
@@ -286,7 +296,7 @@ for i in range(len(SORT_SEARCH_NAMES)):
         gui.leftClick()
         
     # click scroll x times, click on tab, put items, scroll back, click on dump
-    elif items > 0 and i >= 6:
+    elif items > 0 and i >= 6 and i <= 9:
         for j in range(i-5):
             # scroll stash right
             gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
@@ -305,10 +315,53 @@ for i in range(len(SORT_SEARCH_NAMES)):
             gui.moveTo(LEFT_ARROW_CLICK_COORDS)
             t.sleep(0.1)
             gui.leftClick()
+    
+    # separate statement that handles non 1x1 items
+    elif items > 0 and i > 9 and i <= 12:
+        for j in range(i-5):
+            # scroll stash right
+            gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
+            t.sleep(0.1)
+            gui.leftClick()
+            
+        # move mouse to tab and click then put items
+        gui.moveTo(TAB_CLICK_COORDS[6])
+        t.sleep(0.1)
+        gui.leftClick()
+        items *= 4
+        move_to_stash(items)
+        
+        # move back to dump tab and click
+        for k in range(i-5):
+            # scroll stash left
+            gui.moveTo(LEFT_ARROW_CLICK_COORDS)
+            t.sleep(0.1)
+            gui.leftClick()
         
         gui.moveTo(TAB_CLICK_COORDS[0])
         t.sleep(0.1)
         gui.leftClick()
+        
+     # click scroll x times, click on tab, put items, scroll back, click on dump
+    elif items > 0 and i <= 13:
+        for j in range(i-5):
+            # scroll stash right
+            gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
+            t.sleep(0.1)
+            gui.leftClick()
+        
+        # move mouse to tab and click then put items
+        gui.moveTo(TAB_CLICK_COORDS[6])
+        t.sleep(0.1)
+        gui.leftClick()
+        move_to_stash(items)
+        
+        # move back to dump tab and click
+        for k in range(i-5):
+            # scroll stash left
+            gui.moveTo(LEFT_ARROW_CLICK_COORDS)
+            t.sleep(0.1)
+            gui.leftClick()
 
            
 for i in range(len(SORT_SEARCH_NAMES)):
