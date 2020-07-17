@@ -129,7 +129,13 @@ STASH_TAB_NAMES = ['dump', 'incu', 'misc', 'splt', 'esse', 'prop', 'veil',
 
 # dict with only 1x1 items
 STASH_DICT = {'dump': 0,
-              'misc': 1,
+              'oils': 1,
+              'tane': 2,
+              '$$$$': 3,
+              'deli': 4,
+              'frag': 5,
+              
+              
               'incu': 2,
               'splt': 3,
               'esse': 4,
@@ -159,7 +165,8 @@ STASH_DICT = {'dump': 0,
 #              'infl': 14}
 
 # list with only 1x1 items
-SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck', 'delirium orb'],
+SORT_SEARCH_NAMES = [['oil'], ['tane\'s'], ['stacked deck'], ['simulacrum',
+                     'delirium orb'],
                      ['incubator'], ['splinter of','scarab',
                      'sacrifice at dawn', 'sacrifice at dusk', 
                      'sacrifice at noon', 'sacrifice at midnight', 'timeless', 
@@ -168,7 +175,7 @@ SORT_SEARCH_NAMES = [['oil','tane\'s','stacked deck', 'delirium orb'],
                      'cobalt jewel','viridian jewel','crimson jewel'],
                      ['"place in a resonator"', 'primitive resonator'],
                      ['"requires 4"'], ['"requires 3"'], ['"requires 2"'],
-                     ['currency', 'simulacrum'],['quality gem', 'vaal gem'],
+                     ['currency', ],['quality gem', 'vaal gem'],
                      ['Map']]
                      
 
