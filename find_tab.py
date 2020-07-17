@@ -250,25 +250,25 @@ def search_and_move(search_name):
 # wont work for items larger than 1x1, need to develop a system for scanning
 # inventory and putting those items different than 1 square at a time
 for i in range(len(SORT_SEARCH_NAMES)):
-    items = 0
-    
-    # single slot item
-    if i <= 7:
-        items = search_and_move(SORT_SEARCH_NAMES[i])
-    
-    # 4 slot item
-    if 7 < i >= 9:
-        items = search_and_move(SORT_SEARCH_NAMES[i])
-        items = items * 4
-       
-    # 4 slot item
-    if i == 10:
-        items = search_and_move(SORT_SEARCH_NAMES[i])
-        items = items * 2
-    
-    # single slot item
-    if i > 10:
-        items = search_and_move(SORT_SEARCH_NAMES[i])
+    items = search_and_move(SORT_SEARCH_NAMES[i])
+ 
+#    # single slot item
+#    if i <= 7:
+#        items = search_and_move(SORT_SEARCH_NAMES[i])
+#    
+#    # 4 slot item
+#    if 7 < i >= 9:
+#        items = search_and_move(SORT_SEARCH_NAMES[i])
+#        items = items * 4
+#       
+#    # 4 slot item
+#    if i == 10:
+#        items = search_and_move(SORT_SEARCH_NAMES[i])
+#        items = items * 2
+#    
+#    # single slot item
+#    if i > 10:
+#        items = search_and_move(SORT_SEARCH_NAMES[i])
     
     # click on tab, put items, click back on dump
     if items > 0 and i <= 5:
