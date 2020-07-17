@@ -139,9 +139,10 @@ STASH_DICT = {'dump': 0,
               'card': 8,
               'jewl': 9,
               'foss': 10,
-              '$$$$': 11,
-              'gems': 12,
-              'maps': 13}
+              'foss_lrg': 11,
+              '$$$$': 12,
+              'gems': 13,
+              'maps': 14}
 
 # full list with larger than 1x1 items
 #STASH_DICT = {'dump': 0, 
@@ -169,7 +170,7 @@ SORT_SEARCH_NAMES = [['oil'], ['tane\'s'], ['simulacrum', 'delirium orb'],
                      ['prophecy to your'],['card'], ['eye jewel',
                      'cobalt jewel','viridian jewel','crimson jewel'],
                      ['"place in a resonator"', 'primitive resonator'],
-                     #['"requires 4"'], ['"requires 3"'], ['"requires 2"'],
+                     ['"requires 4"', '"requires 3"', '"requires 2"'],
                      ['currency', 'stacked deck'],['quality gem', 'vaal gem'],
                      ['Map']]
                      
