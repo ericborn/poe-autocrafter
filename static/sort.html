@@ -18,22 +18,20 @@
   </head>
   <body>
     <div class="header">
-      <h2>POE AutoCrafter</h2>
+      <a href="index.html"><h2>POE AutoCrafter</h2></a>
     </div>
     <!-- Form -->
-    <div class="navigation">
-      <li>
-        <a href="sort.html">
-          <span>Sort Inventory</span>
-        </a>
-      </li>
+    <div class="container">
+     <!-- <form action="/" method="POST">-->
 
-      <li>
-        <a href="roll.html">
-          <span>Roll Item</span>
-        </a>
-      </li>
-
+        <div class="form-group">
+          <input type="button" class="submit" value="Status Check" id="status_btn" onclick="statusCheck()"/>
+          <ul style="list-style: none;">
+            <li><span class="dot" id="dot0"></span> Inventory Open</li> 
+          </ul>
+        </div>
+        <input type="button" class="submit" value="Sort!" id="sort_btn" onclick="webData()"/>
+    <!--   </form> -->
     </div>
     <script type="text/javascript">
      $(".chosen").chosen();

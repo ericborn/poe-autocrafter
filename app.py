@@ -15,16 +15,21 @@ eel.init('static')
 # 1st test is inventory stash check, 2nd is magic rarity, 3rd is currency
 # present in inventory
 @eel.expose
-def status_check(num):
+def roll_status_check(num, curr):
     if num == 0:
         return(inv())
     if num == 1:
         return(magic())
     if num == 2:
-        return(currency())
+        return(currency(curr))
+
+# check for inventory being open so sorting can start
+@eel.expose
+def sort_status_check():
+    return(inv())
 
 @eel.expose
-def roll_function(desired_rolls, desired_mod):
+def roll_function(desired_rolls, desired_curr, desired_mod):
     num_of_rolls = int(desired_rolls)
     mod_to_roll = desired_mod.lower()
     print(mod_to_roll, num_of_rolls)
@@ -39,5 +44,9 @@ def roll_function(desired_rolls, desired_mod):
             roll_item()
             print('roll', i, 'out of', num_of_rolls, \
                    'looking for', mod_to_roll)
+
+@eel.expose
+def sort_inventory():
+    
 
 eel.start('index.html')

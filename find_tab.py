@@ -13,18 +13,15 @@ import time as t
 import math as m
 import pyautogui as gui
 import pytesseract
-import numpy as np
-from checks import check_inv_stash, check_for_mod
 from image_manip import color_text, image_adjustments, screenshot
-from constants import LEFT_ARROW_COORDS, RIGHT_ARROW_COORDS, GREY_ARROW_COLOR,\
-                      ITEM_IN_STASH_COORDS, TOP_LEFT_INVENTORY_COORDS,\
-                      TOP_LEFT_CORNER, STASH_TAB_COORDS, STASH_YELLOW_TEXT,\
-                      STASH_BLACK_TEXT, STASH_TAB_NAMES, BLACK_TEXT,\
-                      LEFT_ARROW_CLICK_COORDS, YELLOW_TEXT, TAB_CLICK_COORDS,\
+from constants import GREY_ARROW_COLOR,\
+                      TOP_LEFT_CORNER, STASH_YELLOW_TEXT,\
+                      STASH_BLACK_TEXT, BLACK_TEXT,\
+                      YELLOW_TEXT, TAB_CLICK_COORDS,\
                       TAB_BOARDER_COORDS, RIGHT_ARROW_CLICK_COORDS,\
-                      STASH_SEARCH_BOX, SORT_SEARCH_NAMES, YELLOW_BORDER,\
+                      STASH_SEARCH_BOX, YELLOW_BORDER,\
                       ENTIRE_STASH_COORDS, INVENTORY_Y_COORDS, \
-                      INVENTORY_X_COORDS, EQUIPMENT_SORTING_INDEX
+                      INVENTORY_X_COORDS
 
 def check_stash_tabs():
     gui.moveTo(TOP_LEFT_CORNER)
@@ -246,102 +243,7 @@ def search_and_move(search_name):
 #        t.sleep(0.2)
 #        gui.leftClick()
 
-for i in range(len(SORT_SEARCH_NAMES)):
-    items = search_and_move(SORT_SEARCH_NAMES[i])
-    
-    # click on tab, put items, click back on dump
-    if items > 0 and i <= 5:
-        
-        # move mouse to tab and click then put items
-        gui.moveTo(TAB_CLICK_COORDS[i + 1])
-        t.sleep(0.1)
-        gui.leftClick()
-        move_to_stash(items)
-        t.sleep(0.1)
-        
-        # move back to dump tab and click
-        gui.moveTo(TAB_CLICK_COORDS[0])
-        t.sleep(0.1)
-        gui.leftClick()
-        
-    # click scroll x times, click on tab, put items, scroll back, click on dump
-    elif items > 0 and i >= 6 and i <= 8:
-        for j in range(i-5):
-            # scroll stash right
-            gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
-            t.sleep(0.1)
-            gui.leftClick()
-        
-        # move mouse to tab and click then put items
-        gui.moveTo(TAB_CLICK_COORDS[6])
-        t.sleep(0.1)
-        gui.leftClick()
-        move_to_stash(items)
-        
-        # move back to dump tab and click
-        for k in range(i-5):
-            # scroll stash left
-            gui.moveTo(LEFT_ARROW_CLICK_COORDS)
-            t.sleep(0.1)
-            gui.leftClick()
-            
-        # move back to dump tab and click
-        gui.moveTo(TAB_CLICK_COORDS[0])
-        t.sleep(0.1)
-        gui.leftClick()
-    
-    # separate statement that handles non 1x1 items
-    elif items > 0 and i == 9:
-        for j in range(i-5):
-            # scroll stash right
-            gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
-            t.sleep(0.1)
-            gui.leftClick()
-            
-        # move mouse to tab and click then put items
-        gui.moveTo(TAB_CLICK_COORDS[6])
-        t.sleep(0.1)
-        gui.leftClick()
-        items *= 4
-        move_to_stash(items)
-        
-        # move back to dump tab and click
-        for k in range(i-5):
-            # scroll stash left
-            gui.moveTo(LEFT_ARROW_CLICK_COORDS)
-            t.sleep(0.1)
-            gui.leftClick()
-        
-        # move back to dump tab and click
-        gui.moveTo(TAB_CLICK_COORDS[0])
-        t.sleep(0.1)
-        gui.leftClick()
-        
-     # click scroll x times, click on tab, put items, scroll back, click on dump
-    elif items > 0 and i >= 10:
-        for j in range(i-5):
-            # scroll stash right
-            gui.moveTo(RIGHT_ARROW_CLICK_COORDS)
-            t.sleep(0.1)
-            gui.leftClick()
-        
-        # move mouse to tab and click then put items
-        gui.moveTo(TAB_CLICK_COORDS[6])
-        t.sleep(0.1)
-        gui.leftClick()
-        move_to_stash(items)
-        
-        # move back to dump tab and click
-        for k in range(i-5):
-            # scroll stash left
-            gui.moveTo(LEFT_ARROW_CLICK_COORDS)
-            t.sleep(0.1)
-            gui.leftClick()
-        
-        # move back to dump tab and click
-        gui.moveTo(TAB_CLICK_COORDS[0])
-        t.sleep(0.1)
-        gui.leftClick()
+
         
         
         

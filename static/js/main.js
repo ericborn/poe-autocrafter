@@ -29,20 +29,37 @@ async function statusCheck() {
 // runs a loop three times asking python to perform a check for the inventory/stash to be ready,
 // item rarity to be magic and currecny being in the top left inventory slot
 // calls the changeColor function with the result of those tests
-async function statusCheck(){
-	var d = 'dot';
+// dot is the color dots indicating the status red/green for each item
+async function rollStatusCheck(){
+	var roll_d = 'dot';
 	var y = ''
 	//var data = 0;
 
 	for (let i = 0; i < 3; i++){
 
-		let data = await eel.status_check(i)() //(function(ret){console.log(ret)})
+		let data = await eel.roll_status_check(i, curr)() //(function(ret){console.log(ret)})
 		//console.log(data)
 
-		y = d + String(i)
+		y = roll_d + String(i)
 		//console.log(y)
 		changeColor(data, y)
 	}
+}
+
+// runs a loop three times asking python to perform a check for the inventory/stash to be ready,
+// item rarity to be magic and currecny being in the top left inventory slot
+// calls the changeColor function with the result of those tests
+async function sortStatusCheck(){
+  var sort_d = 'dot';
+  var x = ''
+  //var data = 0;
+
+  let data = await eel.sort_status_check(1)() //(function(ret){console.log(ret)})
+    console.log(data)
+
+    x = sort_d + String(1)
+    //console.log(y)
+    changeColor(data, x)
 }
   
 // used to change the dot color next to each item in the status check
@@ -57,10 +74,16 @@ function changeColor(status, id){
       }
 }
 
+function sortInventory(){
+
+}
+
 // Used to report the desired number of rolls and mod back to python
 async function webData(){
 	var rolls = document.getElementById("rolls").value
+  var curr = document.getElementById("desiredCurr").value
 	var mod = document.getElementById("desiredMod").value
-	await eel.roll_function(rolls, mod)() //(function(ret) {console.log(ret)})
+	await eel.roll_function(rolls, curr, mod)() //(function(ret) {console.log(ret)})
+  await eel.sort_inventory():
 	//return[rolls, mod];
 } 
